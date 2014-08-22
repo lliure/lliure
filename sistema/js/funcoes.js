@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -95,7 +95,7 @@ function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 function gsqul(){
 	var st = window.location;
 	
-	$('body').append('<iframe src="http://www.lliure.com.br/ferramentas/gsqul.php?u='+st+'" border="0" frameborder="0" width="0" height="0"> </iframe>');
+	$('body').append('<iframe src="http://www.lliure.com.br/tools/gsqul/index.php?u='+st+'" border="0" frameborder="0" width="0" height="0"> </iframe>');
 }
 
 
@@ -143,5 +143,5 @@ function ll_addDesk(){
 	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
 	
 	if (nome != null && nome != "")
-		ll_load('includes/desktop.php', {nome: nome});
+		ll_load('opt/desktop/sen_html.php?ac=addDesktop', {nome: nome});
 }

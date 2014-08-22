@@ -13,7 +13,7 @@ Array.prototype.remove = function(from, to) {
 };
 
 function textWidth(text){
-	var calc = '<span style="display:none">' + text + '</span>';
+	var calc = '<span style="display:none" class="color2">' + text + '</span>';
 	$('body').append(calc);
 	var width = $('body').find('span:last').width();
 	$('body').find('span:last').remove();
@@ -87,12 +87,11 @@ $('#command').keyup(function(e){
             }
 			
 			var tcomText = (comInput.attr('type').toLowerCase() != 'password' ? comInput.val(): '******');
-			var tcomColor = !isRunningCommand? 'color2':'';
 			var tcomArrowWidth = textWidth(comArrow.html());
 			if(tcomArrowWidth < 20) tcomArrowWidth = 20;
 			var tcom = $('<table class="command-box">'+
 				'<tr>'+
-					'<td class="cmd-arrow '+tcomColor+'" style="width: '+tcomArrowWidth+'px">'+comArrow.html()+'</td>'+
+					'<td class="cmd-arrow color2" style="width: '+tcomArrowWidth+'px">'+comArrow.html()+'</td>'+
 					'<td class="cmd-inner-box">'+tcomText+'</td>'+
 				'</tr>'+
 				'<tr>'+

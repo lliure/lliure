@@ -3,7 +3,7 @@
 *
 * API navigi - lliure
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -23,11 +23,10 @@ if($navigi['rename'] || (isset($navigi['config'][$seletor]['rename']) && $navigi
 	$_POST = jf_iconv2($_POST);
 			
 	$tabela = $navigi['config'][$seletor]['tabela'];
-	$texto[$navigi['config'][$seletor]['coluna']] = mysql_real_escape_string($_POST['texto']);
+	$dados[$navigi['config'][$seletor]['coluna']] = mysql_real_escape_string($_POST['texto']);
 	$id = mysql_real_escape_string($_POST['id']);
 
-
-	jf_update($tabela, $texto, array('id' => $id));
+	jf_update($tabela, $dados, array('id' => $id));
 } else{
 	echo 403;
 }

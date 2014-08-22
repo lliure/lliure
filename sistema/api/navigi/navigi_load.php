@@ -3,7 +3,7 @@
 *
 * API navigi - lliure
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -19,18 +19,29 @@ $navigi = unserialize(jf_decode($_SESSION['logado']['token'], $_POST['token']));
 function navigi_tratamento($dados){
 	global $navigi;
 
+	
 	$configSel = 0;
 	
-	if($navigi['configSel']  != false)
+	if($navigi['configSel'] != false)
 		$configSel = $dados[$navigi['configSel']];
 		
+	/** Configura a coluna e o id que serão exibidos	*/
 	$dados['coluna'] = $dados[$navigi['config'][$configSel]['coluna']];
-
-	$dados['click'] = (isset($navigi['config'][$configSel]['link_col']) 
-							? $dados[$navigi['config'][$configSel]['link_col']] 
-							: $navigi['config'][$configSel]['link'].$dados['id'] 
-					  );
-					  
+	$dados['id'] = $dados[$navigi['config'][$configSel]['id']];
+	
+	
+	/**********		DEFINIÇÃO DO CLICK							**/
+	$dados['click'] = null;
+	
+	if(isset($navigi['config'][$configSel]['link_col']))
+		$dados['click'] = $dados[$navigi['config'][$configSel]['link_col']];
+	elseif(isset($navigi['config'][$configSel]['link']))
+		$dados['click'] = $navigi['config'][$configSel]['link'].$dados['id'];
+		
+	$dados['click']	.= (isset($navigi['paginacao']['pAtual']) ? '&nvg_pg='.$navigi['paginacao']['pAtual'] : '' ); /* acrecenta paginação*/
+	/**/
+	
+	/**********		DEFINIÇÃO DO ICONE							**/
 	$dados['ico'] = 'api/navigi/img/ico.png';
 	
 	if(isset($navigi['config'][$configSel]['ico']))
@@ -38,15 +49,18 @@ function navigi_tratamento($dados){
 	
 	if(isset($navigi['config'][$configSel]['ico_col']) && !empty($navigi['config'][$configSel]['ico_col']))
 		$dados['ico'] = $dados[$navigi['config'][$configSel]['ico_col']];
+	/**/
 	
-	$dados['as_id'] = $dados[$navigi['config'][$configSel]['as_id']];
+	$dados['as_id'] = $dados[$navigi['config'][$configSel]['as_id']]; // alias para o id
 	
+	/**********		DEFINIÇÃO DAS FUNÇÕES DE RENOMEAR E DELETAR	**/
+	/** Também realiza a codificação de permições, usadas no js	**/
 	$dados['rename'] = false;
 	$dados['delete'] = false;
 	
 	$per_ren = $navigi['rename'];
 	$per_del = $navigi['delete'];
-	
+		
 	if(isset($navigi['config'][$configSel]['rename']) && $navigi['config'][$configSel]['rename']){
 		$dados['rename'] = true; 
 		$per_ren = 1;
@@ -56,7 +70,13 @@ function navigi_tratamento($dados){
 		$dados['delete'] = true; 
 		$per_del = 1;
 	}
+	
 	$dados['permicao'] = $per_ren.$per_del;
+	/**/
+		
+	if(isset($navigi['config'][$configSel]['botao'])){
+		$dados['botao'] = $navigi['config'][$configSel]['botao'];
+	}
 	
 	return $dados;	
 }
@@ -72,6 +92,7 @@ $navigi['delete'] = ($navigi['delete'] ? 1 : 0);
 
 if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 	while($dados = mysql_fetch_assoc($query)){
+
 		$dados = navigi_tratamento($dados);
 		
 	
@@ -84,11 +105,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'nome="'.$dados['coluna'].'"> '
 					 
 				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
-				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.$dados['coluna'].'</span>'
+				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</span>'
 			.'</div>';
 
 	}
-} else {	//// exibindo como lista
+} else {	/*/// exibindo como lista ********************************************************/
 	$ico = false;
 	
 	if($navigi['configSel'] != false){
@@ -97,32 +118,73 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		$ico = (isset($ico['ico']) ? true : false);
 	}
 	
+	// colspan		
+	$tableColspan = 0;
+	$linhas = array();
+	
+	$cell = '';
+	
+	while($dados = mysql_fetch_array($query)){
+		$dados['rename'] = null;
+		$dados['delete'] = null;
+		$dados['botoes'] = null;		
+		
+		$dados = navigi_tratamento($dados);		
+		$colspan = 0;
+				
+		if($navigi['rename'] || $dados['rename']){
+			$dados['rename'] = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
+			$colspan++;
+		}
+		
+		if($navigi['delete'] || $dados['delete']){
+			$dados['delete'] = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
+			$colspan++;
+		}
+		
+		if(isset($dados['botao'])){
+			$dados['botoes'] = '';
+			foreach($dados['botao'] as $key => $valor){
+				$valor['link'] = str_replace('#ID', $dados['id'], $valor['link']);
+				$dados['botoes'] .= '<td><a href="'.$valor['link'].'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'><img src="'.$valor['ico'].'"></a></td>'."\n";
+				$colspan++;
+			}
+		}
+		$cell[$dados['id']] = '';
+		/** puxando os campos que foram setados nas etiquetas	***/		
+		if(!empty($navigi['cell']))
+			foreach($navigi['cell'] as $key => $valor)
+				$cell[$dados['id']] .= '<td>'.$dados[$key].'</td>'."\n";
+			
+		
+		
+		/* Para calcular o colspan dinâmico */
+		$dados['colspan'] = $colspan;		
+		$tableColspan = ($tableColspan > $colspan ? $tableColspan : $colspan);
+		
+		$linhas[] = $dados;
+	}
+	
+		
 	echo '<table class="table navigi_list">'
 			.'<tr>'
 				.($ico == true ? '<th class="ico"></th>' : '' )
-				.'<th class="cod">Cod.</th>'
-				.'<th></th>'
-				.'<th class="ico"></th>'
-				.'<th class="ico"></th>';
+				.'<th class="cod">'.$navigi['etiqueta']['id'][0].'</th>'
+				.'<th style="width: '.$navigi['etiqueta']['coluna'][1].';">'.$navigi['etiqueta']['coluna'][0].'</th>';
+				
+	if(!empty($navigi['cell']))
+		foreach($navigi['cell'] as $key => $valor)
+				echo '<th style="width: '.$valor[1].';">'.$valor[0].'</th>';
+
 		
-		while($dados = mysql_fetch_array($query)){
-			$dados = navigi_tratamento($dados);
-			
-			$colspan = 3;
-			$rename = null;
-			$delete = null;
-			
-			if($navigi['rename'] || $dados['rename']){
-				$rename = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
-				$colspan--;
-			}
-			
-			if($navigi['delete'] || $dados['delete']){
-				$delete = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
-				$colspan--;
-			}
-			
-			echo '<tr class="navigi_tr" '
+	/** Para criar no top os th necessários para exibição dos botões a baixo */			
+	for($i = 1; $i <= $tableColspan; $i++)
+		echo 	 '<th class="ico"></th>';
+	
+	echo	 '</tr>';
+	
+	foreach($linhas as $chave => $dados){
+		echo '<tr class="navigi_tr" '
 					.'id="item_'.$dados['id'].'" ' 
 					.'as_id = "'.$dados['as_id'].'" ' 
 					.'dclick="'.$dados['click'].'" '
@@ -133,15 +195,41 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.$colspan.'"><div class="navigi_nome">'.$dados['coluna'].'</div></td>'
-			
-					.$rename
-					.$delete
-
+					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna']).'</div></td>'
+					
+					.$cell[$dados['id']]
+					
+					.$dados['botoes']
+					
+					.$dados['rename']
+					.$dados['delete']
 				.'</tr>';
-		}
+	}
 		
-		echo '</table>';
-		
+	echo '</table>';	
 }
+
+echo '<div id="nvg_paginacao">';				
+		$anterior = $navigi['paginacao']['pAtual'] -1;
+		$proximo = $navigi['paginacao']['pAtual'] +1;
+				
+		
+		
+		if($navigi['paginacao']['tPaginas'] > 1){
+			$navigi['paginacao']['tReg'] = 3;
+			
+			$ini = $navigi['paginacao']['pAtual']-$navigi['paginacao']['tReg'];
+			if($ini < 1){
+				$ini = 1;
+			}
+
+			$ult = $navigi['paginacao']['pAtual']+$navigi['paginacao']['tReg'];
+			if($ult > $navigi['paginacao']['tPaginas']){
+				$ult = $navigi['paginacao']['tPaginas'];
+			}
+
+			for($i = $ini; $i <= $ult; $i++)
+				echo '<span '.($i == $navigi['paginacao']['pAtual']?"class='atual'":"").'><a href="'.(empty($navigi['paginacao']['url'])?'':$navigi['paginacao']['url'].'&')."nvg_pg=".$i.'">'.$i.'</a></span>';
+		}  
+echo '</div>';
 ?>

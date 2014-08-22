@@ -2,7 +2,7 @@
 *
 * API navigi - lliure
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -16,7 +16,7 @@ $(function() {
 
 
 
-function navigi_start(){	
+function navigi_start(){
 	navigi_limpAllEvent();
 	
 	$('#navigi').html('<span class="load"><img src="api/navigi/img/load.gif" alt=""/></span>');
@@ -62,7 +62,8 @@ jQuery.fn.extend({
 		
 		($(this).find('.navigi_tr')).bind({
 			click: function(event){
-				location = $(this).attr('dclick');
+				if($(this).attr('dclick') != '')
+					location = $(this).attr('dclick');
 			}
 		});
 		
@@ -72,6 +73,18 @@ jQuery.fn.extend({
 				event.stopPropagation();
 			
 				navigi_apaga(id);
+			}
+		});
+		
+		
+		($(this).find('.navigi_bmod')).bind({			
+			click: function(event){
+				var href = $(this).attr('href');
+				var tamanho = $(this).attr('rel');				
+				tamanho = tamanho.split("x")
+				
+				$().jfbox({carrega: href, width: tamanho[0], height: tamanho[1]});
+				return false;
 			}
 		});
 		
@@ -130,7 +143,7 @@ $('html').jfkey('right', function(e){
 	}
 });
 
-$('html').jfkey('delete', function(){
+$('html').jfkey('delete,osxdelete', function(){
 	if($('#navigi_inp_ren, #navigi_inp_lis_ren').length == 1){
 		return true;
 	} else if(navigi_selecionado != null && ($('#'+navigi_selecionado).attr('permicao') == 11 || $('#'+navigi_selecionado).attr('permicao') == 01)){
@@ -169,6 +182,7 @@ $('html').jfkey('enter', function(){
 $('html').jfkey('esc', function(){	
 	navigi_limpAllEvent();
 });
+
 
 /***************************************			FUNÇÕES			***************************************/
 

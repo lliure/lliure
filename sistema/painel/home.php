@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -39,19 +39,18 @@ echo app_bar('Painel de controle', $botoes);
 					<a href="" onclick="abrepopup();"><span>Terminal</span></a>
 				</div>
 			</div>
-			
-						
-			<script>
-			function abrepopup(){
-				var width = 725;
-				var height = 500;
 
-				var left = 99;
-				var top = 99;
-				window.open('opt/terminal/terminal.php','Console', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=yes');
-				
-				return false;
-			}
+			<script>
+				function abrepopup(){
+					var width = 725;
+					var height = 500;
+
+					var left = 99;
+					var top = 99;
+					window.open('opt/terminal/terminal.php','Console', 'width='+width+', height='+height+', top='+top+', left='+left+', scrollbars=yes, status=no, toolbar=no, location=no, directories=no, menubar=no, resizable=no, fullscreen=yes');
+					
+					return false;
+				}
 			</script>
 			<?php
 
@@ -85,25 +84,13 @@ echo app_bar('Painel de controle', $botoes);
 		<?php
 		$appFolder = array();
 		$erroAbrirDir = false;
-		$consulta = "select * from ".PREFIXO."lliure_plugins";
+		$consulta = "select * from ".PREFIXO."lliure_apps";
 		$query = mysql_query($consulta);
 		
 		if(mysql_num_rows($query) > 0)
 			while($dados = mysql_fetch_array($query))
 			$aplicativos[$dados['pasta']] = $dados['nome'];
-		
-		/*****   será depreciado nas versões posteriores   *****/
-		if ($handle=opendir("plugins")) {
-			while (false !== ($file = readdir($handle))) 
-				if (strstr($file, '.') == false) 
-						$appFolder[] = $file;
-			 
-			closedir($handle);
-		} else {
-			$erroAbrirDir = true;
-		}
-		/**********/
-		
+				
 		if ($handle=opendir("app")) {
 			while (false !== ($file = readdir($handle))) 
 				if (strstr($file, '.') == false) 

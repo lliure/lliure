@@ -1,11 +1,14 @@
 <?php
 function about(){
+	ob_start();
+	include (LLPATH.'paginas/sobre.php');
+	ob_clean();
 ?>
 	<div class="color2">
 		lliure WAP<br/>
 		=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 	</div>
-	<span class="color2">lliure version: </span><?php echo str_replace('* @Versão ', '', '* @Versão 4.10.4'); ?><br/>
+	<span class="color2">lliure version: </span><?php echo $versao; ?><br/>
 	<span class="color2">lliure home: </span><a class="color1" href="http://www.lliure.com.br" target="_blank">www.lliure.com.br</a><br/>
 	<span class="color2">Author: </span>Jeison Frasson [jnomade2@gmail.com]<br/>
 	<div class="color2">

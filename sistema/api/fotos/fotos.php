@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -68,7 +68,7 @@ if(mysql_num_rows($query) == 0){
 			</div>
 			
 			<a href="api/fotos/refotos.php?tabela=<?php echo $tabela?>&amp;dir=<?php echo $dir?>&amp;foto=<?php echo $idFoto?>" class="renomeiaFoto" title="editar">			
-				<img src="../uploads/thumb.php?i=<?php echo $dir?>/<?php echo $dados['foto']?>:70:60:c" class="img" />
+				<img src="<?php echo '../uploads/'.$dir.'/70-60-c/'.mb_strtolower($dados['foto']);?>" class="img" />
 			</a>			
 		</div>
 		<?php

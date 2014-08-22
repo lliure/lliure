@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,9 +11,9 @@
 */
 
 if(!empty($_POST)){
-	require_once("../etc/bdconf.php"); 
-	require_once("../includes/jf.funcoes.php"); 
-	require_once("../api/fileup/inicio.php"); 
+	require_once("../../etc/bdconf.php"); 
+	require_once("../../includes/jf.funcoes.php"); 
+	require_once("../../api/fileup/inicio.php"); 
 
 	if(empty($_POST['senha'])){
 		unset($_POST['senha']);
@@ -22,7 +22,7 @@ if(!empty($_POST)){
 	}
 	
 	$file = new fileup; 								// incia a classe
-	$file->diretorio = '../../uploads/usuarios/';		// pasta para o upload (lembre-se que o caminho é apartir do arquivo onde estiver sedo execultado)
+	$file->diretorio = '../../../uploads/usuarios/';		// pasta para o upload (lembre-se que o caminho é apartir do arquivo onde estiver sedo execultado)
 	$file->up(); 										// executa a classe
 	
 	if(isset($_POST['imagem']))
@@ -34,31 +34,20 @@ if(!empty($_POST)){
 	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
 
 	$_SESSION['aviso'][0] = "Alteração realizada com sucesso!";
-	header('location: ../index.php?'.(isset($_GET['minhaconta']) ? 'minhaconta' : 'usuarios' ));
+	header('location: ../../index.php?'.(isset($_GET['minhaconta']) ? 'minhaconta' : 'usuarios' ));
 }
 
 if(empty($_GET['usuarios'])){
-	$botoes[] =	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome);
-	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
+	$botoes[] =	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome);
+	$botoes[] =	array('href' => 'opt/user/ajax.novo_usuario.php', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
-	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
 }
 
 echo app_bar('Painel de usuários', $botoes);
 
 
-if(empty($_GET['usuarios'])){
-	/*
-	$query = $consulta.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
-
-	$pastas = '';
-	$click['link'] = '?usuarios=';
-	$click['ico'] = "imagens/layout/user.png";
-	$pluginTable = $tabela;
-
-	jNavigator($query, $pluginTable, $pastas, $mensagemVazio = null, $click);
-	*/
-	
+if(empty($_GET['usuarios'])){	
 	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO.'lliure_admin';
 	$navegador->query = 'select * from '.$navegador->tabela.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
@@ -89,7 +78,7 @@ if(empty($_GET['usuarios'])){
 	?>
 
 	<div class="boxCenter editUsuario">
-		<form method="post" action="paginas/usuarios.php?id=<?php echo $_GET['usuarios'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
+		<form method="post" action="opt/user/usuarios.php?id=<?php echo $_GET['usuarios'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
 			<fieldset>
 				<legend>Dados pessoais</legend>
 				

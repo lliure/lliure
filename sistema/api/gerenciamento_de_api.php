@@ -3,7 +3,7 @@
 *
 * gerenciamento de APIs - lliure
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Colaboração Carlos Alberto Carucci
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
@@ -23,7 +23,7 @@ class lliure {
 		}else{
 			$ret = '';
 			foreach($_ll['css'] as $css){
-				$ret.= '<link rel="stylesheet" href="'.$css.'"/>';
+				$ret.= '<link rel="stylesheet" href="'.$css.'"/>'."\r\n\t";
 			}
 			
 			if($ecoa)
@@ -42,7 +42,7 @@ class lliure {
 		}else{
 			$ret = '';
 			foreach($_ll['js'] as $js){
-				$ret.= '<script type="text/javascript" src="'.$js.'"></script>';
+				$ret.= '<script type="text/javascript" src="'.$js.'"></script>'."\r\n\t";
 			}
 			
 			if($ecoa)

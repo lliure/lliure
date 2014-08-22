@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -115,7 +115,7 @@ case 'instalar':
 		@copy($_POST['segur'] ,'../etc/'.$_GET['app'].'/seguranca.ll');
 	}
 
-	jf_insert(PREFIXO.'lliure_plugins', array('nome' => $aplicativo_nome, 'pasta' => $_GET['app']));
+	jf_insert(PREFIXO.'lliure_apps', array('nome' => $aplicativo_nome, 'pasta' => $_GET['app']));
 	?><br><br>
 	<span><strong>Instalação realizada com sucesso!</strong></span><br><br>
 	<span style="font-size: 11px;">Esta instalação foi referente apenas ao banco de dados e pastas, não foram arquivos de configuração, leia com atenção o arquivo sobre a instalação deste aplicativo para seu pleno funcionamento</span><br><br>

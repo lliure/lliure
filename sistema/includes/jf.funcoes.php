@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -34,7 +34,8 @@ function jf_anti_injection($sql) {
 		foreach($sql as $chave => $valor)
 			$sql[$chave] = jf_anti_injection($valor);
 	} else {
-		$sql = preg_replace(sql_regcase("/(%0a|%0d|Content-Type:|bcc:|to:|cc:|Autoreply:|from|select|insert|delete|where|drop table|show tables|\\\\)/"), "", $sql);
+		$sql = get_magic_quotes_gpc() ? stripslashes($sql) : $sql;
+        $sql = function_exists('mysql_real_escape_string') ? mysql_real_escape_string($sql) : mysql_escape_string($sql);
 		$sql = trim($sql); # Remove espaços vazios.
 		$sql = addslashes($sql); # Adiciona barras invertidas à uma string.
 	}
@@ -99,7 +100,7 @@ function jf_insert($tabela, $dados, $print = false){
 	//Descrição
 	jf_insert(string $tabela, array $dados)
 	monta e execulta uma query de insert em mysql	
-		
+
 	// Parametros
 	$table
 	nome da tabela que estará sendo feito o insert
@@ -132,12 +133,13 @@ function jf_insert($tabela, $dados, $print = false){
 				$colunas [$chave1] = '`'.$chave1.'`';
 			}
 		}
-
+		
 		$valores = '';
 		foreach($dados as $chave => $valor){
 			$unicValores = '';
-			foreach($colunas as $coluna){
-				$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] != null && $valor[$coluna] != 'null' && $valor[$coluna] != 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
+			
+			foreach($colunas as $coluna => $d){
+				$unicValores .= (empty($unicValores)? '': ', ') . (isset($valor[$coluna]) && $valor[$coluna] !== null && $valor[$coluna] !== 'null' && $valor[$coluna] !== 'NULL'? '"' . addslashes($valor[$coluna]) . '"': 'NULL');
 			}
 			$valores .= (empty($valores)? '': ', ') . '(' . $unicValores . ')';
 		}
@@ -259,7 +261,6 @@ function jf_delete($tabela, $alter){
 
 //	Gerencia o array $haystack, e retira o $needle (pode ser um array também) caso exista em $haystack e retorna em modo de link
 define("JF_URL_AMIGAVEL", "URL_AMIGAVEL");
-
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
 	/*
 	 * caso passe a constante JF_URL_AMIGAVEL para $amigavel retorna o link em formato de url amigável
@@ -411,12 +412,13 @@ function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
 	}
 	
 	$ret = $arr;
-	function array_iconv(&$val, $key, $userdata){
-		$val = iconv($userdata[0], $userdata[1], $val);
-	}
 	
 	array_walk_recursive($ret, "array_iconv", array($in_charset, $out_charset));
 	return $ret;
+}
+
+function array_iconv(&$val, $key, $userdata){
+	$val = iconv($userdata[0], $userdata[1], $val);
 }
 
 // Limpa acentuação de uma string

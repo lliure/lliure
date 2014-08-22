@@ -24,7 +24,7 @@ $yourLink = 'http://lliure.com.br';
 				<table class="command-box incomming">
 					<tr>
 						<td class="cmd-arrow color2" style="width: 20px;">></td>
-						<td class="cmd-inner-box"><div><input class="color1" id="command" type="text" placeholder="Type command here..."/></div></td>
+						<td class="cmd-inner-box"><div><input class="color1" id="command" type="text" placeholder=""/></div></td>
 					</tr>
 				</table>
 

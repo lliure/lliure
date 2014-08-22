@@ -2,7 +2,7 @@
 *
 * lliure WAP
 *
-* @Versão 5.0
+* @Versão 6.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -33,6 +33,8 @@
 		left:0;
 		top:0;
 		overflow: auto;
+		width: 100%;
+		height: 100%;
 		}
 		
 #gifJfbox{
