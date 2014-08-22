@@ -1,0 +1,1 @@
+Adiciona um usuário. Parâmetros: -u [login] -p [senha] [-g [grupo]]
