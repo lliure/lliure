@@ -4,6 +4,10 @@ lliure wolf
 
 <br>
 
+
+#### 6.1 Shiba inu (26/09/2014)
+- [bug] - Correções na api Aplimo
+
 #### 6.0 Shiba inu (21/07/2014)
 - [update] - Alteração na API Navigi para receber botões acicionais na exibição lista
 - [update] - Eliminação da pasta "plugin" e removido o suporte

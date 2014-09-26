@@ -4,7 +4,7 @@
 *
 * API Aplimo - lliure
 *
-* @Versão 6.0
+* @Versão 6.1
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -104,24 +104,24 @@ class aplimo{
 		
 		switch($tipo){
 		case 'botao':
-			$mod = '"url": "'.$mod.'",';
+			$data['url'] = $mod;
 			break;
 		
 		case 'input':
-			$name = '"name": "'.$class.'",';
+			$data['name'] = $class;
+			$data['url'] = $compl;
 			
 		case 'botao_js':
-			$mod = '"js": "'.jf_encode('aplimo', $mod).'",';
+			$data['js'] = jf_encode('aplimo', $mod);
 			break;
 		}
 		
-		$data = '{	"texto": "'.$texto.'", 
-					'.$mod.$name.'
-					"orientacao": "'.$orientacao.'",
-					"adjunct": "'.$compl.'",
-					"class": "'.$class.'"
-				}';
-
+		$data['texto'] = $texto;
+		$data['orientacao'] = $orientacao;
+		$data['adjunct'] = $compl;
+		$data['class'] = $class;
+		
+		$data = json_encode($data, true);
 		
 		$this->hc_menu_item($tipo, $data);
 	}
@@ -129,7 +129,8 @@ class aplimo{
 	function hc_menu_item($type = 'a', $data = null){			
 			/*	$this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');	*/
 			
-			$data = json_decode($data, true);
+			if(!is_array($data))
+				$data = json_decode($data, true);
 			
 			$this->hc_menu[] = array(
 					'tipo' => $type,
@@ -141,20 +142,21 @@ class aplimo{
 					'name' => isset($data['name']) ? $data['name'] : null,
 					'js' => isset($data['js']) ? $data['js'] : null
 					);
+					
+			
 	
 			$tmp_menu = array_keys($this->menu);				
 			return array_shift($tmp_menu);
 		}
 		
 	function monta_hc_menu(){	
-		echo '<div class="aplm_subheader">';		
+		echo '<div class="aplm_subheader">';
+			
 		
 		foreach($this->hc_menu as $key => $valor){
 			if(isset($valor['js']))
-			$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
-			
-			echo $this->js;
-			
+				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
+
 			switch($valor['tipo']){
 				case 'botao':
 				case 'a':
@@ -162,9 +164,11 @@ class aplimo{
 					break;
 					
 				case 'botao_js':
+					
+				
 					echo '<a href="javascript: void(0)" '.$valor['adjunct'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
 					
-					$this->js .= $valor['js'];					
+					$this->js .= $valor['js'];
 					break;
 					
 				case 'input':
