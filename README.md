@@ -5,6 +5,10 @@ lliure wolf
 <br>
 
 
+#### 6.2 Shiba inu (30/09/2014)
+- [bug] - Correções na api Aplimo
+- [update] - função jf_insert() apta a não recerber a array com dados
+
 #### 6.1 Shiba inu (26/09/2014)
 - [bug] - Correções na api Aplimo
 
