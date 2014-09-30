@@ -4,7 +4,7 @@
 *
 * API Aplimo - lliure
 *
-* @Versão 6.1
+* @Versão 6.2
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -100,7 +100,6 @@ class aplimo{
 	
 	function hc_menu($texto, $mod, $tipo = 'botao', $orientacao = null, $class = null, $compl = null){
 		$name = null;
-		//$mod = null;
 		
 		switch($tipo){
 		case 'botao':
@@ -129,8 +128,10 @@ class aplimo{
 	function hc_menu_item($type = 'a', $data = null){			
 			/*	$this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');	*/
 			
-			if(!is_array($data))
+			if(!is_array($data)){
+				$data = utf8_encode($data); 
 				$data = json_decode($data, true);
+			}
 			
 			$this->hc_menu[] = array(
 					'tipo' => $type,
@@ -153,7 +154,8 @@ class aplimo{
 		echo '<div class="aplm_subheader">';
 			
 		
-		foreach($this->hc_menu as $key => $valor){
+		foreach($this->hc_menu as $key => $valor){			
+			$valor = jf_iconv2($valor);
 			if(isset($valor['js']))
 				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
 
@@ -163,9 +165,7 @@ class aplimo{
 					echo '<a href="'.$valor['url'].'" class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
 					break;
 					
-				case 'botao_js':
-					
-				
+				case 'botao_js':				
 					echo '<a href="javascript: void(0)" '.$valor['adjunct'].' class="alg_'.$valor['align'].' aplm_botao '.$valor['class'].'">'.$valor['texto'].'</a>';
 					
 					$this->js .= $valor['js'];
