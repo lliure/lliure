@@ -62,9 +62,15 @@ class aplimo{
 	var $h_menu = array();
 	var $smalt = null;
 	var $js = null;
+	private static $basePath = null;
 	
-	function __construct() {		
-
+	function __construct() {
+		global $_ll;		
+		self::basePath($_ll['app']['pasta']);
+	}
+	
+	static function basePath($pasta){
+		self::$basePath = $pasta;
 	}
 	
 	function menu($titulo, $url){
@@ -76,9 +82,9 @@ class aplimo{
 	
 	function sub_menu($titulo, $folder = null){
 		$array = array(
-						'titu' => $titulo,
-						'link' => array()
-						);
+					'titu' => $titulo,
+					'link' => array()
+					);
 						
 		if(empty($folder))
 			$this->menu[] = $array;
@@ -89,13 +95,16 @@ class aplimo{
 		$this->smalt = array_pop($this->smalt );
 	}
 	
+
 	function sub_menu_item($titulo, $url, $mark = null){
 		
 		$this->menu[$this->smalt]['link'][] = array(
 					'titu' => $titulo,
 					'link' => $url,
+					'basePath' => self::$basePath,
 					'mark' => (!empty($mark) ? explode(',', $mark.','.$url)  : array($url))
 					);
+
 	}
 	
 	function hc_menu($texto, $mod, $tipo = 'botao', $orientacao = null, $class = null, $compl = null){
@@ -125,8 +134,18 @@ class aplimo{
 		$this->hc_menu_item($tipo, $data);
 	}
 	
+	
+	/**
+	 * 
+	 * Exemplo de utlização
+	 * $this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');
+	 * 
+	 * $type: passe o tipo do menu pode ser 
+	 * 			   a: link comum
+	 * 		botao_js: para um botão com ação javascrip
+	 * 		   input: para criar um input
+	 */
 	function hc_menu_item($type = 'a', $data = null){			
-			/*	$this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');	*/
 			
 			if(!is_array($data)){
 				$data = utf8_encode($data); 
@@ -143,8 +162,6 @@ class aplimo{
 					'name' => isset($data['name']) ? $data['name'] : null,
 					'js' => isset($data['js']) ? $data['js'] : null
 					);
-					
-			
 	
 			$tmp_menu = array_keys($this->menu);				
 			return array_shift($tmp_menu);
@@ -188,21 +205,49 @@ class aplimo{
 		
 		$aktivigi_class = ' aktivigi ll_border-color ll_color';
 		
-		 if(!isset($_GET['apm'])){			
+		$this->class_sub = null;
+		$this->class_li = null;
+		
+		if(!isset($_GET['apm'])){			
 			$tmp_menu = array_keys($this->menu);
 			$class = array_shift($tmp_menu);				
 			
-			$class_li[$class] = $aktivigi_class;
+			//$class_li[$class] = $aktivigi_class;
 			
 			if(!is_array($this->menu[$class]['link']))
 				$_GET['apm'] = $this->menu[$class]['link'];
 		}
 		
-		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php'))
-				require_once($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');
+		
+		foreach($this->menu as $key => $valor){
+			if(is_array($valor['link'])){
+				$this->class_li[$key] = null;
+				$this->class_sub[$key] = null;
+				 
+				foreach($valor['link'] as $lok => $defin){
+					
+					$this->class_li[$key.'-'.$lok] = null;
+						
+					if(	 	(isset($_GET['apm']) && $defin['link'] == $_GET['apm'])
+						|| (isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
+						self::$basePath = $defin['basePath'];
+						$this->class_li[$key.'-'.$lok] = $aktivigi_class;
+						$this->class_sub[$key] = 'open_sub';
+					}
+				}
+			} else {
+				$this->class_li[$key] = null;
 				
-		elseif(isset($_GET['apm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/header.php'))
-				require_once($_ll['app']['pasta'] . $_GET['apm'] . '/header.php');
+				if(isset($_GET['apm']) && $valor['link'] == $_GET['apm'] )
+					$this->class_li[$key] = $aktivigi_class;
+			}
+		}
+		
+		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php'))
+				require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');
+				
+		elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php'))
+				require_once(self::$basePath . $_GET['apm'] . '/header.php');
 	}
 	
 	function onserver(){
@@ -216,44 +261,26 @@ class aplimo{
 		require_once($apm_load);
 	}
 	
+	function require_page(){
+		global $_ll;
+		$apm_load  = 'api/aplimo/ne_trovi.php';
+		                    
+        if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
+			$apm_load = self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
+		elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
+			$apm_load = self::$basePath . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
+		elseif(!isset($_GET['sapm']) && file_exists(self::$basePath . 'home/home.php'))
+			$apm_load = self::$basePath . 'home/home.php';
+			
+		
+		require_once($apm_load);
+	}
+	
 	function monta(){
 		global $_ll;
 		
 		$total_reg = 30;
 		$tr = 10;
-		
-		$aktivigi_class = ' aktivigi ll_border-color ll_color';
-				
-		$class_sub = null;
-		$class_li = null;
-		
-		foreach($this->menu as $key => $valor){
-			if(is_array($valor['link'])){
-				$class_li[$key] = null;
-				$class_sub[$key] = null;
-				 
-				foreach($valor['link'] as $lok => $defin){
-					
-					$class_li[$key.'-'.$lok] = null;
-						
-					if(	 	(isset($_GET['apm']) && $defin['link'] == $_GET['apm'])
-						|| (isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
-							
-						$class_li[$key.'-'.$lok] = $aktivigi_class;
-						$class_sub[$key] = 'open_sub';
-					}
-				}
-			} else {
-				$class_li[$key] = null;
-				
-				if(isset($_GET['apm']) && $valor['link'] == $_GET['apm'] ){
-					$class_li[$key] = $aktivigi_class;
-					
-					if(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/header.php'))
-						require_once($_ll['app']['pasta'] . $_GET['apm'] . '/header.php');
-				}				
-			}
-		}	
 		?>
 		<div class="container cabecalho">
 			<div class="menu">
@@ -275,13 +302,13 @@ class aplimo{
 					<?php					
 					foreach($this->menu as $key => $valor){
 						
-						echo '<li class="'.$class_li[$key].'">';
+						echo '<li class="'.$this->class_li[$key].'">';
 	
 						if(is_array($valor['link'])){
 							?>
 							<li> 
-								<span <?php echo 'class="'.$class_sub[$key].'"' ?>><?php echo $valor['titu']; ?></span> 
-								<ul <?php echo 'class="'.$class_sub[$key].'"' ?>>								
+								<span <?php echo 'class="'.$this->class_sub[$key].'"' ?>><?php echo $valor['titu']; ?></span> 
+								<ul <?php echo 'class="'.$this->class_sub[$key].'"' ?>>								
 									<?php
 									foreach($valor['link'] as $lok => $defin){
 										$link = $_ll['app']['home'].'&apm='.$defin['link'];
@@ -289,7 +316,7 @@ class aplimo{
 										if(!empty($key))
 											$link = $_ll['app']['home'].'&apm='.$key.'&sapm='.$defin['link'];
 															
-										echo '<li class="'.$class_li[$key.'-'.$lok].'">'
+										echo '<li class="'.$this->class_li[$key.'-'.$lok].'">'
 												.'<a href="'.$link.'">'.$defin['titu'].'</a>'
 											.'</li>';	
 									}
@@ -313,16 +340,7 @@ class aplimo{
 					if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
 						$this->monta_hc_menu();					
 							
-					$apm_load  = 'api/aplimo/ne_trovi.php';
-                    
-                    if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
-						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php';
-					elseif(isset($_GET['apm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php'))
-						$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/' . $_GET['apm'] . '.php';
-					elseif(!isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . 'home/home.php'))
-						$apm_load = $_ll['app']['pasta'] . 'home/home.php';
-				
-					require_once($apm_load);
+					$this->require_page();
 					?>
 
 				</div>

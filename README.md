@@ -1,9 +1,12 @@
 lliure wolf
 =========
-> 6.0 (Shiba inu) 
+> 6.x (Shiba inu) 
 
 <br>
 
+
+#### 6.3 Shiba inu (03/10/2014)
+- [bug] - corrigido acesso direto por nli
 
 #### 6.2 Shiba inu (30/09/2014)
 - [bug] - Correções na api Aplimo
