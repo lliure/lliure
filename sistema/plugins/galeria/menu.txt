@@ -1,0 +1,9 @@
+nome: Galeria
+tipo: galeria
+condicao: tipo
+optCondicao: 0 1, 1 2 
+link: 1 ?galeria&album=$idlig, 2 ?galeria=$idlig
+linkEdit: 1 ?plugin=galeria&acoes=editar&id=$idlig, 2 ?plugin=galeria&gal=$idlig
+imagem: 1 img/album.png, 2 img/book.png
+tabela: galeria
+campo: nome '$nome'

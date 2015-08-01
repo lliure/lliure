@@ -1,0 +1,38 @@
+.addVid input{
+	width: 250px;
+	}
+	
+.addVid span{
+	color: #777;
+	margin: 4px 4px 0 0;
+	font-size: 12px;
+	}
+	
+	
+div.vidVideo{
+	background: #eee;
+	border-top: 1px solid #aaa;
+	padding:  4px;
+	margin-top: 4px;
+	}
+	
+div.vidVideo div.object{
+	float: left;
+	}
+	
+div.vidVideo div.info{
+	float: right;
+	width: 284px;
+	}
+	
+div.vidVideo span.nome{
+	font-size: 14px;
+	font-weight: bold;
+	display: block;
+	color: #EB3D00;
+	}
+	
+div.vidVideo span.descricao{
+	margin: 10px 0;
+	display: block;
+	}

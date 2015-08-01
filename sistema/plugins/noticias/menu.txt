@@ -1,0 +1,6 @@
+nome: Noticias
+tipo: noticias
+link: ?noticias=$idlig
+linkEdit: ?plugin=noticias&acoes=noticiario&id=$idlig
+tabela: noticias_categorias
+campo: nome '$nome'

@@ -1,0 +1,15 @@
+div.tMenu{
+	float: left;
+	clear: both;
+	margin-bottom: 9px;
+	}
+	
+div.tMenu img{
+	float: left;
+	}	
+	
+div.tMenu span{
+	float: left;
+	padding: 9px 0 0 5px;
+	font-weight: bold;
+	}

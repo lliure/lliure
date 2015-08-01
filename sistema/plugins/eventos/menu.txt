@@ -1,0 +1,6 @@
+nome: Eventos
+tipo: eventos
+link: ?eventos
+linkEdit: ?plugin=eventos
+tabela: eventos
+container

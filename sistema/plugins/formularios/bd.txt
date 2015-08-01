@@ -1,0 +1,22 @@
+CREATE TABLE `sgs_formularios` (
+  `id` int(11) NOT NULL auto_increment,
+  `nome` varchar(40) NOT NULL,
+  `email` varchar(255) default NULL,
+  `titulo` varchar(200) default NULL,
+  `conteudo` longtext,
+  `embed` text,
+  `obrigatorio` enum('0','1') default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
+
+CREATE TABLE `sgs_formularios_campos` (
+  `id` bigint(255) NOT NULL auto_increment,
+  `id_form` int(255) NOT NULL,
+  `identificacao` varchar(255) default NULL,
+  `titulo` varchar(255) default NULL,
+  `valor` varchar(255) default NULL,
+  `tipo` varchar(200) default NULL,
+  `ordem` int(255) default '0',
+  `obrigatorio` enum('0','1') default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=612 ;

@@ -1,0 +1,6 @@
+nome: Formulário
+tipo: formularios
+link: ?formularios=$idlig
+linkEdit: ?plugin=formularios&acoes=editar&id=$idlig
+tabela: formularios
+campo: nome '$nome'

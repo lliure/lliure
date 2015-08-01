@@ -1,0 +1,26 @@
+CREATE TABLE `sgs_catalogo` (
+  `id` bigint(255) NOT NULL auto_increment,
+  `nome` varchar(255) NOT NULL,
+  `titulo` varchar(255) default NULL,
+  `descricao` longtext,
+  `destaque` enum('0','1') default '0',
+  `ativo` enum('0','1') default '0',
+  `firtPhoto` varchar(255) default NULL,
+  `valor` double default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE `sgs_catalogo_categorias` (
+  `id` bigint(255) NOT NULL auto_increment,
+  `idLig` int(255) NOT NULL default '0',
+  `nome` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+
+CREATE TABLE `sgs_catalogo_relacao` (
+  `id` bigint(255) NOT NULL auto_increment,
+  `idCat` int(255) NOT NULL default '0',
+  `idProd` int(255) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+

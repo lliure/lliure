@@ -1,0 +1,6 @@
+nome: Mapa
+tipo: mapa
+link: ?mapa=$idlig
+linkEdit: ?plugin=mapa&acoes=editar&id=$idlig
+tabela: mapa
+campo: nome '$nome'

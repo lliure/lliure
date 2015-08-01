@@ -1,202 +1,145 @@
 <?php 
-/**
-*
-* lliure WAP
-*
-* @Versão 6.4
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
-
-if(!file_exists("etc/bdconf.php"))
-	header('location: install/index.php');
-
-require_once("etc/bdconf.php"); 
-require_once("includes/functions.php");
-
-/* Identifica o diretório atual do sistema */
-ll_dir();
-
-if(!isset($_SESSION['logado'])) {
-	$_SESSION['ll_url'] = jf_monta_link($_GET);
-	header('location: nli.php');
-}
-
-$_ll['user'] = $_SESSION['logado'];
-
-if(!isset($_ll['mode_operacion']))
-	$_ll['mode_operacion'] = 'kun_html';
-
-$_ll['css'] = array();
-$_ll['js'] = array();
-
-require_once('includes/carrega_conf.php');
-
-$llconf = $_ll['conf'];
-
-$_ll['ling'] = ll_ling();
-$ll_ling = $_ll['ling'];
-
-require_once("api/gerenciamento_de_api.php"); 
-
-$_ll['app']['header'] = null;
-$_ll['app']['pagina'] = "paginas/permissao.php";
-
-
-$get = array_keys($_GET);
-switch(isset($get[0]) ? $get[0] : 'desk' ){
-	case 'app':
-		if(!empty($_GET['app'])
-			&& (file_exists('app/'.$_GET['app']))){
-			
-			$_ll['app']['home'] = 'index.php?app='.$_GET['app'];
-			$_ll['app']['onserver'] = 'onserver.php?app='.$_GET['app'];
-			$_ll['app']['sen_html'] = 'sen_html.php?app='.$_GET['app'];
-			$_ll['app']['pasta'] = 'app/'.$_GET['app'].'/';
-						
-			$llAppHome = $_ll['app']['home'];
-			$llAppOnServer = $_ll['app']['onserver'];
-			$llAppSenHtml = $_ll['app']['sen_html'];			
-			$llAppPasta = $_ll['app']['pasta'];
-			
-			/**		Controle de abertura de páginas		**/			
-			switch($_ll['mode_operacion']){
-				
-			case 'onserver':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'onserver.php';
-				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				break;
-				
-			case 'sen_html':
-				$_ll['app']['pagina'] = $_ll['app']['pasta'].'sen_html.php';
-				$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';
-				break;
-			
-			case 'kun_html':
-				$ll_segok = false;
-				
-				if(ll_tsecuryt() == false){
-					if(($config = @simplexml_load_file($_ll['app']['pasta'].'/sys/config.ll')) !== false){
-						
-						if($config->seguranca != 'public' && (ll_securyt($_GET['app']) == true))
-							$ll_segok = true;
-						elseif($config->seguranca == 'public')
-							$ll_segok = true;
+	require_once("../includes/conection.php"); 
+	require_once("includes/functions.php"); 
+	require_once("includes/acoes.php"); 
 	
-					} else {
-						$ll_segok = true;
+	if(!empty($_GET)){
+		$keyGet = array_keys($_GET);
+		if($keyGet['0'] == 'plugin' and $_GET['plugin']){
+			$pageatual = '?'.$_SERVER['QUERY_STRING'];
+			
+			if(isset($_SESSION['historicoNav'])){
+				if(isset($_GET['goback'])){
+					array_pop($_SESSION['historicoNav']);
+				} elseif(isset($keyGet[1])){
+					if(in_array($pageatual, $_SESSION['historicoNav']) == false){
+						$_SESSION['historicoNav'][] = $pageatual;
 					}
 				} else {
-					$ll_segok = true;
+					unset($_SESSION['historicoNav']);
+					$_SESSION['historicoNav'][0] = $pageatual;
 				}
 				
-				if($ll_segok){
-					$_ll['app']['pagina'] = $_ll['app']['pasta'].'start.php';
-					
-					if(file_exists($_ll['app']['pasta'].'header.php'))
-						$_ll['app']['header'] = $_ll['app']['pasta'].'header.php';			
-				}	
-				
-				break;			
+				$historico = $_SESSION['historicoNav'];				
+			} else {
+				$_SESSION['historicoNav'][0] = $pageatual;
+				$historico = $_SESSION['historicoNav'];
 			}
 			
-			
-		} elseif(ll_tsecuryt('admin')) {
-			$_ll['app']['pagina'] = "painel/plugins.php";
+		retornaLink($historico);
 		}
-		
-		break;
-
-	case 'minhaconta':
-		$_GET['usuarios'] = $_ll['user']['id'];
-		$_ll['css'][] = 'css/usuarios.css';
-		$_ll['app']['home'] = '?minhaconta';
-		$_ll['app']['header'] = 'opt/user/usuarios.header.php';
-		$_ll['app']['pagina'] = 'opt/user/usuarios.php';
-		break;
-
-	case 'usuarios':
-		if(ll_tsecuryt('admin')){
-			$_ll['app']['pagina'] = 'opt/user/usuarios.php';
-			$_ll['app']['header'] = 'opt/user/usuarios.header.php';
-			$_ll['app']['home'] = '?painel';
-			$_ll['css'][] = 'css/usuarios.css';
-		}
-		break;
-
-	case 'painel':
-		if(ll_tsecuryt('admin')){
-			$_ll['app']['header'] = 'painel/header.php';
-			$_ll['app']['pagina'] = 'painel/index.php';
-			$_ll['app']['home'] = '?painel';
-		}
-
-		break;
-
-	case 'desk':	
-		if(isset($_ll['conf']->desktop->$_ll['user']['grupo']))
-			header('location: '.$_ll['conf']->desktop->$_ll['user']['grupo']);
-			
-		$_ll['app']['pagina'] = "opt/desktop/desktop.php";
-		$_ll['app']['header'] = 'opt/desktop/desktop.header.php';
-		break;
-
-	default:
-		break;
-}
-/*****/
-
-if($_ll['mode_operacion'] == 'kun_html'){
-	lliure::loadJs('js/jquery.js');
-	lliure::loadJs('api/tiny_mce/tiny_mce.js');
-	lliure::loadJs('js/jquery-ui.js');
-	lliure::loadJs('js/funcoes.js');
-	lliure::loadJs('js/jquery.jfkey.js');
-	lliure::loadJs('js/jquery.easing.js');
-	lliure::loadJs('js/jquery.jfbox.js');
-
-	lliure::loadCss('css/base.css');
-	lliure::loadCss('css/principal.css');
-	lliure::loadCss('css/paginas.css');
-	lliure::loadCss('css/predifinidos.css');
-	lliure::loadCss('css/jfbox.css');
-
-	$apigem = new api;
-	$apigem->iniciaApi('appbar');
-	$apigem->iniciaApi('fileup');
-}
-
-/*******************************		Header			*/
-if($_ll['app']['header'] != null)
-	require_once($_ll['app']['header']);
-
-
-/*******************************		On Server		*/
-if($_ll['mode_operacion'] == 'onserver'){	
-	require_once($_ll['app']['pagina']);	
-	die();
-}
-
-
-
-/*******************************		Sen HTML		*/
-if($_ll['mode_operacion'] == 'sen_html'){
-	require_once($_ll['app']['pagina']);	
-	die();
-}
+	} else{
+		if(isset($_SESSION['historicoNav'])){
+			unset($_SESSION['historicoNav']);
+		}		
+	}
 	
-//Inicia o histórico
-ll_historico('inicia');
-//Inicia o Tema atual 	
-if(($ll_tema = lltoObject('temas/'.$_ll['user']['tema'].'/dados.ll')) != false){
-	$_ll['tema'] = (array) $ll_tema;
-	$ll_icones = $_ll['tema']['icones'];
-	$plgIcones = $ll_icones;
-	
-}
-// 
 
-require_once('kun_html.php');
 ?>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	
+	<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="js/funcoes.js"></script>
+	<script type="text/javascript" src="js/javaNavigator.js"></script>
+	
+<title>Plugin site manager</title>
+
+<style type="text/css" media="screen">
+	@import "css/base.css";
+	@import "css/principal.css";
+	@import "css/paginas.css";
+	@import "css/predifinidos.css";
+</style>
+
+
+</head>
+
+<body onkeyup="disparaPorTec(event)">
+<div id="tudo">
+	<div id="topo">
+		<div class="left">
+			<a href="index.php"><img src="imagens/layout/logo.png" /></a>
+		</div>
+		<?php
+		if(!empty($DadosLogado)){ ?>
+		<div class="right">
+			<ul class="menu">
+				<li><a href="index.php">Home</a></li>
+				<li><a href="?usuarios">Usuarios</a></li>
+			<?php
+			if($DadosLogado['tipo'] == 1){ 
+				?>
+				<li><a href="?plugin">Plugins</a></li>
+				<?php
+			}
+			?>
+				<li><a href="?acao=logout">Sair</a></li>
+			</ul>
+			<?php 
+			
+			if($DadosLogado['tipo'] == 1){
+				?>
+				<ul class="start">
+				<?php
+					$consulta = "select a.idPlug, b.pasta, b.nome from 
+						".SUFIXO."start as a
+						
+						left join ".SUFIXO."plugins as b
+						on a.idPlug = b.id
+					";
+					$query = mysql_query($consulta);
+					
+					if(mysql_num_rows($query) > 0){
+						while($dados = mysql_fetch_array($query)){
+						$folder= $dados['pasta'];
+						?>
+						<li>
+							<a href="?plugin=<?=$folder?>" title="<?=$dados['nome']?>">
+								<img src="plugins/<?=$folder?>/ico.png" alt="" />
+							</a>
+						</li>
+						<?php
+						}
+					} ?>
+					
+				</ul>
+				<?php
+				if(!empty($_GET)){
+					$keyGet = array_keys($_GET);
+					if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
+					?>
+				<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
+					<?php 
+					}
+				} 
+			} 
+		?>
+		</div>
+		<?php	
+		}
+		?>
+	</div>
+
+	<div id="conteudo">
+		<div class="marding">
+			<?php require_once(requirePage()); ?>
+			<div class="both"></div>
+		</div>
+	</div>
+	
+	<div id="rodape">
+		<span class="desenvolvidopor">
+			<a href="http://www.newsmade.com.br">Desenvolvido por Newsmade</a>
+		</span>
+	</div>
+
+</div> 
+
+</body>
+
+</html>

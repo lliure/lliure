@@ -1,0 +1,9 @@
+nome: Video
+tipo: video
+condicao: album
+optCondicao: 0 1
+link: 1 ?galeria&album=$idlig
+linkEdit: 1 ?plugin=galeria&acoes=editar&id=$idlig
+imagem: 1 img/book.png
+tabela: video
+campo: nome '$nome'

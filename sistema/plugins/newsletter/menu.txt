@@ -1,0 +1,6 @@
+nome: Página
+tipo: pagina
+link: ?pagina=$idlig
+linkEdit: ?plugin=pagina&acoes=editar&id=$idlig
+tabela: paginas
+campo: nome '$nome'
