@@ -46,6 +46,5 @@ if(!isset($require) || isset($_GET['r'])){
 	}
 }
 
-
 require($require);
 ?>
