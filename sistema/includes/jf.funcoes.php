@@ -202,7 +202,7 @@ function jf_update($tabela, $dados, $alter, $mod = null, $print = false){
 	*/
 	$return = null;
  	$valores = '';
-	foreach($dados as $chaves => $valor){
+	foreach($dados as $chaves => $valor){		
 		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 		$valores .= (empty($valores)?' ':', ').'`'.$chaves.'` = '.$valor;
 	}

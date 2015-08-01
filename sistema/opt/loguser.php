@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Vers�o 6.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -17,6 +17,7 @@ case 'logout':
 	break;
 	
 case 'login':
+	
 	if(isset($_SESSION['logado'])){	
 		header('location: nli.php?r=rotinas');
 		
@@ -61,7 +62,7 @@ case 'login':
 				} 			
 			}
 			
-			
+
 			if(isset($dadosLogin)){
 
 				$tema_default = $temo;
@@ -71,7 +72,7 @@ case 'login':
 				else 
 					if(file_exists('temas/'.$dadosLogin['themer'].'/dados.ll') == false)
 						$dadosLogin['themer'] = $tema_default;
-		
+
 				$_SESSION['logado'] = array(
 							'id' => $dadosLogin['id'],
 							'nome' => $dadosLogin['nome'],
@@ -79,7 +80,6 @@ case 'login':
 							'tema' => $dadosLogin['themer'],
 							'token' => jf_token('novo')
 							);
-							
 				$falha = false;
 			}
 

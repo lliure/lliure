@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versção 6.3
+* @Versção 6.5
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @LicenÃ§a http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -33,16 +33,19 @@ if(isset($_GET['nli'])){
 		$require =  $direkti[$_GET['r']];
 }
 
-if(!isset($require)){
+if(!isset($require) || isset($_GET['r'])){
 	require_once('includes/carrega_conf.php');
-	
+
 	$temo = 'lliure';
 	if(isset($_ll['conf']->temoDefaulto))
 		if(file_exists('temas/'.$_ll['conf']->temoDefaulto.'/dados.ll'))
 		$temo = (string) $_ll['conf']->temoDefaulto;
 		
-	$require = 'temas/'.$temo.'/login.php';
+	if(!isset($require)){
+		$require = 'temas/'.$temo.'/login.php';
+	}
 }
+
 
 require($require);
 
