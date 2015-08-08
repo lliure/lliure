@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.8
+-- version 3.5.1
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: 10/02/2012 às 03h30min
--- Versão do Servidor: 5.5.18
--- Versão do PHP: 5.3.8
+-- Tempo de Geração: 20/07/2012 às 10:33:39
+-- Versão do Servidor: 5.5.25a
+-- Versão do PHP: 5.3.14
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,16 +17,16 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Banco de Dados: `plugin`
+-- Banco de Dados: `lliure3`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `plugin_admin`
+-- Estrutura da tabela `ll_admin`
 --
 
-CREATE TABLE `plugin_admin` (
+CREATE TABLE IF NOT EXISTS `ll_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `login` varchar(200) NOT NULL,
   `senha` varchar(200) NOT NULL,
@@ -37,49 +37,49 @@ CREATE TABLE `plugin_admin` (
   `grupo` varchar(10) NOT NULL DEFAULT 'user',
   `themer` varchar(50) DEFAULT 'default',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
--- Extraindo dados da tabela `plugin_admin`
+-- Extraindo dados da tabela `ll_admin`
 --
 
-INSERT INTO `plugin_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `grupo`, `themer`) VALUES
+INSERT INTO `ll_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `grupo`, `themer`) VALUES
 (1, 'admin', '1a84dec0b04a7631fada69b7e8f60bbe', 'Admin', NULL, NULL, NULL, 'dev', 'default');
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `plugin_desktop`
+-- Estrutura da tabela `ll_desktop`
 --
 
-CREATE TABLE `plugin_desktop` (
+CREATE TABLE IF NOT EXISTS `ll_desktop` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL,
   `link` varchar(200) NOT NULL,
   `imagem` varchar(200) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `plugin_plugins`
+-- Estrutura da tabela `ll_plugins`
 --
 
-CREATE TABLE `plugin_plugins` (
+CREATE TABLE IF NOT EXISTS `ll_plugins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(200) NOT NULL,
   `pasta` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `plugin_start`
+-- Estrutura da tabela `ll_start`
 --
 
-CREATE TABLE `plugin_start` (
+CREATE TABLE IF NOT EXISTS `ll_start` (
   `idPlug` int(11) NOT NULL,
   PRIMARY KEY (`idPlug`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

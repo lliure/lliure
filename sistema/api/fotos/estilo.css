@@ -1,8 +1,8 @@
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -61,6 +61,7 @@ div.api-fotos{
 			
 div.api-fotos div#api_fotos_galeria{
 	margin: 0 -12px 0 -4px;
+	float: left;
 	}
 	
 	#api_fotos_galeria .mensagem{
@@ -102,6 +103,11 @@ div.api-fotos div#api_fotos_galeria{
 		}
 	
 /*	Editar foto	*/
+div.renFoto{
+	overflow: hidden !important;
+	}
+
+
 div.ediFoto {
 	display: block;
 	width: 325px;
@@ -121,7 +127,7 @@ div.ediFoto {
 		}	
 		
 		div.ediFoto form input{
-			width: 225px;
+			width: 215px;
 			float: left;
 			padding: 4px;
 			font-size: 11px;
@@ -134,5 +140,6 @@ div.ediFoto {
 			}
 			
 		div.ediFoto form .botao button{
-			padding: 6px 14px;
+			padding: 4px 14px;
+			margin: 0;
 			}

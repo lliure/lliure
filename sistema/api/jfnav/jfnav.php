@@ -3,7 +3,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -27,7 +27,7 @@ if(mysql_num_rows($query) > 0){
 	switch(in_array($_POST['exibicao'], $exibicoes) ? $_POST['exibicao'] : 'icone'){
 		
 	
-	case 'icone':	
+	case 'icone':	// Exibição em icones -----------------------------------------------------
 		while($dados = mysql_fetch_assoc($query)){	
 			$id = $dados['id'];
 			$config = isset($configs['campo']) ? $configs[$dados[$configs['campo']]] : $configs;
@@ -41,9 +41,7 @@ if(mysql_num_rows($query) > 0){
 
 			$ico = $pluginPasta.'sys/ico.png';
 
-			if(isset($config['ico'])){
-				$ico = $pluginPasta.$config['ico'];
-				
+			if(isset($config['ico'])){				
 				if(is_array($config['ico'])){
 					if(isset($config['ico']['c']) && !empty($dados[$config['ico']['c']])) // se exitir e não for vázio o campo em que irá puxar o icone
 						$ico = 'includes/thumb.php?i='.$config['ico']['p'].$dados[$config['ico']['c']].':32:32:o';
@@ -51,6 +49,8 @@ if(mysql_num_rows($query) > 0){
 						$ico = $pluginPasta.$config['ico']['a'];
 					elseif(isset($config['ico']['i'])) // se possuir um icone definido
 						$ico = $dados[$config['ico']['i']];
+				} else {
+					$ico = $pluginPasta.$config['ico'];
 				}
 			}
 			
@@ -65,9 +65,9 @@ if(mysql_num_rows($query) > 0){
 			</div>
 			<?php
 		}		
-	break;
+		break;
 
-	case 'lista':
+	case 'lista': // Exibição em lista -----------------------------------------------------
 
 		$ico = false;
 		if(isset($configs['campo'])){
@@ -109,7 +109,7 @@ if(mysql_num_rows($query) > 0){
 					'.(isset($config['coluna']) ? 'coluna="'.$config['coluna'].'"' : '').'>
 					
 					'. ($ico == true ? '<td><a href="'.$click.'"><img src="'.$config['ico'].'"></a></td>' : '' ).'
-					<td><a href="'.$click.'">'.str_pad($dados['id'], 7, 0, STR_PAD_LEFT).'</a></td>					
+					<td>'.str_pad($dados['id'], 7, 0, STR_PAD_LEFT).'</td>					
 					<td class="inter"><span id="'.$pagInp.'" title="'.$nome.'">'.$nomelink.'</span></td>';
 			
 			if(isset($config['botoes']))
@@ -122,13 +122,13 @@ if(mysql_num_rows($query) > 0){
 		}
 		
 		echo '</table>
-			<script>
+			<script type="text/javascript">
 				$(\'.jfnav_del\').click(function(){
 					jfnav_clickDelReg($(this).closest(\'tr\').attr(\'rel\'));
 				});
 			</script>';
 		
-	break;
+		break;
 	}
 } else { 
 	?>

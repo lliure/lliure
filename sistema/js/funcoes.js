@@ -1,35 +1,14 @@
 
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
-function ajax() {
-   try {
-      xmlhttp = new XMLHttpRequest();
-   }
-   catch(ee) {
-      try {
-         xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-      }
-      catch(e) {
-         try {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-         }
-         catch(E) {
-            xmlhttp = false;
-         }
-      }
-   }
-   return xmlhttp;
-}
-
 
 ///////////////////////////////////////////////////////////////////// PHP FUNCTIONS
 function empty( mixed_var ) {
@@ -94,7 +73,7 @@ function substr(f_string, f_start, f_length) {
     return f_string.substring(f_start, f_length);
 }
 
-/////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////// Funções comuns
 function ajustaForm(){	
 	$('form div table').closest('div').css({'margin': '0 -11px 0 -5px', 'padding-bottom': '20px'});
 	
@@ -118,28 +97,6 @@ function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 } 
 
 
-
-/*************************************************************/
-
-function plg_load(url, callback){ // APELIDO PARA ll_load
-	return ll_load(url, callback);
-}
-
-function ll_load(url, callback){
-	if(url == 'load')
-		$('#tudo').prepend('<div id="plg_load"></div>');
-	else
-		$('#plg_load').load(url, callback);
-}
-
-function plg_sessionFix(){
-	$('body').append('<div id="atlSession"></div>');
-	setInterval(function(){
-		$("#atlSession").load("includes/session_start.php");
-	}, 1000*60*10);
-}
-
-
 function selecionartodos(ret){
 	if (ret == false) {
 		for (i=1;i<document.form1.length;i++){
@@ -156,10 +113,33 @@ function selecionartodos(ret){
 	}
 }
 
-function plg_addDesk(){
+
+
+/************************************************************		Funções do lliure	*/
+
+function plg_load(url, callback){ ///////// APELIDO PARA ll_load
+	return ll_load(url, callback);
+}
+
+function ll_load(url, data, callback){		
+	if(url == 'load'){
+		$('#tudo').prepend('<div id="plg_load"></div>');
+	} else {
+		$('#plg_load').load(url, data, callback);
+	}
+}
+
+function ll_sessionFix(){
+	$('body').append('<div id="atlSession"></div>');
+	setInterval(function(){
+		$("#atlSession").load("includes/session_start.php");
+	}, 1000*60*10);
+}
+
+
+function ll_addDesk(){
 	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
 	
-	if (nome!=null && nome!="")
-		plg_load('includes/desktop.php?nome='+nome);
-	
+	if (nome != null && nome != "")
+		ll_load('includes/desktop.php', {nome: nome});
 }

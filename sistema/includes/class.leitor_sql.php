@@ -47,8 +47,7 @@ class leitor_sql {
     * @since Mar 15, 2004
     * @access public
     */
-    function leitor_sql($arquivo_sql)
-    {
+    function leitor_sql($arquivo_sql, $prefixo_atual = null, $prefixo_novo = null){
         /**
         * Inicializa as variáveis de contagem e erros.
         * Isso reseta as mesmas caso a função seja chamada mais de uma vez na mesma página,
@@ -59,13 +58,14 @@ class leitor_sql {
         // Verifica se arquivo existe
         if(!file_exists($arquivo_sql))
         {
-            echo "O arquivo <B>" . $arquivo_sql . "</B> é inexistente!";
+            echo "O arquivo <strong>" . $arquivo_sql . "</strong> é inexistente!";
             exit;
         }
 
         /**
         * Importa o arquivo SQL para um array
         */
+        
         $conteudo = file($arquivo_sql);
 
         /**
@@ -108,20 +108,24 @@ class leitor_sql {
         /**
         * Executa as instruções SQL
         */
-        foreach($dados as $atual)
-        {
+        foreach($dados as $atual) {
             // Limpa os ";"
             $atual = substr($atual, 0, strlen($atual) - 1);
-
+            
+			if($prefixo_atual && $prefixo_novo != null && $prefixo_atual != $prefixo_novo){
+				$this->altera_prefixo($atual, $prefixo_atual, $prefixo_novo);
+			}
+			
             /**
             * Pega nome da tabela criada
             * $resultado[1] conterá o nome da mesma
             */
-            if(preg_match("/CREATE TABLE (\S+)/i", $atual, $resultado))
+            if(preg_match("/CREATE TABLE (IF NOT EXISTS )?(\S+)/i", $atual, $resultado))
             {
-                $this->limpa_acento($resultado[1]);
-                echo "- Criando tabela <B>" . $resultado[1] . "</B>: ";
-                $this->executa_consulta($atual, "<font color=\"green\">OK!</font><BR>", "<font color=\"red\">ERRO!</font><BR>");
+                $this->limpa_acento($resultado[2]);
+                
+                echo "- Criando tabela <strong>" . $resultado[2] . "</strong>: ";
+                $this->executa_consulta($atual, "<font color=\"green\">OK!</font><br/>", "<font color=\"red\">ERRO!</font><br/>");
             }
             /**
             * Pega o nome da tabela onde dados foram inseridos
@@ -138,7 +142,7 @@ class leitor_sql {
             elseif(preg_match("/DROP TABLE (IF EXISTS )?(\S+)/i", $atual, $resultado))
             {
                 $this->limpa_acento($resultado[2]);
-                $this->executa_consulta($atual, "- Tabela <B>" . $resultado[2] . "</B> excluída com sucesso<br>");
+                $this->executa_consulta($atual, "- Tabela <strong>" . $resultado[2] . "</strong> excluída com sucesso<br/>");
             }
             /**
             * Comandos DROP DATABASE
@@ -146,7 +150,7 @@ class leitor_sql {
             elseif(preg_match("/DROP DATABASE (IF EXISTS )?(\S+)/i", $atual, $resultado))
             {
                 $this->limpa_acento($resultado[2]);
-                $this->executa_consulta($atual, "- Banco de dados <B>" . $resultado[2] . "</B> excluído com sucesso<br>");
+                $this->executa_consulta($atual, "- Banco de dados <strong>" . $resultado[2] . "</strong> excluído com sucesso<br/>");
             }
             /**
             * CREATE DATABASE
@@ -154,8 +158,18 @@ class leitor_sql {
             elseif(preg_match("/CREATE DATABASE (\S+)/i", $atual, $resultado))
             {
                 $this->limpa_acento($resultado[1]);
-                echo "- Criando banco de dados <B>" . $resultado[1] . "</B>: ";
-                $this->executa_consulta($atual, "<font color=\"green\">OK!</font><BR>", "<font color=\"red\">ERRO!</font><BR>");
+                echo "- Criando banco de dados <strong>" . $resultado[1] . "</strong>: ";
+                $this->executa_consulta($atual, "<font color=\"green\">OK!</font><br/>", "<font color=\"red\">ERRO!</font><br/>");
+            }
+            
+            /**
+            * ALTER TABLE
+            */
+            elseif(preg_match("/ALTER TABLE (\S+)/i", $atual, $resultado))
+            {
+                $this->limpa_acento($resultado[1]);
+                echo "- Alterando estrutura da tabela <strong>" . $resultado[1] . "</strong>: ";
+                $this->executa_consulta($atual, "<font color=\"green\">OK!</font><br/>", "<font color=\"red\">ERRO!</font><br/>");
             }
         }
         
@@ -180,7 +194,7 @@ class leitor_sql {
                     echo "s";
                 }
 
-                echo " na tabela <B>" .  $tabela . "</B><br>";
+                echo " na tabela <strong>" .  $tabela . "</strong><br/>";
             }
         }
         
@@ -190,7 +204,7 @@ class leitor_sql {
         if(sizeof($this->erros))
         {
             $total = sizeof($this->erros);
-            echo "<BR>Ocorre";
+            echo "<br/>Ocorre";
             
             if($total > 1)
             {
@@ -205,11 +219,11 @@ class leitor_sql {
             {
                 echo "s";
             }            
-            echo ":<font size=1><br>";
+            echo ":<font size=1><br/>";
 
             foreach($this->erros as $linha => $erro)
             {
-                echo "<li>Cláusula SQL: <font color=\"green\">" . $linha . "</font><li>Erro: <font color=\"red\">" . $erro . "</font><br><BR>";
+                echo "<li>Cláusula SQL: <font color=\"green\">" . $linha . "</font><li>Erro: <font color=\"red\">" . $erro . "</font><br/><br/>";
             }
 
             echo "</font>";
@@ -257,6 +271,13 @@ class leitor_sql {
         $dados = preg_replace("/^\`/i", "", $dados);
         // Final da string
         $dados = preg_replace("/\`$/i", "", $dados);
+    }
+
+    /**
+    * Altera prefixo das tabelas, ex: teste_tabela
+    */
+    function altera_prefixo(&$dados, $prefixo_atual, $novo_prefixo)  {
+        $dados = str_replace($prefixo_atual, $novo_prefixo, $dados);
     }
     
     /**

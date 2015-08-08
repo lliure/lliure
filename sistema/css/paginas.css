@@ -1,8 +1,8 @@
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -44,7 +44,6 @@
 
 
 /*******************************************		Painel de controle			*****/
-
 .painelCtrl{
 	
 	}
@@ -153,9 +152,57 @@
 			right: 0;
 			bottom: 0;
 			}
-
-
-
+			
+			
+/*******************************************		Sobre					*****/
+.llSobre_box{
+	
+	}
+		
+	#llSobre h1{
+		margin-bottom: 2px;
+		}	
+	
+	.llSobre_box .sigla{
+		display: block;
+		margin-bottom: 20px;
+		font-size: 0.8em;
+		color: #777;
+		}
+	
+	.llSobre_box .versao{
+		display: block;
+		margin-bottom: 20px;
+		}
+	
+	.llSobre_box .desenvolvido{
+		font-size: 0.8em;
+		position: absolute;
+		bottom: 46px;
+		left: 25px;
+		color: #777;
+		}
+		
+	.llSobre_box .rodape{
+		background: #e7e7e7;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		border-radius: 0 0 4px 4px;
+		width: 100%;
+		border-top: 1px solid #bbb;
+		}	
+		
+		.llSobre_box .rodape .container{
+			padding: 12px 25px 25px;
+			}
+	
+			
+			.llSobre_box .rodape .container span.terco{
+				float: left;
+				width: 33.3%;
+				text-align: center;
+				}
 	
 /*********************		depreciadas		*********************/
 img#loadImg{

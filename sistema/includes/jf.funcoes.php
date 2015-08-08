@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -130,7 +130,7 @@ function jf_insert($tabela, $dados){
 		$colunas .= (empty($colunas)? '' : ', ').$chaves;
 	}
 	
-	$executa = "INSERT INTO $tabela ($colunas) values ($valores)";
+	$executa = 'INSERT INTO '.$tabela.' ('.$colunas.') values ('.$valores.')';
 	if(mysql_query($executa) != false){
 		global $ml_ultmo_id;
 		global $jf_ultimo_id;
@@ -173,7 +173,7 @@ function jf_update($tabela, $dados, $alter, $mod = null){
 	
 	is_null($mod) ? $mod = "=" : $mod = "$mod" ;
 	
-	$executa = "UPDATE $tabela Set $valores where $int $mod '$intv'";
+	$executa = 'UPDATE '.$tabela.' Set '.$valores.' where '.$int.' '.$mod.' "'.$intv.'"';
 	$query = mysql_query($executa);
 	
 	return $executa;
@@ -351,7 +351,7 @@ function jf_dunix($dataEnt){
 }
 
 //	Função iconv formulada para array
-function jf_iconv($in_charset, $out_charset, $arr){ 
+function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){ 
 	
 
 	if (!is_array($arr)){

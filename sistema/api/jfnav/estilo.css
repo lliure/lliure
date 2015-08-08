@@ -2,7 +2,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -63,6 +63,7 @@ div.listp .inter{
 		font-size: inherit;
 		color: #555;
 		}
+		
 	
 /**********************			Listagem em lista		**********************/
 #jfnList{
@@ -85,14 +86,21 @@ div.listp .inter{
 		text-align: left;
 		vertical-align: middle;
 		}
+		
+		#jfnList td form{
+			margin-right: 10px;
+			}
 
 		#jfnList td input{
 			text-align: left;
-			border: none;
+			border: 1px solid #A00037;
 			background: none;
 			font-size: inherit;
-			padding: 0;
-			margin: 0;
+			padding: 2px;
+			margin: -3px 0;
+			border-radius: 0;
+
+			background: #fff;
 			}
 
 		#jfnList tr:hover td{

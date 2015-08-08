@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -34,7 +34,7 @@ if(isset($_GET['a'])){
 	jf_insert(PREFIXO.'start', array('idPlug' => $_GET['a']));
 	
 	$dados = mysql_fetch_array(mysql_query('select * 
-						from plugin_plugins 
+						from '.PREFIXO.'plugins 
 						where id = "'.$_GET['a'].'"
 						limit 1'));
 	?>
@@ -55,9 +55,9 @@ if(isset($_GET['a'])){
 <div class="ARTem ARbox">
 	<?php
 	$query = mysql_query('select b.*
-						from plugin_start a
+						from '.PREFIXO.'start a
 						
-						left join plugin_plugins b
+						left join '.PREFIXO.'plugins b
 						on b.id = a.idPlug
 						order by b.nome');
 	if(mysql_num_rows($query) > 0){
@@ -82,8 +82,8 @@ if(isset($_GET['a'])){
 <div class="ARTem ARbox">
 	<?php
 	$query = mysql_query('select * 
-						from plugin_plugins 
-						where id not in((select idPlug from plugin_start))
+						from '.PREFIXO.'plugins 
+						where id not in((select idPlug from '.PREFIXO.'start))
 						order by nome');
 	if(mysql_num_rows($query) > 0){
 		while($dados = mysql_fetch_array($query)){

@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -44,7 +44,7 @@ if(!empty($_POST)){
 <?php
 
 if(empty($_GET['usuarios'])){
-	$botoes[] =	array('href' => 'index.php', 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome);
 	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
 	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
@@ -70,7 +70,7 @@ if(empty($_GET['usuarios'])){
 	<script type="text/javascript">
 		$(document).ready(function(){	
 			$(".criar").jfbox({abreBox: false}, function(){
-				$(document).jfaviso('Novo usuário criado com sucesso!', 1);
+				jfAlert('Novo usuário criado com sucesso!', 1);
 			}); 
 		});
 	</script>
@@ -109,7 +109,7 @@ if(empty($_GET['usuarios'])){
 					$file->titulo = 'Foto'; 				//titulo da Label
 					$file->rotulo = 'Selecionar imagem'; 	// texto do botão
 					$file->registro = $foto;
-					$file->campo = 'foto'; 				//campo do banco de dados (no retorno no formulario ele irá retornar um $_POST com essa chave, no caso do exemplo $_POST['imagem'])
+					$file->campo = 'foto'; 					//campo do banco de dados (no retorno no formulario ele irá retornar um $_POST com essa chave, no caso do exemplo $_POST['imagem'])
 					$file->extencao = 'png jpg'; 			//extenções permitidas para o upload, se deixar em branco será aceita todas
 					$file->form(); 				 			// executa a classe
 					?>
@@ -138,10 +138,25 @@ if(empty($_GET['usuarios'])){
 						<select name="grupo">
 							<?php
 							$grupos = array('admin' => 'Administrador', 'user' => 'Usuário');
-							ll_tsecuryt() ? $grupos['dev'] ='Desenvolvedor' : '';
-							foreach($grupos as $indice => $valor){
-								echo '<option value="'.$indice.'" '.($grupo == $indice?'selected':'').'>'.$valor.'</option>';
+							ll_tsecuryt() ? $grupos['dev'] = 'Desenvolvedor' : '';
+							
+							
+							if($llconf){
+								$grupos_add = jf_iconv("UTF-8", "ISO-8859-1", (array) $llconf->usua_grup);
+								
+								if(!empty($grupos_add)){
+									echo '<optgroup label="Sub-grupos">';
+									foreach($grupos_add as $indice => $valor)
+										echo '<option value="'.$indice.'" '.($grupo == $indice?'selected':'').'>'.$valor.'</option>';
+									
+									echo '</optgroup>';
+								}
 							}
+							
+							echo '<optgroup label="Grupos principais">';
+							foreach($grupos as $indice => $valor)
+								echo '<option value="'.$indice.'" '.($grupo == $indice?'selected':'').'>'.$valor.'</option>';					
+							echo '</optgroup>';
 							?>
 						</select>
 					</div>
@@ -150,7 +165,7 @@ if(empty($_GET['usuarios'])){
 				?>
 			</fieldset>
 			
-			<span class="botao"><a href="?<?php echo isset($_GET['minhaconta']) ? 'desk' : 'usuarios';?>">Voltar</a></span>
+			<span class="botao"><a href="<?php echo  $backReal;?>">Voltar</a></span>
 			
 			<span class="botao"><button type="submit">Salvar</button></span>
 		</form>

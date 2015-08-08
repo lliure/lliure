@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -23,12 +23,24 @@ echo app_bar('Painel de controle', $botoes);
 	<div class="bloco">
 		<h2>Configurações</h2>
 		
-		<div class="listp">
-			<div class="inter link_idioma">
-				<a href="painel/idiomas.php"><img src="imagens/layout/language.png" alt="" /></a>
-				<a href="painel/idiomas.php"><span>Idiomas</span></a>
+		<?php
+		if(ll_tsecuryt()) {
+			?>
+			<div class="listp">
+				<div class="inter link_idioma">
+					<a href="painel/idiomas.php"><img src="imagens/layout/language.png" alt="" /></a>
+					<a href="painel/idiomas.php"><span>Idiomas</span></a>
+				</div>
 			</div>
-		</div>
+			<?php
+		}
+		?>
+		<div class="listp">
+			<div class="inter">
+				<a href="paginas/sobre.php" class="llSobre"><img src="imagens/layout/info.png" alt="" /></a>
+				<a href="paginas/sobre.php" class="llSobre"><span>Sobre</span></a>
+			</div>
+		</div>	
 		
 		<div class="listp">
 			<div class="inter menu_rapido">
@@ -37,6 +49,13 @@ echo app_bar('Painel de controle', $botoes);
 			</div>
 		</div>
 		
+		<div class="listp">
+			<div class="inter">
+				<a href="?usuarios"><img src="imagens/layout/users.png" alt="" /></a>
+				<a href="?usuarios"><span>Usuários</span></a>
+			</div>
+		</div>		
+			
 	</div>
 	
 	<div class="bloco">
@@ -64,7 +83,7 @@ echo app_bar('Painel de controle', $botoes);
 							</div>
 						</div>
 						<?php
-					} else {
+					} elseif(ll_tsecuryt()) {
 						?>
 						<div class="listp">
 							<div class="inter">
@@ -88,4 +107,6 @@ echo app_bar('Painel de controle', $botoes);
 	$('.menu_rapido a, .install').jfbox({width: 420, height: 440});
 	
 	$('.link_idioma a').jfbox({width: 420, height: 440, addClass: 'idiomaBox'});
+	
+	$('.llSobre').jfbox({width: 420, height: 200, addClass: 'llSobre_box'});
 </script>

@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -49,7 +49,7 @@ case 'home':
 			<?php		
 			if(!is_writeable('../etc')){
 				echo '	<span class="mens"><span class="erro ret">Erro</span> - A pasta <strong>/site/sistema/etc</strong> não tem permissão para escrita
-							<span class="reso">Altere a permissão da pasta <strong>/.../sistema/etc</strong> para escrita e leitura (777) </span>
+							<span class="reso">Altere a permissão da pasta <strong>/.../sistema/etc</strong> para escrita e leitura do proprietário (700) </span>
 						</span>';
 			} else {
 				echo '<span class="mens"><span class="ok ret">Ok</span> - A pasta <strong>/.../sistema/etc</strong> está configurada corretamente</span>
@@ -59,7 +59,7 @@ case 'home':
 			
 			if(!file_exists('../../uploads')){
 				echo '	<span class="mens"><span class="erro ret">Erro</span> - A pasta <strong>/.../uploads</strong> não encontrada
-							<span class="reso">Crie manualmente a pasta /.../uploads com permissão de escrita e leitura (777)</span>
+							<span class="reso">Crie manualmente a pasta /.../uploads com permissão de escrita e leitura proprietário (700)</span>
 						</span>';
 			} else {
 				if(!is_writeable('../../uploads')){
@@ -94,6 +94,12 @@ case 'home':
 				<label>Tabela</label>
 				<input name="tabela" />
 			</div>		
+			
+			<div>
+				<label>Prefixo</label>
+				<input name="prefixo" value="ll"/>
+			</div>
+				
 		</fieldset>	
 		<button type="submit">Instalar</button>
 	</form>
@@ -108,11 +114,14 @@ case 'instalar':
 			echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
 			break;
 		}
+		
+		require_once("../includes/class.leitor_sql.php"); 
+		$prefixo = $_POST['prefixo'].'_';
 			
 		echo '<h2>Progresso de instalação</h2>';
 	
-		/*********************	INSTALA AS BASES	**/
-		require_once("../includes/class.leitor_sql.php"); 
+		
+		/*********************	INSTALA O BANCO	**/
 		
 		$conexao = mysql_connect($_POST['host'], $_POST['login'], $_POST['senha']);
 		
@@ -123,7 +132,9 @@ case 'instalar':
 			
 		mysql_select_db($_POST['tabela'], $conexao);
 
-		$tp = new leitor_sql('bd.sql');	
+		/*********************	INSTALA AS TABELAS	**/
+		$tp = new leitor_sql('bd.sql', 'll_', $prefixo);	
+		
 		
 		/*********************	CRIA A PASTA UPLOADS	**/		
 		if(!file_exists('../../uploads/usuarios')){
@@ -154,7 +165,8 @@ case 'instalar':
 		}
 		$in .= '?>';
 		
-		$in = str_replace(array('.localhost.', '.root.', '.senha.', '.banco.'), array($_POST['host'], $_POST['login'], $_POST['senha'], $_POST['tabela']), $in);
+		$in = str_replace(	array('.localhost.', '.root.', '.senha.', '.banco.','.prefixo.'),		
+							array($_POST['host'], $_POST['login'], $_POST['senha'], $_POST['tabela'], $prefixo), $in );
 		
 		fclose($fd);	
 		
@@ -171,7 +183,7 @@ case 'instalar':
 		}
 		
 	} else {
-		echo '<span style="font-size: 13px; color: #f00;">O Lliure já foi instalado!</span>';
+		echo '<span style="font-size: 13px; color: #800; font-weight: bold;">O lliure já foi instalado!</span>';
 	}
 	?>
 	<div style="padding-top: 10px;">

@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -87,17 +87,18 @@ if(mysql_num_rows($query) == 0){
 			$('.favorite').click(function(){
 				var id = $(this).attr('idfoto');
 
-				$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela_app.'&campo='.$capa_campo.'&fk='.$id.'&foto=';?>'+id, abreBox: false}, function(){
-					$('#div'+capa).css('background', '#fff');			
-					$('#div'+id).css('background', '#fa0');					
-					capa = id;
-				});
+					ll_load('api/fotos/firstimg.php?tabela=<?php echo $tabela_app.'&campo='.$capa_campo.'&fk='.$id.'&foto=';?>'+id, function(){
+						$('#div'+capa).css('background', '#fff');			
+						$('#div'+id).css('background', '#fa0');					
+						capa = id;
+					}
+				);
 			});	
 			<?php
 		}
 		?>
 	
-		$(".renomeiaFoto").jfbox({width: 325, height: 270}); 
+		$(".renomeiaFoto").jfbox({width: 325, height: 270, addClass: 'renFoto'}); 
 		
 		$('.galdiv').bind({
 			mouseenter :function(){
@@ -112,7 +113,7 @@ if(mysql_num_rows($query) == 0){
 		$('.trash').click(function(){
 			var id = $(this).attr('idfoto');
 			
-			$().jfbox({carrega: 'api/fotos/deletimg.php?tabela=<?php echo $tabela?>&id='+id+'&arquivo='+$(this).attr('arquivo'), abreBox: false}, function(){
+			ll_load('api/fotos/deletimg.php?tabela=<?php echo $tabela?>&id='+id+'&arquivo='+$(this).attr('arquivo'), function(){
 				$('#div'+id).fadeOut(200);
 			});
 		});	

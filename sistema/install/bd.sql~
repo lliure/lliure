@@ -35,7 +35,7 @@ CREATE TABLE `plugin_admin` (
   `twitter` varchar(50) DEFAULT NULL,
   `foto` varchar(256) DEFAULT NULL,
   `grupo` varchar(10) NOT NULL DEFAULT 'user',
-  `themer` varchar(50) NOT NULL,
+  `themer` varchar(50) DEFAULT 'default',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 

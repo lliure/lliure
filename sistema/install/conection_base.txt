@@ -4,7 +4,7 @@ $username_conexao = ".root.";
 $password_conexao = ".senha.";
 $banco_conexao = ".banco.";  
 
-define("PREFIXO", "plugin_");
+define("PREFIXO", ".prefixo.");
 define("SISTEMA", "sistema");
 
 

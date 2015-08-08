@@ -1,23 +1,25 @@
 <?php 
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-if(!file_exists("etc/bdconf.php")) 
+if(!file_exists("etc/bdconf.php"))
 	header('location: install/index.php');
 
 require_once("etc/bdconf.php"); 
 require_once("includes/functions.php");
 
-if(!isset($_SESSION['logado']))
+if(!isset($_SESSION['logado'])) {
+	$_SESSION['ll_url'] = jf_monta_link($_GET);
 	header('location: paginas/login.php');
+}
 
 if(($llconf = @simplexml_load_file('etc/llconf.ll')) == false)
 	$llconf = false;
@@ -76,7 +78,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 	break;
 
 	case 'painel':
-		ll_tsecuryt() ? $pagina = 'painel/index.php' : '';
+		ll_tsecuryt('admin') ? $pagina = 'painel/index.php' : '';
 	break;
 
 	case 'desk':
@@ -118,7 +120,7 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	echo $apigem->js; 
 	?>
 	
-	<title>lliure cms</title>
+	<title>lliure WAP</title>
 
 	<link rel="stylesheet" type="text/css" href="css/base.css" />
 	<link rel="stylesheet" type="text/css" href="css/principal.css" />
@@ -159,18 +161,12 @@ $plgIcones = $DadosLogado['themer']['icones'];
 		<div class="right">			
 			<div class="menu">
 				<ul>
-					<li><a href="index.php">Home</a></li>
-					<li><a href="?minhaconta">Minha conta</a></li>				
 					<?php
-					if(ll_tsecuryt()){
-						echo '<li><a href="?usuarios">Usuários</a></li>'
-							.'<li><a href="?painel">Painel de controle</a></li>';
-					} elseif(ll_tsecuryt('admin')){ 
-						echo '<li><a href="?usuarios">Usuários</a></li>'
-							.'<li><a href="?plugin">Aplicativos</a></li>';
-					}
-					?>
-					<li><a href="acoes.php?logout">Sair</a></li>
+					echo '<li><a href="index.php">Home</a></li>'
+						.'<li><a href="?minhaconta">Minha conta</a></li>'
+						.(ll_tsecuryt('admin') ? '<li><a href="?painel">Painel de controle</a></li>' : '')						
+						.'<li><a href="acoes.php?logout">Sair</a></li>';
+					?>					
 				</ul>
 			</div>
 			<?php 
@@ -228,22 +224,22 @@ $plgIcones = $DadosLogado['themer']['icones'];
 				unset($_SESSION['aviso']);
 			}
 			?>
-			
+						
 			$('.addDesktop').click(function(){
-				plg_addDesk();
+				ll_addDesk();
 			});
 	
-			plg_load('load');
-			plg_sessionFix();
+			ll_load('load');
+			ll_sessionFix();
 
-			$('#topo .right div.start').mouseenter(function(){			
+			$('#topo .right div.start').mouseenter(function(){		
 				var size = $("#appRapido").find("li").size()*52;
 				$("#appRapido").css({width: size});
 
 				$(this).stop().animate({width: size+20}, 500, 'easeInOutQuart');
 			}).mouseleave(function(){
 			  $(this).stop().animate({width: '20'}, 500, 'easeInOutQuart');
-			});
+			});		
 		});
 	</script>
 </head>

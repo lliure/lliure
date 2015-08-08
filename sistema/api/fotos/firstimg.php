@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,5 +12,5 @@
 require_once("../../etc/bdconf.php"); 
 require_once("../../includes/jf.funcoes.php"); 
 
-echo jf_update(PREFIXO.$_GET['tabela'], array($_GET['campo'] => $_GET['foto']), array('id' => $_GET['fk']));
+jf_update(PREFIXO.$_GET['tabela'], array($_GET['campo'] => $_GET['foto']), array('id' => $_GET['fk']));
 ?>

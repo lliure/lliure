@@ -2,7 +2,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -14,20 +14,25 @@ $().ready(function(){
 });
 
 nav_selecionado = null;
+jfnav_vcc = null;
 jQuery.fn.extend({
 	jfnav: function (){			
-		$(this).find('.listp .inter span').dblclick(function(event){
-			editName();
-			event.stopPropagation();
-		});
-		
 		($(this).find('.listp')).bind({
-			dblclick: function(){
-				var id = $(this).attr('rel');
-				location = $(this).attr('dclick');
-			},
 			click: function(event){
 				var id = $(this).attr('rel');
+				
+				if(jfnav_clickCount() >= 4) {
+					var id = $(this).attr('rel');
+					location = $(this).attr('dclick');
+				} else if($("#in"+nav_selecionado).length != 0 && nav_selecionado != id){
+					alteraNome();
+				} else if(nav_selecionado != null && nav_selecionado == id && jfnav_clickCount() > 0 && jfnav_clickCount() < 4) {
+					editName();
+					return false;
+				} else {
+					jfnav_clickCount('novo');
+				}
+				
 				selectPag(id, $(this).attr('click'));
 				event.stopPropagation();
 			}
@@ -51,14 +56,14 @@ function jfnav_start(){
 function jfnav_objetos(){
 }
 
-
-$(document).click(function(){
-	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0)
+$(document).click(function(){	
+	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0) {
 		limpAllEvent();
-	else if($("#in"+nav_selecionado).length != 0)
+	} else if(nav_selecionado != null && $("#in"+nav_selecionado).length != 0) {
 		alteraNome();
+		limpAllEvent();
+	}
 });
-
 
 $(document).jfkey('delete', function(tecla, opcao){
 	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0){
@@ -69,16 +74,26 @@ $(document).jfkey('delete', function(tecla, opcao){
 });
 
 $(document).jfkey('f2', function(){
-	if(nav_selecionado != null){
+	if(nav_selecionado != null)
 		editName();
-	}
+	else 
+		return true;
 });
 
-$(document).jfkey('enter', function(){
-	if(isset(document.getElementById("in"+nav_selecionado)) == true)
+$(document).jfkey('enter', function(){	
+	if($("#in"+nav_selecionado).length == 1)
 		alteraNome();
 	else if(nav_selecionado != null)
-		$('#div'+nav_selecionado).dblclick();
+		location = $('#div'+nav_selecionado).attr('dclick');
+	else 
+		return true;
+});
+
+$(document).jfkey('esc', function(){
+	if($("#in"+nav_selecionado).length != 0)
+		$("#"+nav_selecionado).html($("#"+nav_selecionado).attr('title'));
+	else
+		return true;
 });
 
 function limpAllEvent(){
@@ -86,6 +101,8 @@ function limpAllEvent(){
 		$('.listp').removeClass('jfn_selected');
 		nav_selecionado = null
 	}
+	
+	jfnav_clickCount('zera');
 }
 
 function selectPag(divId){
@@ -105,7 +122,7 @@ function editName(){
 	$('#in'+nav_selecionado+' input').select();
 }
 
-function alteraNome(){
+function alteraNome(){	
 	namPag = $('#in'+nav_selecionado+' input').val();
 	
 	if(empty(namPag) == false){
@@ -122,7 +139,7 @@ function alteraNome(){
 			
 			return false;
 		});
-				
+		
 		$('#in'+nav_selecionado).submit();
 		$('#'+nav_selecionado).attr('title', namPag);
 		
@@ -135,7 +152,27 @@ function alteraNome(){
 		$('#'+nav_selecionado).html(namPagLink);
 	}
 	
-	$('#div'+nav_selecionado).click();
+	//$('#div'+nav_selecionado).click();
+}
+
+function jfnav_clickCount(acao){
+	if(acao == 'novo'){
+		jfnav_vcc = 5;
+		jfnav_clickCount('start');
+	} else if(acao == 'start'){
+		jfnav_vcc--;
+		
+		if(jfnav_vcc > 0)
+			setTimeout(function(){
+				jfnav_clickCount('start');
+			}, 500);
+	} else if(acao == 'zera'){
+		jfnav_vcc = 0;
+	} else {
+		return jfnav_vcc;
+	}
+	
+	return false;
 }
 
 function jfnav_clickDelReg(selecionado){
@@ -153,13 +190,3 @@ function deletaArquivo(tabela, confirmed){
 		
 	}
 }
-
-/*
-function carregaConteudo(enter, div){
-	$('#'+div).append(enter);
-}
-
-function alteraConteudo(enter, div){
-	document.getElementById(div).innerHTML = ""+enter+"";
-}
-*/

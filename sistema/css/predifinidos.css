@@ -1,8 +1,8 @@
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -38,6 +38,10 @@ div.bodyhome{
 
 		div.bodyhome .inter img{
 			width: 32px;
+			}
+			
+		.listp .inter a:hover{
+			color: #555;
 			}
 	
 div.boxCenter{
@@ -228,6 +232,7 @@ form.form div.botoes {
 		border-radius: 3px;
 		line-height: 1.2em;
 		padding: 0.75em 1.2em;
+		margin: 0;
 		margin-right: 3px;
 		}
 		

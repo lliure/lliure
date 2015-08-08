@@ -2,7 +2,7 @@
 
 rm $0
 
-./estilo
+php "jfnav.php"
 
 echo "
 

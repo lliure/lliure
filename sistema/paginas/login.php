@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* lliure CMS
+* lliure WAP
 *
-* @Versão 4.5.2
+* @Versão 4.6.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,6 +11,7 @@
 */
 
 require_once('../etc/bdconf.php');
+require_once('../includes/jf.funcoes.php');
 
 if(isset($_SESSION['logado'])){
 	
@@ -41,7 +42,7 @@ if(isset($_SESSION['logado'])){
 	
 	
 	$falha = false;
-	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && $_POST['token'] == $_SESSION['token']){	
+	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){	
 		$senha = md5($_POST['senha']."0800");
 		$usuario = jf_anti_injection($_POST['usuario']);		
 		
@@ -53,7 +54,7 @@ if(isset($_SESSION['logado'])){
 			$_SESSION['logado'] = array(
 				'id' => $dadosUser['id'],
 				'nome' => $dadosUser['nome'],
-				'tipo' => $dadosUser['grupo'],
+				'tipo' => $dadosUser['grupo'], // será depreciado
 				'grupo' => $dadosUser['grupo'],
 				'themer' => 'default'
 				);
@@ -79,13 +80,14 @@ if(isset($_SESSION['logado'])){
 
 <html>
 <head>
-
-<style type="text/css" media="screen">
-		@import "../css/base.css";
-		@import "../css/login.css";
-</style>
-<script type="text/javascript" src="../js/jquery.js"></script>
-<script type="text/javascript" src="../js/jquery.corner.js"></script>
+	<style type="text/css" media="screen">
+			@import "../css/base.css";
+			@import "../css/login.css";
+	</style>
+	
+	<script type="text/javascript" src="../js/jquery.js"></script>
+	
+	<title>lliure Web Application Platform</title>
 </head>
 
 <body>
@@ -96,11 +98,12 @@ if(isset($_SESSION['logado'])){
 		echo '<span class="mensagem">Login e/ou senha incorreto(s). Tente novamente</span>';
 	
 	$_SESSION['token'] = uniqid(md5(time()));
+	jf_token('novo');
 	?>
 	
 	<div id="loginBox">
 		<form method="post" action="login.php" id="form">
-			<input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
+			<input type="hidden" name="token" value="<?php echo jf_token('exibe'); ?>">
 			<fieldset>
 				<div>
 					<label>Usuário</label>
@@ -117,12 +120,6 @@ if(isset($_SESSION['logado'])){
 		<div class="both"></div>
 	</div>
 </div>	
-		
-	<div id="rodape">
-		<span class="desenvolvidopor">
-			<a href="http://www.grapestudio.com.br">Desenvolvido por Jeison Frasson</a>
-		</span>
-	</div>
 
 </body>
 

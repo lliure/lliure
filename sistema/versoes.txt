@@ -1,21 +1,38 @@
-Neste aquivo estão descritas todas atualizações do lliure e de API nativas
+Neste aquivo estão descritas todas atualizações do lliure (lê-se lhiura) e de API nativas
 
--- 4.5.2 (20/06/2012)
-# [update/API] - Foi alterada a API fileUp para gravar mais de um arquivo por vez 
+-- 4.6.2 (07/08/2012)
+# [update] - Adicionado mais 56 icones no pacote padrão
+# [API/bug] - jfnav - estava com problemas quando precionava a tecla "enter" quando não estivesse selecionado algum registro
+# [API/update][jfnav] - Atualização no layout de lista, cancelar edição com o "esc", modificado a forma de navegação
+# [bug] - Ao adicionar atalhos com espaço ou caracteres especiais
+
+-- 4.6.1 (04/08/2012)
+# [update/bug] - Liberado acesso para usuários do grupo "admin" ao painel de controle com restrições
+# [update] - Quando acessar uma página e não estiver logado, depois que logar será direcionado para aquela página
+# [update] - Agora o lliure é definido como WAP "Plataforma de aplicações web" do inglês Web Application Platform
+# [update] - a Licença de uso passou para GPL v3.0
+
+-- 4.6.0 (20/07/2012)
+@ [update/API] - Foi alterada a API fileUp para gravar mais de um arquivo por vez 
+@ [update] - Controle de prefixo nas tabelas, ao fazer a instalação você define o prefixo que irá utilizar (PS: se for desenvolvedor utilize sempre "ll" que é o padrão, caso contrario seu aplicativo não poderá utilizar o instalador do lliure)
+@ [update/API] - Adicionada a API phpmailer para envio de e-mails com o lliure
+
 # [update] - O estilo .form em predefinidos.css foi alterado e a função ajustaForm() para funcionar melhor no Chrome
-# [update/API] - Adicionada a API phpmailer para envio de e-mails com o lliure
+# [update] - O botão usuários foi movido para o painel de controle
+# [update] - Adicionado um botão para informações (sobre) do lliure no painel de controle
+# [update] - Arquivo painel/plugin.php foi removido
 
 
 -- 4.5.1 (24/05/2012)
 # [bug] - A função array2xml() da classe jf_xml{} estava com uma declaração depreciada
 
 -- 4.5.0 (16/05/2012)
-# [update] - O GET ?plugin foi substituido por ?app
-# [update] - Sistema de multi-linguagens
+@ [update] - O GET ?plugin foi substituido por ?app
+@ [update] - Sistema de multi-linguagens
+@ [update] - Novo painel de controle, substituindo a página aplicativos
+@ [update] - Atualizada a função que controla o histórico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
+@ [update] - Layout da página de login
 # [update/bug] - Adicionado animação ao menu rápido, e alterada a função que adiciona e remove itens
-# [update] - Novo painel de controle, substituindo a página aplicativos
-# [update] - Atualizada a função que controla o histórico de navegação dentro do lliure, agora ele abrange todas as páginas e não as relacionadas a aplivativos
-# [update] - Layout da página de login
 
 -- 4.4.4 (26/04/2012)
 # [update/API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibição de icones
