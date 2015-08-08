@@ -1,9 +1,8 @@
-
 /**
 *
-* Plugin CMS
+* API jfnav - Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -13,11 +12,10 @@
 $().ready( function(){
 	$('body').append('<div id="jnavActions"></div>');
 });
- 
- jQuery.fn.extend({
-	jfnav: function (){	
-		nav_selecionado = null;
-		
+
+nav_selecionado = null;
+jQuery.fn.extend({
+	jfnav: function (){			
 		($(this).find('.listp .inter span')).dblclick(function(event){
 			editName();
 			event.stopPropagation();
@@ -41,9 +39,9 @@ $().ready( function(){
 });
 
 function jfnav_start(){
-	$('#jfnav').load('api/jfnav/jfnav.php', {query: jfnav_objetos.query, config: jfnav_objetos.config, pasta: jfnav_objetos.pasta},
+	$('#jfnav').load('api/jfnav/jfnav.php', {query: jfnav_objetos.query, config: jfnav_objetos.config, pasta: jfnav_objetos.pasta, exibicao: jfnav_objetos.exibicao},
 		function(){
-		$('#jfnav').jfnav();
+			$('#jfnav').jfnav();
 		}
 	);
 }
@@ -52,11 +50,12 @@ function jfnav_objetos(){
 }
 
 
-$('body').click(function(){
-	if(nav_selecionado != null && isset(document.getElementById("in"+nav_selecionado)) == false)
+$(document).click(function(){
+	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0)
 		limpAllEvent();
-	else if(isset(document.getElementById("in"+nav_selecionado)) == true)
+	else if($("#in"+nav_selecionado).length != 0)
 		alteraNome();
+	
 });
 
 
@@ -64,7 +63,6 @@ $(document).jfkey('delete', function(tecla, opcao){
 	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0){
 		tabela = document.getElementById('namTable').value;
 		deletaArquivo(tabela);
-
 	} else {
 		return true;
 	}
@@ -86,9 +84,6 @@ $(document).jfkey('enter', function(){
 function limpAllEvent(){
 	if(nav_selecionado != null){
 		$('.listp').css({'background': 'transparent'});
-		
-		document.getElementById('idPag').value = "";
-		document.getElementById('linked').value = "";
 		nav_selecionado = null
 	}
 }
@@ -103,10 +98,6 @@ function editName(){
 
 function selectPag(divId, linked){
 	$('.listp').css({'background': 'transparent'});
-	
-	document.getElementById('idPag').value = divId;
-	document.getElementById('linked').value = linked;
-	
 	nav_selecionado = divId;
 
 	$('#div'+divId).css({'background': '#e7e7e7'});
@@ -124,8 +115,7 @@ function alteraNome(){
 			
 			return false;
 		});
-		
-		
+				
 		$('#in'+nav_selecionado).submit();
 		$('#'+nav_selecionado).attr('title', namPag);
 		
@@ -135,20 +125,25 @@ function alteraNome(){
 			namPagLink = namPag;
 		}
 		
-		document.getElementById(nav_selecionado).innerHTML = namPagLink;
+		$('#'+nav_selecionado).html(namPagLink);
 	}
 	
 	$('#div'+nav_selecionado).click();
 }
 
+function jfnav_clickDelReg(selecionado){
+	tabela = document.getElementById('namTable').value;
+	nav_selecionado  = selecionado;
+	deletaArquivo(tabela);
+}
 
 function deletaArquivo(tabela, confirmed){
 	if(empty(nav_selecionado) == false){
-		var linked = $('#div'+nav_selecionado).attr('lig');
 		/*
+		var linked = $('#div'+nav_selecionado).attr('lig');
 		if((linked == '0') || (confirmed == true)){
 			if((confirmed == true) || (confirmAlgo('esse item') == true)){
-				mLExectAjax('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
+				plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
 			
 				$('#div'+nav_selecionado).remove();
 		
@@ -168,18 +163,16 @@ function deletaArquivo(tabela, confirmed){
 		}
 		*/
 		
-		if((confirmed == true) || (confirmAlgo('esse item') == true)){
-			mLExectAjax('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
+		if((confirmed == true) || (confirmAlgo('este registro') == true)){
+			plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
 		
 			$('#div'+nav_selecionado).remove();
-	
-			document.getElementById('idPag').value = "";
-			document.getElementById('linked').value = "";
 		}
 		
 	}
 }
 
+/*
 function carregaConteudo(enter, div){
 	$('#'+div).append(enter);
 }
@@ -187,3 +180,4 @@ function carregaConteudo(enter, div){
 function alteraConteudo(enter, div){
 	document.getElementById(div).innerHTML = ""+enter+"";
 }
+*/

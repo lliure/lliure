@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -58,7 +58,7 @@ echo app_bar('Painel de aplicativos', $botoes);
 	  }
 	  closedir($handle); 
    } else {
-		mLAviso('Houve um erro ao tentar abrir o diretório de aplicativos');
+		jfAlert('Houve um erro ao tentar abrir o diretório de aplicativos');
    }
 ?>
 	<script>

@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -24,9 +24,7 @@ navig_historic();
 
 $plgThemer = $DadosLogado['themer']['pasta'];
 $plgIcones = $DadosLogado['themer']['icones'];
-
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
@@ -45,10 +43,8 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
 	
 	<script type="text/javascript" src="js/jquery.maskedinput-1.2.2.js"></script>
-	<script type="text/javascript" src="js/jquery.corner.js"></script>
-	
 	<?php
-		echo $apigem->js; 
+	echo $apigem->js; 
 	?>
 	
 	<title>sistema Plugin</title>
@@ -60,16 +56,14 @@ $plgIcones = $DadosLogado['themer']['icones'];
 		@import "css/predifinidos.css";
 		@import "css/jfbox.css";
 		<?php
-		echo $apigem->css; 
-		echo (isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?  '@import "plugins/'.$_GET['plugin'].'/estilo.css"; ' : '' );
+		echo $apigem->css."\r"
+			.(isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?  '@import "plugins/'.$_GET['plugin'].'/estilo.css"; ' : '' );
 		?>
 		
 		#topo{
 			background: url("<?php echo 'themer/'.$plgThemer.'/bg.jpg'?>") center top repeat-x;
 		}
 	</style>
-
-
 </head>
 
 
@@ -83,7 +77,7 @@ $plgIcones = $DadosLogado['themer']['icones'];
 				$keyGet = array_keys($_GET);
 				if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
 					?>
-					<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
+					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
 					<?php 
 				}
 			} 
@@ -173,20 +167,20 @@ $plgIcones = $DadosLogado['themer']['icones'];
 
 <head>
 	<script type="text/javascript">
-		$(document).ready(function(){
+		$(function(){
 			<?php
 			if(isset($_SESSION['aviso'])){
-				echo 'mLaviso("'.$_SESSION['aviso'][0].'", "'.$_SESSION['aviso'][1].'");';
+				echo 'jfAlert("'.$_SESSION['aviso'][0].'", "'.$_SESSION['aviso'][1].'");';
 				unset($_SESSION['aviso']);
 			}
 			?>
-			$('body').append('<div id="atlSession"></div>');
 			
-			setInterval(function(){
-				$("#atlSession").load("includes/session_start.php");
-			},1000*60*10);
-			
-			$('#topo').corner('bl br 10px');
+			$('.addDesktop').click(function(){
+				plg_addDesk();
+			});
+	
+			plg_sessionFix();
+			plg_load('load');
 		});
 	</script>
 </head>

@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -215,11 +215,12 @@ function mlLimpaacento($texto){
 
 //	Gerencia o array GET, onde retira o $needle (pode ser um array) caso exista em GET e monta em modo de link
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
+	$needle = $needle == 'URL_AMIGAVEL' ? true : $needle ; 
 	
-	if($needle == URL_AMIGAVEL)
+	if($needle == true)
 		$amigavel = true;	
 	
-	if(!is_null($needle) && $needle != URL_AMIGAVEL) {
+	if(!is_null($needle) && $needle != true) {
 		if(is_array($needle) == false){
 			unset($haystack[$needle]);
 		} else {
@@ -370,13 +371,13 @@ function jf_iconv($in_charset, $out_charset, $arr){
 
 function jf_urlformat($texto){
 	$texto = mb_strtolower($texto);
-	$texto = ereg_replace("[áàâãª]","a",$texto);
-	$texto = ereg_replace("[éèê]","e",$texto);
-	$texto = ereg_replace("[íìîï]","i",$texto);
-	$texto = ereg_replace("[óòôõº]","o",$texto);
-	$texto = ereg_replace("[úùû]","u",$texto);
+	$texto = preg_replace("/[áàâãª]/","a",$texto);
+	$texto = preg_replace("/[éèê]/","e",$texto);
+	$texto = preg_replace("/[íìîï]/","i",$texto);
+	$texto = preg_replace("/[óòôõº]/","o",$texto);
+	$texto = preg_replace("/[úùû]/","u",$texto);
 	$texto = str_replace("ç","c",$texto);
-	$texto = ereg_replace("[^ a-z 0-9 \t _ \/ -]", "", $texto);	
+	$texto = preg_replace("/[^ a-z 0-9 \t _ \/ -]/", "", $texto);	
 	$texto = str_replace(" ","-",$texto);
 	return($texto);
 }

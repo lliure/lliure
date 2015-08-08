@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -91,20 +91,38 @@ case 'instalar':
 		/*********************	CRIA A PASTA UPLOADS	**/
 		if(!file_exists('../../uploads')){
 			if(mkdir('../../uploads', 0777))
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>uploads</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 			else
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		} else {
-			echo '<span style="font-size: 13px;">- Criar pasta <strong>uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+			echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		}
 		
 		if(!file_exists('../../uploads/usuarios')){
 			if(mkdir('../../uploads/usuarios', 0777))
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>usuarios</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 			else
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		} else {
-			echo '<span style="font-size: 13px;">- Criar pasta <strong>usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+			echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+		}		
+		
+		if(!file_exists('../apt_files')){
+			if(mkdir('../apt_files', 0777))
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+			else
+				echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+		} else {
+			echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+		}
+		
+		if(!file_exists('../../uploads/thumb.php')){
+			if(copy('../includes/thumb.php', '../../uploads/thumb.php'))
+				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+			else
+				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
+		} else {
+			echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
 		}
 		
 		/*********************	CRIA O ARQUIVO DE CONEXÃO	**/			

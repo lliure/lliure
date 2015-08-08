@@ -1,15 +1,21 @@
 <?php
 /**
 *
-* Jfnav
+* API jfnav - Plugin CMS
 *
-* @versão 2.0.0
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs = null){
+
+function jNavigator($query, $pluginTable, $pasta, $mensagemVazio = null, $link, $liglink = null){
+	jfnav($query, $pluginTable, $pasta, $link);
+}
+
+
+function jfnav($query, $plgTable, $pasta, $link,  $objetos = null){
 	/*
 	Documentação da função
 
@@ -18,18 +24,13 @@ function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs 
 		$consulta = "select * from tabela";
 		$query = mysql_query($consulta);
 		
-	$pluginTable
+	$plgTable
 		Exemplo de utilização
-		$pluginTable = 'tabela'; // Básicamente é a tabela que está sendo utilizada o motivo de ter que mostra-lo é que será utilizado pelo JS
+		$plgTable = 'tabela'; // Básicamente é a tabela que está sendo utilizada o motivo de ter que mostra-lo é que será utilizado pelo JS
 		
-	$Pastas
+	$pasta
 		Exemplo de utilização
 		$pastas = 'sistema/pasta'; // Básicamente é a pasta em que está o plugin, é utilizado para selecionar icones
-		
-		ou 
-		
-		$pastas['pp'] = Pasta do Plugin // igual o acima;
-		$pastas['plp'] = Pasta que o plugin faz interação, essa caso não exista o sistema retorna uma mensagem dizendo que a pasta não existe
 		
 	$mensagemVazio
 		Exemplo de utilização
@@ -45,30 +46,26 @@ function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs 
 		$link['t2']['link'] = "?gal=";					//$link['t2']['link'] = ao link que o usuario será direcionado em caso click	
 		$link['t2']['ico'] = "/img/book.png";			//$link['t2']['ico'] = é a imagem 
 	*/
+	//global $jnav_registros;
 	
-	global $jnav_registros;
-	
-	$pluginPasta = (is_array($pastas)?$pastas['pp']:$pastas);
 	?>
 	
-	<input id="namTable" type="hidden" value="<?php echo $pluginTable?>"/>
+	<input id="namTable" type="hidden" value="<?php echo $plgTable?>"/>
 	<input type="hidden" id="idPag" value="" />
 	<input type="hidden" id="linked" value="" />
 
-	<div class="bodyhome" id="jfnav">
-		
-	</div>
+	<div class="bodyhome" id="jfnav"></div>
 	
 	<script type="text/javascript">
 		var config_objeto;
 		jfnav_objetos.query = '<?php echo addslashes($query); ?>'; 		
-		jfnav_objetos.pasta = '<?php echo $pluginPasta; ?>'; 		
-		
+		jfnav_objetos.pasta = '<?php echo $pasta; ?>';
 		<?php
+		echo 'jfnav_objetos.exibicao = \''.(isset($objetos['exibicao']) ? $objetos['exibicao'] : 'icones').'\';';
+		
 		$jnav_config = json_encode($link);
 		echo 'jfnav_objetos.config = '.$jnav_config.';';
-		?>			
-
+		?>
 		
 		$(function() {
 			jfnav_start();
@@ -78,15 +75,8 @@ function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs 
 	<?php
 }
 
-function jNavigatorInner($ultimo_id, $ondblclick, $icone, $nome){
-	$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
-	
-	return '<div class="listp" id="divname'.$ultimo_id.'" rel="name'.$ultimo_id.'" lig="0" click="0" dclick="'.$ondblclick.$ultimo_id.'">'
-				.'<div class="inter">'
-					.'<img src="'.$icone.'" alt="'.$nome.'" />'
-					.'<span id="name'.$ultimo_id.'" rel="name'.$ultimo_id.'"  title="'.$nome.'">'.$nomelink.'</span>'
-				.'</div>'
-			.'</div>';
+function jNavigatorInner(){
+	echo 'função <strong>jNavigatorInner</stong> depreciada, por favor leia a documentação e nova forma de se usar essa função';
 }
 
 ?>

@@ -1,3 +1,14 @@
+/**
+*
+* API jfnav - Plugin CMS
+*
+* @versão 4.2.7
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
 /**********************			Listagem em ícones		**********************/
 div.listp {
 	padding: 4px;
@@ -22,8 +33,35 @@ div.listp .inter{
 	text-align: center;
 	}
 
-div.listp .inter span{
-	display: block;
-	margin: 3px 0 0 0;
-	}
+	div.listp .inter span{
+		display: block;
+		margin: 3px 0 0 0;
+		height: 32px;
+		overflow: hidden;
+		}
 	
+	
+/**********************			Listagem em lista		**********************/
+#jfnList{
+	width: 100%;
+	}
+
+
+	#jfnList td{
+		border: 1px solid #e1e1e1;
+		padding: 5px;
+		text-align: left;
+		}
+
+		#jfnList td input{
+			text-align: left;
+			}
+
+		#jfnList tr:hover td{
+			background: #F6F2D4;
+			}
+			
+		#jfnList .jfnav_del{
+			cursor: pointer;
+			}
+			

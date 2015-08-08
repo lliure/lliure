@@ -1,0 +1,35 @@
+/**
+*
+* API Fileup - Plugin CMS
+*
+* @versão 4.2.7
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+.fileup_file{
+	display: hidden;
+	height: 0px;
+	}
+
+input#fileup_nome{
+	float: left;
+	width: 175px;
+	padding: 8px 8px 7px;
+	margin-left: 10px;
+	}
+
+.fileup_botao{
+	background: #444;
+	padding: 10px 15px;
+	float: left;
+	color: #ddd;
+	border-radius: 3px;
+	}
+	
+	.fileup_botao:hover{
+		color: #ddd;
+		background: #606060;
+		}

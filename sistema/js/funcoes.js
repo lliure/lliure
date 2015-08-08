@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -114,75 +114,24 @@ function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 	}
 } 
 
-function mLvisible(divId){// MOSTRA ITEM POR visibility (ID_DO_ITEM)
-	document.getElementById(divId).style.visibility = 'visible';
-}
-
-function mLHidden(divId){ // ESCONDE ITEM POR visibility (ID_DO_ITEM)
-	document.getElementById(divId).style.visibility = 'hidden';
-}
-
-function show_hide(id) { // OCULTA E MOSTRA ITENS (ID_DO_ITEM)
-	if (document.getElementById(id).style.display=='none') {
-		document.getElementById(id).style.display='block';
-	} else {
-		document.getElementById(id).style.display='none';
-	}
-}
-
-function sForm(form, url){ // SUBMIT EM FORMULARIO (ID_DO_FORM, URL_ACTION)
-	document.getElementById(form).action=url;
-	document.getElementById(form).submit();
-}
-
-function loadPage(url, tempo){ // CARREGA UMA PÁGINA POR JS (URL_DA_PAGINA, TEMPO_DE_ESPERA)
-	if(isset(tempo)){
-		setTimeout("loadPage('"+url+"')", tempo*1000); 
-	} else {
-		document.location = url;
-	}
-}
-
-document.write('<div id="exectAjax"></div>');
-document.write('<img src="imagens/layout/loading.gif" style="display: none;" id="loadImg" />');
-
-ajaxBox = new ajax();
-function mLExectAjax(pagina){
-	document.getElementById('loadImg').style.display = "block";
-	
-	ajaxBox.open("get",pagina,true);
-	ajaxBox.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	
-	ajaxBox.onreadystatechange=function() {
-		if(ajaxBox.readyState==4) {
-			document.getElementById('loadImg').style.display = "none";
-			document.getElementById('exectAjax').innerHTML = ajaxBox.responseText; 
-		}
-	}
-	ajaxBox.send(null);
-}
-
-document.write('<div id="mLAviso" style="display: none;"><div id="mLAvisoInter"></div><a href=\'javascript: void(0)\' onclick=\"fechaAviso()\" class=\'close\'>X</a></div>');
-function mLaviso(texto, tempo){
-	var tempo = (tempo > 0?parseInt(tempo):2);
-	
-	$(document).jfaviso(texto, tempo);
-	/*
-	
-
-	$('#mLAvisoInter').html(texto);
-	$("#mLAviso").slideDown(200);
-
-	setTimeout("fechaAviso()", tempo*1000); 
-	*/
-}
-
-function fechaAviso(){
-	$('#mLAviso').slideUp(300);
-}
 
 
 /*************************************************************/
+
+function plg_load(url){
+	if(url == 'load')
+		$('#tudo').prepend('<div id="plg_load"></div>');
+	else
+		$('#plg_load').load(url);
+}
+
+function plg_sessionFix(){
+	$('body').append('<div id="atlSession"></div>');
+	setInterval(function(){
+		$("#atlSession").load("includes/session_start.php");
+	}, 1000*60*10);
+}
+
 
 function selecionartodos(ret){
 	if (ret == false) {
@@ -200,10 +149,10 @@ function selecionartodos(ret){
 	}
 }
 
-function nomeDaPagina(){
+function plg_addDesk(){
 	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
 	
-	if (nome!=null && nome!=""){
-		mLExectAjax('includes/desktop.php?nome='+nome);
-	}
+	if (nome!=null && nome!="")
+		plg_load('includes/desktop.php?nome='+nome);
+	
 }

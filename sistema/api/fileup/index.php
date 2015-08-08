@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* Plugin CMS
+* API Fileup - Plugin CMS
 *
 * @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
@@ -9,6 +9,4 @@
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
-session_start();
 ?>

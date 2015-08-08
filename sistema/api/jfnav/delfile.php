@@ -1,9 +1,9 @@
 <?php
 /**
 *
-* Jfnav
+* API jfnav - Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -20,4 +20,7 @@ $alter['id']	= $id;
 
 jf_delete($tabela, $alter);
 ?>
-<img src="error.jpg" onerror="mLaviso('Item excluido com sucesso!', '1')" class="imge" alt="" /> 
+
+<script type="text/javascript">
+	jfAlert('Item excluido com sucesso!', 0.7);
+</script>

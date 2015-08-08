@@ -2,7 +2,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.1.8
+* @versão 4.2.7
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -40,28 +40,6 @@ html, body {
 body{	
 	text-align:center;	
 	}
-	
-	
-* html img/**/ {
-	filter:expression(
-		this.alphaxLoaded ? "" :(
-			this.src.substr(this.src.length-4)==".png"
-			?
-			(
-				(!this.complete)
-				? "" :
-				this.runtimeStyle.filter=
-				("progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+this.src+"')")+
-				(this.onbeforeprint="this.runtimeStyle.filter='';this.src='"+this.src+"'").substr(0,0)+
-				String(this.alphaxLoaded=true).substr(0,0)+
-				(this.src="../imagens/layout/blank.gif").substr(0,0)
-			)
-			:
-			this.runtimeStyle.filter=""
-		)
-	);
-}
-
 	
 img{border: 0px;
 	}
@@ -285,9 +263,6 @@ div#ajaxBoxfundo{
 		height: 100%;
 		background: #fff;
 		z-index: 9000;
-
-		filter:alpha(opacity=70);
-		-moz-opacity:.70;
 		opacity:.70;
 		}
 	
