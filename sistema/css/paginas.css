@@ -2,7 +2,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,7 +12,64 @@
 	margin-bottom: 15px;
 	}
 
-/**********************			Install modal			**********************/
+
+/*******************************************		Permição 					*****/
+#permicao{
+	text-align: center;
+	}
+	
+	#permicao .box{
+		width: 480px;
+		height: 200px;
+		margin: 0 auto;
+		background: #e7e7e7;
+		position: relative;
+		border-radius: 10px;
+		}
+		
+		#permicao .box img{
+			position: absolute;
+			left: 10px;
+			top: 30px;
+			}
+		#permicao .box span{
+			position: absolute;
+			font-size: 16px;
+			color: #777;
+			font-weight: bold;
+			left: 150px;
+			top: 75px;
+			width: 300px;
+			}
+
+
+/*******************************************		Painel de controle			*****/
+
+.painelCtrl{
+	
+	}
+
+	.painelCtrl .bloco{
+		clear: both;
+		margin-bottom: 20px;
+		float: left;
+		}
+
+
+	.idiomaBox form{
+		padding-top: 20px;
+
+		float: left;
+		}
+
+		.idiomaBox form label{
+			font-weight: bold;
+			}
+	
+		.idiomaBox form.form div.botoes{
+			margin-top: -30px;
+			}
+/***************************		Install modal		*****/
 .install-box{
 	margin-top: 15px;
 	font-size: 12px;
@@ -74,8 +131,8 @@
 			clear: both;
 			margin-top: 10px;
 			}
-	
-/**********************			Acesso rápido			**********************/
+
+/***************************		Acesso rápido		*****/
 .ARbox{
 	background: #ddd;
 	padding: 15px;
@@ -96,33 +153,88 @@
 			right: 0;
 			bottom: 0;
 			}
-			
-			
-/**********************			PERMISSAO			**********************/
-#permicao{
-	text-align: center;
-	}
+
+
+
 	
-	#permicao .box{
-		width: 480px;
-		height: 200px;
+/*********************		depreciadas		*********************/
+img#loadImg{
+		position: absolute; 
+		top: 236px;
+		left: 50%;
+		z-index: 60000;
+		}	
+	
+div#exectAjax{
+		width: 0;
+		height: 0;
+		}
+
+div#ajaxBoxfundo{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		background: #fff;
+		z-index: 9000;
+		opacity:.70;
+		}
+	
+div#ajaxBoxGeral{
+		width: 100%;
+		position: absolute;
+		top: 35px;
+		left: 0;
+		z-index: 9001; 
+		text-align: left;
+		}
+	
+div#ajaxBoxAling{
+		width: 750px;
 		margin: 0 auto;
-		background: #e7e7e7;
 		position: relative;
-		border-radius: 10px;
+		background: #000;
+		padding: 1px 0;
+		}
+	
+div#ajaxBox{
+		background:#fff;
+		display: block;
+		height: 350px;
+		margin: 0 1px;
+		overflow: auto;
+		}
+	
+a.ajaxBoxClose{
+		position: absolute;
+		right: 0;
+		top: -25px;
+		text-align: right;
 		}
 		
-		#permicao .box img{
-			position: absolute;
-			left: 10px;
-			top: 30px;
-			}
-		#permicao .box span{
-			position: absolute;
-			font-size: 16px;
-			color: #777;
-			font-weight: bold;
-			left: 150px;
-			top: 75px;
-			width: 300px;
-			}
+		
+#mLAviso{
+		width: 100%;
+		position: absolute;
+		z-index: 9000;
+		text-align: center;
+		}
+		
+#mLAviso div{
+		padding: 8px 12px 10px 12px;
+		font-size: 12px;
+		border: 1px solid #ddd;
+		border-top: none;
+		background: #FCFDDE;
+		}
+		
+
+	#mLAviso a.close{
+		position: absolute;
+		font-weight: bold;
+		font-size: 12px;
+		top: 2px;
+		right: 4px;
+		}
+		

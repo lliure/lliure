@@ -2,45 +2,47 @@
 *
 * API Fileup - Plugin CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-
-.fl_quebra{
-	margin: 0 !important;
-	padding: 0 !important;
-	clear: both;
-	}
-
-.fileup_file{
-	visibility:hidden;
-	height: 0px;
-	}
-
-input#fileup_nome{
-	float: left;
-	width: 175px;
-	height: 30px;
-	padding: 0 8px;
-	margin: 0 0 0 10px;
-	}
-
-.fileup_botao{
-	background: #444;
-	height: 31px;
-	width: 143px;
-	float: left;
-	color: #ddd;
-	line-height: 31px;
-	text-align: center;
-	border-radius: 3px;
+	
+.fileUpBloco{
 	}
 	
-	.fileup_botao:hover{
-		color: #ddd;
-		background: #606060;
+	.fileUpItem{
+		float: left;
+		width: 100%;
 		}
+
+		.fileUpItem .fileup_file{
+			visibility:hidden;
+			height: 0px;
+			}
+
+		.fileUpItem input.fileup_nome{
+			float: left;
+			width: 175px;
+			height: 30px;
+			padding: 0 8px;
+			margin: 0 0 0 10px;
+			}
+
+		.fileUpItem .fileup_botao{
+			background: #444;
+			height: 31px;
+			width: 143px;
+			float: left;
+			color: #ddd;
+			line-height: 31px;
+			text-align: center;
+			border-radius: 3px;
+			}
+
+		.fileUpItem .fileup_botao:hover{
+			color: #ddd;
+			background: #606060;
+			}

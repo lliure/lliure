@@ -2,7 +2,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -105,7 +105,9 @@ img.imgl{
 li{	list-style-type: none;
 	}
 
-a{	color:#555;
+a{
+	color:#555;
+	outline: none;
 	}
 
 a:hover {
@@ -121,17 +123,10 @@ a.link:hover {
 	text-decoration: underline;
 	}
 	
-span.h1,
-span.h2,
-span.h3{
-	display: block;
-	font-weight: bold;
-	}
-	
 h1	{	
 	font-size: 2em;
 	margin-bottom: 3px;
-	color: #004B98;
+	color: #a90037;
 	font-weight: bold;
 	}
 	
@@ -141,32 +136,18 @@ h1	{
 		}
 		
 h2{
-	font-size: 1em;
+	font-size: 1.3em;
 	color: #9e0000;
 	margin-bottom: 15px;
 	font-weight: bold;
 	}
 			
 h3 {
-	font-size: 13px;
-	color: #6AC334;
+	font-size: 1em;
+	color: #444;
 	margin-bottom: 3px;
 	}
-		
-h4 	{font-size: 13px;
-	color: #EE8100;
-	margin: 0 0 2px 0;
-	}
-		
-h5 	{	
-	font-size: 10px;
-	margin: 0 0 2px 0;
-	}
-h6 	{	
-	font-size: 10px;
-	color: #0074B7;
-	margin: 0 0 2px 0;
-	}
+
 		
 p{	margin: 0 0 8px 0;
 	line-height: 14px;
@@ -175,92 +156,101 @@ p{	margin: 0 0 8px 0;
 
 
 /* Formularios */
-	fieldset{
-		border: none;
-		margin-bottom: 15px;
-		}
+fieldset{
+	border: none;
+	margin-bottom: 15px;
+	}
 
-	label {	
-		display: block;
-		margin-bottom: 5px;
-		font-size: 1em;
-		}
+label {	
+	display: block;
+	margin-bottom: 5px;
+	font-size: 1em;
+	}
 
-	label span {
-		display: block;
-		float: left;
-		} 
+label span {
+	display: block;
+	float: left;
+	} 
 
-	input, textarea, select {
-		color: #444;
-		padding: 3px;
-		outline: none;
-		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
-		font-size: 1em;
-		border: 1px solid #ccc;
-		border-radius: 3px;
-		line-height: 1.5em;
-		}
+input, textarea, select {
+	color: #444;
+	padding: 3px;
+	outline: none;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-size: 1em;
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	line-height: 1.5em;
+	}
 
-	select {	
-		width: auto;
-		}
+select {	
+	width: auto;
+	}
 
-	textarea {	
-		height: 100px;
-		overflow: auto;
-		}
+textarea {	
+	height: 100px;
+	overflow: auto;
+	}
 
-	button {
-		background: #999;
-		color: #fff;
-		cursor: pointer;
-		border: none;
-		font-size: 0.8em;
-		margin: 0px;
-		padding: 8px;
-		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
-		} 
-/***********************************************/
-.both {	clear:both;
-		}
-
+button {
+	background: #999;
+	color: #fff;
+	cursor: pointer;
+	border: none;
+	font-size: 0.8em;
+	margin: 0px;
+	padding: 8px;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	}
+	
+/**********************************************		PRE-CLASSES		*/
+.both {
+	clear:both;
+	}
 		
 span.botao {
-	margin: 0px 6px 2px 0;
 	float: left;
+	height: 32px;
 	}	
+	
+	span.botao button,
+	span.botao a{
+		float: left;
+		font-size: 0.916em;
+		background-color: #4F4F4F;
+		background-image: -moz-linear-gradient(center top , #4F4F4F, #404040);
+		border: 1px solid #353535;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+		border-radius: 3px;
+		line-height: 1.2em;
+		padding: 0.75em 1.2em;
+		margin-right: 3px;
 		
-span.botao button, span.botao a{
-	background: #444;
-	padding: 10px 15px;
-	float: left;
-	color: #ddd;
-	border-radius: 3px;
-	font-size: 11px;
-	text-decoration: none;
-	margin: 0px;
-	line-height: 11px;
-	}
+		}
 		
-span.botao button:hover, span.botao a:hover{
-	color: #ddd;
-	background: #606060;
-	text-decoration: none;
-	}
+	span.botao button:hover,
+	span.botao a:hover{
+		background-color: #454545;
+		background-image: -moz-linear-gradient(center top , #454545, #303030);
+		border: 1px solid #111;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+		text-decoration: none;
+		}
 			
 div.mensagem{
-		margin: 0 -2px 5px -2px;
-		padding: 8px;
-		padding-bottom: 3px;
-		display: block;
-		clear: both;
-		background: #FCFDDE;
-		border: 1px solid #ddd;
-		position: relative;
-		font-size: 12px;
-		color: #7D7D7D;
-		}
+	margin: 0 -2px 5px -2px;
+	padding: 8px;
+	padding-bottom: 3px;
+	display: block;
+	clear: both;
+	background: #FCFDDE;
+	border: 1px solid #ddd;
+	position: relative;
+	font-size: 12px;
+	color: #7D7D7D;
+	}
 			
 	div.mensagem span{
 		display: block;
@@ -282,84 +272,3 @@ div.mensagem{
 		color: #3573A6;
 		}
 	
-	
-/*********************		Funcoes java (depreciadas)	*********************/
-img#loadImg{
-		position: absolute; 
-		top: 236px;
-		left: 50%;
-		z-index: 60000;
-		}	
-	
-div#exectAjax{
-		width: 0;
-		height: 0;
-		}
-
-div#ajaxBoxfundo{
-		position: absolute;
-		top: 0px;
-		left: 0px;
-		width: 100%;
-		height: 100%;
-		background: #fff;
-		z-index: 9000;
-		opacity:.70;
-		}
-	
-div#ajaxBoxGeral{
-		width: 100%;
-		position: absolute;
-		top: 35px;
-		left: 0;
-		z-index: 9001; 
-		text-align: left;
-		}
-	
-div#ajaxBoxAling{
-		width: 750px;
-		margin: 0 auto;
-		position: relative;
-		background: #000;
-		padding: 1px 0;
-		}
-	
-div#ajaxBox{
-		background:#fff;
-		display: block;
-		height: 350px;
-		margin: 0 1px;
-		overflow: auto;
-		}
-	
-a.ajaxBoxClose{
-		position: absolute;
-		right: 0;
-		top: -25px;
-		text-align: right;
-		}
-		
-		
-#mLAviso{
-		width: 100%;
-		position: absolute;
-		z-index: 9000;
-		text-align: center;
-		}
-		
-#mLAviso div{
-		padding: 8px 12px 10px 12px;
-		font-size: 12px;
-		border: 1px solid #ddd;
-		border-top: none;
-		background: #FCFDDE;
-		}
-		
-
-	#mLAviso a.close{
-		position: absolute;
-		font-weight: bold;
-		font-size: 12px;
-		top: 2px;
-		right: 4px;
-		}

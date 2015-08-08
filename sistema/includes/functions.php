@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,72 +12,71 @@
 
 require_once("jf.funcoes.php"); 	// include no pacote JF funções
 
-/*
-//	GERA MENSAGEM
-function mensagemAviso($mensagem){
-	$id = uniqid(time());
-	
-	return "<div id='".$id."' class='mensagem'>
-				<span>$mensagem</span>
-				<a href='javascript: void(0)' onclick=\"show_hide('".$id."')\" class='close'>X</a>
-			</div>";
+// Apelido de funcoes
+function plg_historic($mods = null, $modsQnt = 1){
+	return ll_historico($mods, $modsQnt);
 }
-/*
-function alert($mensagem, $tempo = null){
-		echo '<img src="error.jpg" onerror="mLaviso(\''.$mensagem.'\' '.(!is_null($tempo) ? '\''.$tempo.'\'' : '').')" class="imge" alt="" />';
-	}*/
-/*
-function loadPage($url, $tempo = 0){
-	$tempo = ($tempo != 0?", '".$tempo."'":'');
-	?><img src="erro.jpg" onerror="loadPage('<?php echo $url?>'<?php echo $tempo?>)" class="imge"><?php
-}
-*/
-/*
-if(isset($_SESSION['historicoNav'])){
-	print_r($_SESSION['historicoNav']);
-	die();
-}
-*/
-//print_r($_SESSION['historicoNav']);
+
 function navig_historic(){
-	if(!empty($_GET)){
-		$keyGet = array_keys($_GET);
-		if($keyGet['0'] == 'plugin'){	
+	return ll_historico('inicia');
+}
+
+
+///***///
+
+	
+function ll_historico($mods = null, $modsQnt = 1){
+	global $backReal;
+	global $backNome ;
+
+	$retorno = true;
+	
+	switch($mods){
+	case 'inicia':
+		if(!empty($_GET)){
+			$keyGet = array_keys($_GET);
+			
 			$pageatual = '?'.$_SERVER['QUERY_STRING'];
-			if(isset($_SESSION['historicoNav'])){				
+			if(isset($_SESSION['historicoNav']) && !empty($_SESSION['historicoNav'])){
 				$count = count($_SESSION['historicoNav']);
-				if($count > 2 && $pageatual == $_SESSION['historicoNav'][$count-2]){
-					array_pop($_SESSION['historicoNav']);
-				} elseif(isset($keyGet[1])){
-					if(in_array($pageatual, $_SESSION['historicoNav']) == false){
-						$_SESSION['historicoNav'][] = $pageatual;
-					}
+				
+				if($count > 1 && $pageatual == $_SESSION['historicoNav'][$count-2]){
+					array_pop($_SESSION['historicoNav']);					
+				} elseif($pageatual == $_SESSION['historicoNav'][$count-1]){
+					// não faz nada caso a página atual for igual a última página visitada
 				} else {
-					unset($_SESSION['historicoNav']);
-					$_SESSION['historicoNav'][0] = $pageatual;
+					$_SESSION['historicoNav'][] = $pageatual;
 				}
-				$historico = $_SESSION['historicoNav'];
 			} else {				
 				$_SESSION['historicoNav'][0] = $pageatual;
 			}
 			
-			plg_historic();
+			ll_historico();
+			
+		} else {
+			if(isset($_SESSION['historicoNav'])){
+				unset($_SESSION['historicoNav']);
+			}		
 		}
-	} else {
-		if(isset($_SESSION['historicoNav'])){
-			unset($_SESSION['historicoNav']);
-		}		
-	}
-}
+
+		return true;	
+	break;
+
+	case 'reinicia':
+		$pageatual = '?'.$_SERVER['QUERY_STRING'];
+		unset($_SESSION['historicoNav']);
+		$_SESSION['historicoNav'][0] = $pageatual;
+	break;
 	
-function plg_historic($mods = null, $modsQnt = 1){
-	global $backReal;
-	global $backNome ;
-	
-	if($mods === 'return')
+	case 'return':
 		for($i = 0; $i < $modsQnt;$i++)
 			array_pop($_SESSION['historicoNav']); // APAGA ESSA PÁGINA DO HISTÓRICO
+	break;
 	
+	default:
+	break;
+	}
+
 	$historico = $_SESSION['historicoNav'];
 	$i = count($historico)-1;
 	
@@ -85,25 +84,13 @@ function plg_historic($mods = null, $modsQnt = 1){
 		$i--;
 		$backReal = $historico[$i];
 		$backNome = "Voltar";
-	} else {
-	
+	} else {	
 		$backReal = "index.php";
 		$backNome = "Voltar à área de trabalho";
 	}
+	
+	return $retorno;
 };
-
-// in
-function in($var,$type = 'VALUE') {
-	$in = '';
-	foreach ($var as $k=>$v) {
-		if($type=='VALUE')
-			$in.="'".$v."',";
-		else 
-			$in.="'".$k."',";
-	}
-	$in = substr($in,0,-1);
-	return $in;
-}
 
 // função que testa a segurança de uma página
 function ll_securyt($app){
@@ -182,13 +169,41 @@ function ll_tsecuryt($grupo = null){
 	}
 }
 
-
-//Converte parce xml em array
-function xml2array ( $xmlObject, $out = array () ){
-	foreach ( (array) $xmlObject as $index => $node )
-		$out[$index] = ( is_object ( $node ) ) ? xml2array ( $node ) : $node;
-
-	return $out;
+//função que retorna a linguagem nativa, caso não tenha nenhuma retorna false
+function ll_ling(){
+	global $llconf;	
+	
+	$retorno = false;
+	
+	if(isset($llconf->idiomas) && !empty($llconf->idiomas))
+		$retorno = (string) $llconf->idiomas->nativo;
+		
+	return $retorno;
 }
 
+$ll_lista_idiomas = array(
+	'pt_br' => 'Português (Brasil)',
+	'en' => 'Inglês',
+	'es' => 'Espanhol',
+	'fr' => 'francês',
+	'it' => 'italiano',
+	'de' => 'alemão',
+	'ar' => 'árabe',
+	'zh' => 'chinês',
+	'ja' => 'japonês',
+	'ru' => 'russo',
+	);
+
+// in
+function in($var,$type = 'VALUE') {
+	$in = '';
+	foreach ($var as $k=>$v) {
+		if($type=='VALUE')
+			$in.="'".$v."',";
+		else 
+			$in.="'".$k."',";
+	}
+	$in = substr($in,0,-1);
+	return $in;
+}
 ?>

@@ -3,7 +3,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -16,13 +16,10 @@ header("Content-Type: text/html; charset=ISO-8859-1",true);
 	
 $tabela = $_GET['tabela'];
 
-$dados['nome'] 	=  iconv('UTF-8', 'ISO-8859-1', $_POST['nome']) ;
+$_POST = jf_iconv('UTF-8', 'ISO-8859-1', $_POST) ;
 
 $id = substr($_GET['id'], 4);
 
-$alter['id'] = $id;
-
-
-jf_update($tabela, $dados, $alter);
+jf_update($tabela, $_POST, array('id' => $id));
 ?>
 

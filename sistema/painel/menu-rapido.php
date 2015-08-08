@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -18,11 +18,15 @@ $caminho = 'painel/menu-rapido.php';
 
 if(isset($_GET['d'])){
 	jf_delete(PREFIXO.'start', array('idPlug' => $_GET['d']));
+
 	?>
-	<script>
-	$().ready(function(){
-		$('#appR-<?php echo $_GET['d']?>').remove();
-	});
+	<script type="text/javascript">
+		$(function(){
+			$('#appR-<?php echo $_GET['d']?>').remove();
+
+			if($('#appRapido').find('li').size() == 0)
+					$('#menu_rapido').css({'display': 'none'});
+		});
 	</script>
 	<?php
 }
@@ -34,10 +38,12 @@ if(isset($_GET['a'])){
 						where id = "'.$_GET['a'].'"
 						limit 1'));
 	?>
-	<script>
-	$().ready(function(){
-		$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
-	});
+	<script type="text/javascript">
+		$(function(){
+			$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
+			
+			$('#menu_rapido').css({'display': 'block'});			
+		});
 	</script>
 	<?php
 }
@@ -95,11 +101,10 @@ if(isset($_GET['a'])){
 	<div class="both"></div>
 </div>
 
-<script>
-$('.app').mouseover(function(){
-	$(this).children('a').show();
-}).mouseout(function(){
-	$(this).children('a').hide();
-});
-
+<script type="text/javascript">
+	$('.app').mouseover(function(){
+		$(this).children('a').show();
+	}).mouseout(function(){
+		$(this).children('a').hide();
+	});
 </script>

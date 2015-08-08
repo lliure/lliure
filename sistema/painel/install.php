@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -107,7 +107,7 @@ case 'instalar':
 	<span><strong>Instalação realizada com sucesso!</strong></span><br><br>
 	<span style="font-size: 11px;">Esta instalação foi referente apenas ao banco de dados e pastas, não foram arquivos de configuração, leia com atenção o arquivo sobre a instalação deste aplicativo para seu pleno funcionamento</span><br><br>
 	
-	<a href="index.php?plugin">Atualizar lista de aplicativos</a>
+	<a href="index.php?painel">Atualizar lista de aplicativos</a>
 	<?php
 break;
 }

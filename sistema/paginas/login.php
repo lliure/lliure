@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -13,7 +13,9 @@
 require_once('../etc/bdconf.php');
 
 if(isset($_SESSION['logado'])){
-	header('location: ../index.php');
+	
+	header('location: rotinas.php');
+	
 } elseif(!empty($_POST)){
 	require_once('../includes/jf.funcoes.php');
 	
@@ -53,7 +55,7 @@ if(isset($_SESSION['logado'])){
 				'nome' => $dadosUser['nome'],
 				'tipo' => $dadosUser['grupo'],
 				'grupo' => $dadosUser['grupo'],
-				'themer' => $dadosUser['themer']
+				'themer' => 'default'
 				);
 		} else {
 			$falha = true;
@@ -71,7 +73,7 @@ if(isset($_SESSION['logado'])){
 	}
 	
 	if($falha == false)
-		header('location: ../index.php');
+		header('location: rotinas.php');
 }
 ?>
 
@@ -97,7 +99,7 @@ if(isset($_SESSION['logado'])){
 	?>
 	
 	<div id="loginBox">
-		<form method="post" id="form">
+		<form method="post" action="login.php" id="form">
 			<input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
 			<fieldset>
 				<div>
@@ -110,7 +112,7 @@ if(isset($_SESSION['logado'])){
 					<input type="password" name="senha" />
 				</div>
 			</fieldset>
-			<span class="botao"><button type="submit">entrar</button></span>
+			<span class="botao"><button type="submit">Entrar</button></span>
 		</form>
 		<div class="both"></div>
 	</div>

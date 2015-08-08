@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -129,41 +129,7 @@ if(empty($_GET['usuarios'])){
 					<input type="password" value="" name="senha" />
 					<span class="ex">Deixe em branco para manter a senha atual.</span>
 				</div>	
-				
-				<div>
-					<label>Tema</label>
-					<?php
-					$dir = "themer/";
-					$dh = opendir($dir);
-					?>
-					<div class="temas">
-						<?php
-						while (false !== ($filename = readdir($dh))) {
-							if ( $filename != "." && $filename != "..") {
-								$caminho = 'themer/'.$filename;
-								$fp = fopen($caminho.'/padrao.txt', 'r');
-								
-								while (!feof($fp)){
-									$linha = fgets($fp);
-									$linha = explode('=', $linha);
-									
-									$plg_themer[trim($linha[0])] = trim($linha[1]);
-								}
-								fclose($fp);								
-								?>
-								<div class="tema" style="background-image: url('<?php echo $caminho.'/bg.jpg'?>')">
-									<div>
-										<input  name="themer" <?php echo ((!empty($themer) && $filename == $themer) || (empty($themer) &&  $filename == 'default')? 'checked' :'')?> value="<?php echo $filename?>" type="radio" >
-										<span class="<?php echo $plg_themer['cores']?>"><?php echo $plg_themer['nome']?></span>							
-									</div>
-								</div>
-								<?php
-							}
-						}
-						?>
-					</div>
-				</div>
-				
+			
 				<?php	
 				if(ll_tsecuryt('admin') && $_GET['usuarios'] != $_SESSION['logado']['id']){
 					?>

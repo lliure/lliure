@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -403,5 +403,75 @@ function jf_stradd($var, $caracter, $lim){
 	} else {
 		return $var;
 	}
+}
+
+
+//	CLASSE DE EXTENÇÃO PARA TRATAR ELEMENTOS XML
+class jf_xml extends SimpleXMLElement {
+	//FUNÇÃO PARA CONVERTER O XML EM STRING E ADICIONAR TABULAÇÕES
+	public function jf_pretty_xml(){
+		$xmlArray = explode("\n", preg_replace('/>\s*</', ">\n<", $this->asXML()));
+		$pretty = array();		
+		$indent = 0;
+		
+		// Retira o primeiro atributo para não colocar tabulação
+		if (count($xmlArray) && preg_match('/^<\?\s*xml/', $xmlArray[0]))
+			$pretty[] = array_shift($xmlArray);
+				
+
+		foreach ($xmlArray as $el) {
+			if (preg_match('/^<([\w])+[^>\/]*>$/U', $el)) {
+				// opening tag, increase indent
+				$pretty[] = str_repeat("\t", $indent) . $el;
+				$indent += 1;
+			} else {
+				if (preg_match('/^<\/.+>$/', $el)) {
+					// closing tag, decrease indent
+					$indent -= 1;
+				}
+				
+				$pretty[] = str_repeat("\t", $indent) . $el;
+			}
+		}
+		return implode("\n", $pretty);
+	}
+
+
+	// FUNÇÃO PARA CONVERTER ARRAY EM XML
+	public function jf_array2xml($array) {
+		function array2xml($student_info, $xmlArray_student_info = null) {
+			foreach($student_info as $key => $value) {
+				if(is_array($value)) {
+					if(!is_numeric($key)){
+						$subnode = $xmlArray_student_info->addChild($key);
+						array2xml($value, $subnode);
+					}
+					else{
+						array2xml($value, $xmlArray_student_info);
+					}
+				}
+				else {
+					$xmlArray_student_info->addChild($key, $value);
+				}
+			}
+		}
+
+		$xmlArray_student_info = $this;
+		array2xml($array, $xmlArray_student_info);		
+	}
+}
+
+//funcao para converter xml em array
+function xml2array ( $xmlObject, $out = array () ){
+	if(!empty($xmlObject))
+		foreach ( (array) $xmlObject as $index => $node )
+			$out[$index] = ( is_object ( $node ) ) ? xml2array ( $node ) : $node;
+
+	if(count($out) == 1 && isset($out[0]) && count($out[0]) == 1)
+		unset($out[0]);
+
+		
+	return $out;
+
 }
 ?>

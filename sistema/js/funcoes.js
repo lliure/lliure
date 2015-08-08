@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -96,6 +96,8 @@ function substr(f_string, f_start, f_length) {
 
 /////////////////////////////////////////////////////////////////////
 function ajustaForm(){	
+	$('form div table').closest('div').css({'margin': '0 -11px 0 -5px', 'padding-bottom': '20px'});
+	
 	$('form select').width(function(){
 		$(this).width($(this).width()+10);
 	});

@@ -3,52 +3,21 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-$pluginTable = PREFIXO."desktop";
-$consulta = "select * from ".$pluginTable." order by nome asc";
-$query = mysql_query($consulta);
+
+echo '<div class="bodyhome">';
+	$navegador = new jfnav();
+	$navegador->tabela = PREFIXO."desktop";
+	$navegador->query = 'select * from '.$navegador->tabela.' order by nome asc';
+	$navegador->config = array('s_link' 	=> 'link', 'ico' => array('i' => 'imagem') );
+	$navegador->monta();
+echo '</div>';
 ?>
-<script type="text/javascript">
-	$(function() {
-		$('.bodyhome').jfnav();
-	});
-</script>
 
-<div class="bodyhome">
-	<?php
-	if(mysql_num_rows($query) > 0){
-		?>
-		<input id="namTable" type="hidden" value="<?php echo $pluginTable?>"/>
-		<input type="hidden" id="idPag" value="" />
-		<input type="hidden" id="linked" value="" />
 
-		<?php
-		while($dados = mysql_fetch_array($query)){
-			extract($dados);
-			
-			$pagInp = "name".$id;
-
-			$ico = (isset($link['ico'])?$link['ico']:"ico.png");
-			
-			$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
-			
-			?>
-			<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" lig="0" dclick="<?php echo $link?>">
-				<div class="inter">
-					<img src="<?php echo $imagem?>" alt="<?php echo $nome?>" />
-					<span id="<?php echo $pagInp?>" rel="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink?></span>
-				</div>
-			</div>
-			<?php
-		}
-	} else { 
-		echo'<script type="text/javascript">jfAlert("Não foi encontrado nenhum item em sua área de trabalho");</script>';
-	}
-	?>
-</div>

@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -22,6 +22,7 @@ if(!isset($_SESSION['logado']))
 if(($llconf = @simplexml_load_file('etc/llconf.ll')) == false)
 	$llconf = false;
 
+$ll_ling = ll_ling();
 
 $pagina = "paginas/permissao.php";
 
@@ -46,6 +47,25 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 		}
 	break;
 
+	case 'app':
+		if(!empty($_GET['app']) && file_exists('plugins/'.$_GET['app'])){
+			if(ll_tsecuryt() == false){
+				if(($config = @simplexml_load_file('plugins/'.$_GET['app'].'/sys/config.plg')) !== false && isset($config->seguranca) && $config->seguranca != 'public'){
+					if(ll_securyt($_GET['app']) == true)
+						$pagina = "plugins/".$_GET['app']."/start.php";
+				} elseif(isset($config->seguranca) && $config->seguranca == 'public') {
+					$pagina = "plugins/".$_GET['app']."/start.php";
+				} else {
+					$pagina = "plugins/".$_GET['app']."/start.php";
+				}
+			} else {
+				$pagina = "plugins/".$_GET['app']."/start.php";
+			}	
+		} elseif(ll_tsecuryt('admin')) {
+			$pagina = "painel/plugins.php";
+		}
+	break;
+
 	case 'minhaconta':
 		$_GET['usuarios'] = $_SESSION['logado']['id'];
 		$pagina = 'paginas/usuarios.php';
@@ -53,6 +73,10 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 	case 'usuarios':
 		ll_tsecuryt('admin') ? $pagina = 'paginas/usuarios.php' : '';
+	break;
+
+	case 'painel':
+		ll_tsecuryt() ? $pagina = 'painel/index.php' : '';
 	break;
 
 	case 'desk':
@@ -68,8 +92,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 require_once("includes/gerenciamento_api.php"); 
 
-navig_historic();
-
+ll_historico('inicia');
 
 $plgThemer = $DadosLogado['themer']['pasta'];
 $plgIcones = $DadosLogado['themer']['icones'];
@@ -89,6 +112,7 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/funcoes.js"></script>
 	<script type="text/javascript" src="js/jquery.jfkey.js"></script>
+	<script type="text/javascript" src="js/jquery.easing.js"></script>
 	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
 	<?php
 	echo $apigem->js; 
@@ -105,6 +129,9 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	echo $apigem->css."\r"
 		.(isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?
 			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['plugin'].'/estilo.css">'
+			: '' )
+		.(isset($_GET['app']) && !empty($_GET['app'])  && file_exists('plugins/'.$_GET['app'].'/estilo.css') ?
+			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['app'].'/estilo.css">'
 			: '' );
 	?>
 </head>
@@ -119,7 +146,7 @@ $plgIcones = $DadosLogado['themer']['icones'];
 			<?php
 			if(!empty($_GET) &&  ll_tsecuryt()){
 				$keyGet = array_keys($_GET);
-				if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
+				if(($keyGet['0'] == 'plugin' || $keyGet['0'] == 'app') && (!empty($_GET['plugin']) || !empty($_GET['app']))){
 					?>
 					<a href="javascript: void(0);" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
 					<?php 
@@ -129,18 +156,18 @@ $plgIcones = $DadosLogado['themer']['icones'];
 		</div>
 		
 
-		<div class="right">
-			
+		<div class="right">			
 			<div class="menu">
 				<ul>
 					<li><a href="index.php">Home</a></li>
 					<li><a href="?minhaconta">Minha conta</a></li>				
 					<?php
-					if(ll_tsecuryt('admin')){ 
-						?>
-						<li><a href="?usuarios">Usuários</a></li>
-						<li><a href="?plugin">Aplicativos</a></li>
-						<?php
+					if(ll_tsecuryt()){
+						echo '<li><a href="?usuarios">Usuários</a></li>'
+							.'<li><a href="?painel">Painel de controle</a></li>';
+					} elseif(ll_tsecuryt('admin')){ 
+						echo '<li><a href="?usuarios">Usuários</a></li>'
+							.'<li><a href="?plugin">Aplicativos</a></li>';
 					}
 					?>
 					<li><a href="acoes.php?logout">Sair</a></li>
@@ -156,28 +183,27 @@ $plgIcones = $DadosLogado['themer']['icones'];
 							on a.idPlug = b.id
 						";
 				$query = mysql_query($consulta);
-				if(mysql_num_rows($query) > 0){
-					?>
-					<div class="start">
+				
+				?>
+				<div class="start" id="menu_rapido"  <?php echo mysql_num_rows($query) == 0 ? 'style="display: none;"' : '' ;?>>
+					<div class="width">
 						<span class="icone"></span>
 						<ul id="appRapido">
 							<?php
-							
-
 							while($dados = mysql_fetch_array($query)){
-							?>
-							<li id="appR-<?php echo $dados['id']?>">
-								<a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
-									<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
-								</a>
-							</li>
-							<?php
+								?>
+								<li id="appR-<?php echo $dados['id']?>">
+									<a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
+										<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
+									</a>
+								</li>
+								<?php
 							}
 							?>
 						</ul>
 					</div>
-					<?php
-				}
+				</div>
+				<?php				
 			} 
 			?>
 		</div>
@@ -209,6 +235,15 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	
 			plg_load('load');
 			plg_sessionFix();
+
+			$('#topo .right div.start').mouseenter(function(){			
+				var size = $("#appRapido").find("li").size()*52;
+				$("#appRapido").css({width: size});
+
+				$(this).stop().animate({width: size+20}, 500, 'easeInOutQuart');
+			}).mouseleave(function(){
+			  $(this).stop().animate({width: '20'}, 500, 'easeInOutQuart');
+			});
 		});
 	</script>
 </head>

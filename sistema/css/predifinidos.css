@@ -2,7 +2,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -73,6 +73,7 @@ a.link{
 form.form{
 	float: left;
 	width: 100%;
+	font-size: 1em; 
 	}
 	
 form.form fieldset{
@@ -92,11 +93,12 @@ form.form fieldset{
 		margin-bottom: 20px;
 		display: block;
 		}
-		
+
 		form.form fieldset div > table{
 			border-collapse: separate;
 			border-spacing: 5px 0px;
-			margin: 0 -11px 0 -5px;
+			/*margin: 0 -11px 0 -5px;*/
+			width: 100%;
 			}
 
 			form.form fieldset div > table tbody{
@@ -108,17 +110,17 @@ form.form fieldset{
 					}
 					
 					form.form fieldset div > table tbody tr td{
-						padding-right: 6px;
+						padding: 0 6px 0 0;
 						vertical-align: top;
-						padding-bottom: 6px;
 						width: auto;
 						}
 			
 		form.form fieldset div label{
 			float: none;
 			margin-bottom: 3px;
-			color: #555;
-			font-size: 12px;
+			color: #777;
+			font-weight: bold;
+			font-size: 1em;
 			display: block;
 			}
 			
@@ -139,8 +141,10 @@ form.form fieldset{
 			display: block;
 			float: none;
 			border: 1px solid #CCC;
+			border-color: #C0C0C0 #D9D9D9 #D9D9D9;
 			width: 100%;
-			padding: 4px 2px;
+			padding: 0 2px;
+			height: 26px;
 			color: #666;
 			border-radius: 3px;
 			background: #fff;
@@ -161,12 +165,14 @@ form.form fieldset{
 		
 		 form.form fieldset div select{
 			width: 100%;
-			padding: 3px 1px;
+			padding: 0;
+			height: 28px;
 			margin-right: -6px;
+			padding: 4px 0; 
 			}	
 		
 			form.form fieldset div select option{
-				padding: 0px 4px;
+				padding: 4px 4px;
 				background: #eee;
 				}
 
@@ -194,6 +200,7 @@ form.form fieldset{
 	form.form div.label textarea.editor{
 		height: 500px;
 		}
+		
 	
 	.mceEditor{
 		display: block;
@@ -212,21 +219,26 @@ form.form div.botoes {
 
 	form.form div.botoes button,
 	form.form div.botoes a{
-		background: #444;
-		padding: 10px 15px;
-		float: left;
-		color: #ddd;
+		font-size: 0.916em;
+		background-color: #4F4F4F;
+		background-image: -moz-linear-gradient(center top , #4F4F4F, #404040);
+		border: 1px solid #353535;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 		border-radius: 3px;
-		font-size: 11px;
-		text-decoration: none;
-		margin: 0px;
-		line-height: 11px;
-		margin-right: 8px;
+		line-height: 1.2em;
+		padding: 0.75em 1.2em;
+		margin-right: 3px;
 		}
-
+		
 	form.form div.botoes button:hover,
 	form.form div.botoes a:hover{
-		background: #5e5e5e;
+		background-color: #454545;
+		background-image: -moz-linear-gradient(center top , #454545, #303030);
+		border: 1px solid #111;
+		color: #FFFFFF;
+		text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+		text-decoration: none;
 		}
 
 	
@@ -270,7 +282,7 @@ form.form div.botoes {
 table.table{
 	width: 100%;
 	border-collapse: separate;
-	border-spacing: 0 0 5px 0;
+	border-spacing: 0;
 	clear: both;
 	}
 
@@ -283,21 +295,23 @@ table.table{
 			font-weight: bold;
 			font-size: 13px;
 			color: #555;
-			padding: 5px 8px;
+			padding: 0.7em 8px;
 			background: #ddd;
+			
 			border-bottom: 1px solid #ccc;
 			}			
 			
 		table.table tr th.ico{
-			width: 50px;
+			width: 20px;
 			text-align: center;
 			}		
 			
 		table.table tr td{
 			padding: 10px 8px;
 			font-size: 12px;
-			border: 1px solid #eee;
+			border: none;
 			vertical-align: middle;
+
 			border-bottom: 1px solid #ddd;
 			}
 
@@ -317,4 +331,11 @@ div.paginacao{
 	
 div.paginacao span{
 	color: #ddd;
+	}
+
+
+	
+/**********************			JFBOX			**********************/
+#jfboxLoad h1{
+	font-size: 1.5em;
 	}

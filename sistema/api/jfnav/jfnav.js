@@ -2,21 +2,21 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-$().ready( function(){
+$().ready(function(){
 	$('body').append('<div id="jnavActions"></div>');
 });
 
 nav_selecionado = null;
 jQuery.fn.extend({
 	jfnav: function (){			
-		($(this).find('.listp .inter span')).dblclick(function(event){
+		$(this).find('.listp .inter span').dblclick(function(event){
 			editName();
 			event.stopPropagation();
 		});
@@ -47,6 +47,7 @@ function jfnav_start(){
 	);
 }
 
+//função necessaria para trablhar com os objetos
 function jfnav_objetos(){
 }
 
@@ -56,14 +57,12 @@ $(document).click(function(){
 		limpAllEvent();
 	else if($("#in"+nav_selecionado).length != 0)
 		alteraNome();
-	
 });
 
 
 $(document).jfkey('delete', function(tecla, opcao){
 	if(nav_selecionado != null && $("#in"+nav_selecionado).length == 0){
-		tabela = document.getElementById('namTable').value;
-		deletaArquivo(tabela);
+		deletaArquivo(jfnav_tabela);
 	} else {
 		return true;
 	}
@@ -89,29 +88,37 @@ function limpAllEvent(){
 	}
 }
 
-function editName(){
-	var texto = $('#'+nav_selecionado).attr('title');
-	
-	$('#'+nav_selecionado).html('<form id="in'+nav_selecionado+'"><input type="text" class="edna" name="nome" value="'+texto+'"/></form>');
-	$('#in'+nav_selecionado+' input').focus();
-}
-
-function selectPag(divId, linked){
+function selectPag(divId){
 	$('.listp').removeClass('jfn_selected');
 	nav_selecionado = divId;
 
 	$('#div'+divId).addClass('jfn_selected');
 }
 
+function editName(){
+	var texto = $('#'+nav_selecionado).attr('title');
+
+	var coluna = $('#div'+nav_selecionado).attr('coluna');
+	coluna = (coluna == undefined ?  'nome' : coluna);
+		
+	$('#'+nav_selecionado).html('<form id="in'+nav_selecionado+'"><input type="text" class="edna" name="'+coluna+'" value="'+texto+'"/></form>');
+	$('#in'+nav_selecionado+' input').select();
+}
+
 function alteraNome(){
 	namPag = $('#in'+nav_selecionado+' input').val();
 	
 	if(empty(namPag) == false){
-		var tabela = document.getElementById('namTable').value;
-		
 		$('#in'+nav_selecionado).submit(function(){
 			var campos =  $(this).serializeArray();
-			$('#jnavActions').load('api/jfnav/rename.php?id='+nav_selecionado+'&tabela='+tabela, campos);
+			
+			var tabela = $('#div'+nav_selecionado).attr('tabela');
+			tabela = (tabela == undefined ?  jfnav_tabela : tabela);
+
+			var id = $('#div'+nav_selecionado).attr('c_id');
+			id = (id == undefined ?  nav_selecionado : 'name'+id );
+			
+			$('#jnavActions').load('api/jfnav/rename.php?id='+id+'&tabela='+tabela, campos);
 			
 			return false;
 		});
@@ -132,37 +139,12 @@ function alteraNome(){
 }
 
 function jfnav_clickDelReg(selecionado){
-	tabela = document.getElementById('namTable').value;
-	nav_selecionado  = selecionado;
-	deletaArquivo(tabela);
+	nav_selecionado = selecionado;
+	deletaArquivo(jfnav_tabela);
 }
 
 function deletaArquivo(tabela, confirmed){
-	if(empty(nav_selecionado) == false){
-		/*
-		var linked = $('#div'+nav_selecionado).attr('lig');
-		if((linked == '0') || (confirmed == true)){
-			if((confirmed == true) || (confirmAlgo('esse item') == true)){
-				plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
-			
-				$('#div'+nav_selecionado).remove();
-		
-				document.getElementById('idPag').value = "";
-				document.getElementById('linked').value = "";
-			}
-		} else if(linked == ''){
-		
-		} else {
-			if(linked != 'off'){
-				if(confirmAlgo('Esse item possui ligações com outras fontes de dados, deseja continuar o processo de exclusão?') == true){
-					//mLOpenBox(document.getElementById('linked').value);
-				}
-			} else {
-				alert('Esse item possui ligações com outras fontes de dados.\n Para continuar o processo de exclusão todos as ligações pertencentes a esse item.');
-			}
-		}
-		*/
-		
+	if(empty(nav_selecionado) == false){		
 		if((confirmed == true) || (confirmAlgo('este registro') == true)){
 			plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
 		

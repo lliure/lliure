@@ -3,7 +3,7 @@
 *
 * lliure CMS
 *
-* @versão 4.4.4
+* @Versão 4.5.2
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -31,7 +31,7 @@ echo app_bar('Painel de aplicativos', $botoes);
 	}
 
 
-   if ($handle=opendir("plugins")) { 
+	if ($handle=opendir("plugins")) { 
 	  while (false !== ($file = readdir($handle))) {
 		 if (strstr($file, '.') == false) {
 			
@@ -57,10 +57,10 @@ echo app_bar('Painel de aplicativos', $botoes);
 		 }
 	  }
 	  closedir($handle); 
-   } else {
+	} else {
 		jfAlert('Houve um erro ao tentar abrir o diretório de aplicativos');
-   }
-?>
+	}
+	?>
 	<script>
 		$('.install').jfbox({width: 420, height: 440});
 		$('.rapido').jfbox({width: 420, height: 440});
