@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -40,7 +40,7 @@ if(isset($_GET['a'])){
 	?>
 	<script type="text/javascript">
 		$(function(){
-			$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
+			$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
 			
 			$('#menu_rapido').css({'display': 'block'});			
 		});

@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -74,12 +74,8 @@ function substr(f_string, f_start, f_length) {
 }
 
 ///////////////////////////////////////////////////////////////////// Funções comuns
-function ajustaForm(){	
-	$('form div table').closest('div').css({'margin': '0 -11px 0 -5px', 'padding-bottom': '20px'});
-	
-	$('form select').width(function(){
-		$(this).width($(this).width()+10);
-	});
+function ajustaForm(){
+	$('form div table').closest('div').css({'margin': '0 -5px 0 -5px', 'padding-bottom': '20px'});
 }
 
 

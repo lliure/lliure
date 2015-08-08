@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -20,40 +20,72 @@ if(isset($_SESSION['logado'])){
 } elseif(!empty($_POST)){
 	require_once('../includes/jf.funcoes.php');
 	
-	$falha = false;
+	$falha = true;
+	
 	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){	
+		
 		$senha = md5($_POST['senha']."0800");
 		$usuario = jf_anti_injection($_POST['usuario']);
 		
-		$dadosUser = mysql_query('select * from '.PREFIXO.'admin where login = "'.$usuario.'" and senha = "'.$senha.'" limit 1');
 		
-		if(mysql_num_rows($dadosUser) > 0){
+		if(file_exists('../etc/llconf.ll') && ($llconf = @simplexml_load_file('../etc/llconf.ll')) && isset($llconf->senhaDev)){
+			
+			$senhaDev = trim(isset($llconf->senhaDev->senha) ? $llconf->senhaDev->senha : $llconf->senhaDev);
+			$usuarioDev = isset($llconf->senhaDev->usuario) ? $llconf->senhaDev->usuario : 'dev';
+			
+			if($usuario == $usuarioDev){
+				if(($senhaDev = @file_get_contents($senhaDev)) != false){
+					
+					$senhaDev = trim($senhaDev);							
+					$senha = md5($_POST['senha']);			
+
+					if($senhaDev == $senha){
+						$dadosLogin = array(
+								'id' => '0',
+								'nome' => 'Desenvolvedor',
+								'grupo' => 'dev',
+								'tema' => 'default'
+							);
+					}							
+				}
+			}
+		}
+		
+		
+		if(!isset($dadosLogin)){
+			$dadosUser = mysql_query('select * from '.PREFIXO.'admin where login = "'.$usuario.'" and senha = "'.$senha.'" limit 1');
+			
+			if(mysql_num_rows($dadosUser) > 0){
+				$dadosUser = mysql_fetch_assoc($dadosUser);
+				$dadosLogin = $dadosUser;
+			} 
+		}
+		
+		if(isset($dadosLogin)){
 			$tema_default = 'lliure';
 			
-			$dadosUser = mysql_fetch_assoc($dadosUser);
-			
-			if(file_exists('../temas/'.$dadosUser['themer'].'/dados.ll') == false)
-				$dadosUser['themer'] = 'default';
+			if(file_exists('../temas/'.$dadosLogin['themer'].'/dados.ll') == false)
+				$dadosLogin['themer'] = 'default';
 				
-			if($dadosUser['themer'] == 'default')
-				$dadosUser['themer'] = $tema_default;
+			if($dadosLogin['themer'] == 'default')
+				$dadosLogin['themer'] = $tema_default;
 			
 			$_SESSION['logado'] = array(
-				'id' => $dadosUser['id'],
-				'nome' => $dadosUser['nome'],
-				'grupo' => $dadosUser['grupo'],
-				'tema' => $dadosUser['themer']
-				);
-		} else {
-			$falha = true;
+				'id' => $dadosLogin['id'],
+				'nome' => $dadosLogin['nome'],
+				'grupo' => $dadosLogin['grupo'],
+				'tema' => $dadosLogin['themer']
+			);
+			
+			$falha = false;
 		}
 
-	} else {
-		$falha = true;
 	}
 	
 	if($falha == false)
 		header('location: rotinas.php');
+	else	
+		header('location: login.php?rt=falha');
 }
 ?>
 
@@ -72,7 +104,7 @@ if(isset($_SESSION['logado'])){
 <div id="login">
 	<img src="../imagens/layout/logo.png" class="logo" alt="Plugin" />
 	<?php
-	if(isset($falha))
+	if(isset($_GET['rt']) && $_GET['rt'] == 'falha')
 		echo '<span class="mensagem">Login e/ou senha incorreto(s). Tente novamente</span>';
 	
 	$_SESSION['token'] = uniqid(md5(time()));
@@ -106,36 +138,35 @@ if(isset($_SESSION['logado'])){
 	$(document).ready(function(){
 		$('.user').focus();
 		
-		<?php
-		echo 'gsqul();';
-		
-		if(isset($falha)){
-			?>
-			var tempo = 150;
-			var left = -50;
-			var right = 50;
-			
+		<?php		
+		if(isset($_GET['rt']) && $_GET['rt'] == 'falha'){
+			echo '
+				var tempo = 150;
+				var left = -50;
+				var right = 50;
 
-			$('#loginBox').animate({
-				left: right+"px"
-				},tempo, function() {
-					$(this).animate({
-						left: left+"px"
-						},tempo, function() {
-						  $(this).animate({
-								left: right+"px"
-								},tempo-50, function() {
-									$(this).animate({
-										left: left+"px"
-										},tempo-50, function() {
-											$(this).animate({
-												left: "0px"
-												},tempo-50)
-											})
-									})
-						})
-			});
-			<?php
+				$("#loginBox").animate({
+					left: right+"px"
+					},tempo, function() {
+						$(this).animate({
+							left: left+"px"
+							},tempo, function() {
+							  $(this).animate({
+									left: right+"px"
+									},tempo-50, function() {
+										$(this).animate({
+											left: left+"px"
+											},tempo-50, function() {
+												$(this).animate({
+													left: "0px"
+													},tempo-50)
+												})
+										})
+							})
+				});
+			';
+		} else {
+			echo 'gsqul();';
 		}
 		?>
 	});

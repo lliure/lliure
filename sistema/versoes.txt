@@ -1,5 +1,23 @@
 Neste aquivo estão descritas todas atualizações do lliure (lê-se lhiura) e de API nativas
 
+-- 4.8.1 (São Bernardo) (17/10/2012)
+# [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores
+# [bug] - em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, então não funcionava nas anteriores
+
+-- 4.8.0 (São Bernardo) (25/09/2012)
+# [update] - Atualização nas funções do pacote jf.funcoes.php
+# [update] - Definição para login padrão com usuário remoto através do llconf.ll
+# [update] - Incluido sistema de trabalho OnServer
+# [update] - Incluidas variáveis padrão para trabalhar com aplicativos ($llAppHome, $llAppOnServer, $llAppPasta)
+# [update] - Atualização do css predifinidos.css e principal.css
+# [update] - Atualizado pacote JF funções
+# [update][API] - fileUp quando não encontra $_FILE retorna erro
+# [update] - Arquivo uploads/.htaccess e uploads/thumbs.php incluido na lista de arquivos para instalação
+# [update][API][fotos] - havia um problemas em alguns servidores ao gerar a thumb por conta dos retornos de pasta até selecionar a imagem desejada
+# [bug] - erro na forma da implementação da api jfnav no gerenciador de usuários (erro apenas nas novas  versões devido a atualização do PREFIXO)
+# [bug][API] - Problema encontrado quando não conseguia encontrar os dados de conexão com o smtp
+# [bug] - Falha na interpretação de array na função ll_tsecuryt()
+
 -- 4.7.1 (São Bernardo) (20/08/2012)
 # [bug][API][PHP Mailer] - problema ao detectar diretório na função pm_mail()
 
@@ -13,6 +31,8 @@ Neste aquivo estão descritas todas atualizações do lliure (lê-se lhiura) e de AP
 # [bug] - problema no arquivo includes/thumb.php
 # [anote] - Nova definição para atualizações do lliure onde 4.6.2 lê-se (Atualização com divergencia de compatibilidade a versão anterior).(Atualizações).(Correções)
 # [anote] - Nesta versão estamos instituindo apelidos para versões (primeiro número)
+
+/****************************************** DIVISÃO DA FORMA QUE NOMEIA AS VERSÕES */
 
 -- 4.6.2 (07/08/2012)
 # [update] - Adicionado mais 56 icones no pacote padrão

@@ -2,7 +2,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -73,8 +73,7 @@ strong{
 	
 .both {	clear:both;
 	}
-		
-	
+
 /***/		
 html, body {
 	width:100%;
@@ -181,6 +180,10 @@ input, textarea, select {
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	line-height: 1.5em;
+	
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 	}
 
 select {	
@@ -207,7 +210,14 @@ button {
 .both {
 	clear:both;
 	}
-		
+
+
+.border-box{	
+	box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+	}
+	
 span.botao {
 	float: left;
 	height: 32px;

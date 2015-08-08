@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -38,9 +38,7 @@ if(!empty($_POST)){
 }
 
 ?>
-<style type="text/css" media="screen">
-	@import "css/usuarios.css";
-</style>
+<link rel="stylesheet" type="text/css" href="css/usuarios.css" />
 <?php
 
 if(empty($_GET['usuarios'])){
@@ -52,20 +50,31 @@ if(empty($_GET['usuarios'])){
 
 echo app_bar('Painel de usuários', $botoes);
 
-$tabela = PREFIXO."admin";
-$consulta = 'select * from '.$tabela;
+
+
 
 
 if(empty($_GET['usuarios'])){
+	/*
 	$query = $consulta.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
 
 	$pastas = '';
 	$click['link'] = '?usuarios=';
 	$click['ico'] = "imagens/layout/user.png";
-	$pluginTable = 'plugin_admin';
+	$pluginTable = $tabela;
 
 	jNavigator($query, $pluginTable, $pastas, $mensagemVazio = null, $click);
+	*/
 	
+	$navegador = new jfnav();	
+	$navegador->tabela = PREFIXO."admin";
+	$navegador->query = 'select * from '.PREFIXO.'admin where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	$navegador->pasta = '';
+	$navegador->config = array(
+			'link' => '?usuarios=',
+			'ico' => 'imagens/layout/user.png'
+			);
+	$navegador->monta();
 	?>
 	<script type="text/javascript">
 		$(document).ready(function(){	
@@ -76,7 +85,8 @@ if(empty($_GET['usuarios'])){
 	</script>
 	<?php
 } else {
-	$consulta = $consulta.' where id = "'.$_GET['usuarios'].'"';
+
+	$consulta = 'select * from '.PREFIXO.'admin where id = "'.$_GET['usuarios'].'"';
 	
 	$dados = mysql_fetch_assoc(mysql_query($consulta));
 	
@@ -105,13 +115,13 @@ if(empty($_GET['usuarios'])){
 			
 				<div>
 					<?php
-					$file = new fileup; 					//inicia a classe
-					$file->titulo = 'Foto'; 				//titulo da Label
-					$file->rotulo = 'Selecionar imagem'; 	// texto do botão
+					$file = new fileup;
+					$file->titulo = 'Foto';
+					$file->rotulo = 'Selecionar imagem'; 
 					$file->registro = $foto;
-					$file->campo = 'foto'; 					//campo do banco de dados (no retorno no formulario ele irá retornar um $_POST com essa chave, no caso do exemplo $_POST['imagem'])
-					$file->extencao = 'png jpg'; 			//extenções permitidas para o upload, se deixar em branco será aceita todas
-					$file->form(); 				 			// executa a classe
+					$file->campo = 'foto'; 
+					$file->extencao = 'png jpg';
+					$file->form();
 					?>
 				</div>				
 			</fieldset>

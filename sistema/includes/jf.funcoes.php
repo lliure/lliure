@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Vers„o 4.7.1
+* @Vers„o 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -14,35 +14,6 @@
 $diasdasemana = array ("Domingo", "Segunda-Feira", "TerÁa-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira", "S·bado",);
 $meses = array("0","Janeiro","Fevereiro","MarÁo","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
 
-
-/*******************************	APELIDO DE FUN«’ES	*/
-//	ALTERA DATA PARA UNIX
-function mlDUnix($data){
-	return jf_dunix($data);
-}
-
-//	func„o substr melhorada
-function mLSubstr($texto, $final = 100){
-	return jf_substr($texto, $final);
-}
-
-//	func„o de anti injection
-function mLAntiInjection($sql){
-	return jf_anti_injection($sql);
-}
-
-
-function mLinsert($tabela, $dados){
-	return jf_insert($tabela, $dados);
-}
-
-function mLdelete($tabela, $alter){
-	return jf_delete($tabela, $alter);
-}
-
-function mLupdate($tabela, $dados, $alter, $mod = null){
-	return jf_update($tabela, $dados, $alter, $mod);
-}
 
 /*******************************	FUN«’ES	*/
 
@@ -59,9 +30,23 @@ function jf_file_get_contents($url, $timeout = 10) {
 
 //	Anti injection
 function jf_anti_injection($sql) {
-	$sql = mysql_real_escape_string($sql);
+	if(is_array($sql))
+		foreach($sql as $chave => $valor)
+			$sql[$chave] = jf_anti_injection($valor);
+	else
+		$sql = mysql_real_escape_string($sql);
+		
 	return $sql;
 }
+
+//	Anti injection GET
+function jf_ai_get(){
+	if(($_GET = jf_anti_injection($_GET)) != false)
+		return true;
+	
+	return false;
+}
+
 
 // FUN«√O PARA TRABALHAR COM TOKEN
 function jf_token($caso){
@@ -88,16 +73,6 @@ function jf_token($caso){
 		break;
 	}
 }
-	
-	
-//	GERA MENSAGEM	
-function mlAviso($mensagem, $close = 1){
-	$id = uniqid(time());
-	return "<span id='".$id."' class='mensagem'>
-				<span>$mensagem</span>
-				".($close != 0?"<a href='javascript: void(0)' onclick=\"show_hide('".$id."')\" class='close'>X</a>":'')."
-			</span>";
-}
 
 function jf_insert($tabela, $dados){
 	/*
@@ -118,7 +93,10 @@ function jf_insert($tabela, $dados){
 			);	
 
 	// Retorno
-	retorna a query montada para conferÍncia, porem ela ser· execultada 
+	retorna o erro na execuÁ„o da query,
+	- Caso sej· executada com sucesso o retorno ser· null
+	- Caso n„o sej· possivel execultar a query, retorna a query seguinda do erro
+	
 	retorna tambÈm a vari·vel  $jf_ultimo_id que È o valor auto-increment retornado neste insert 
 	*/
 	
@@ -137,16 +115,15 @@ function jf_insert($tabela, $dados){
 		
 		$jf_ultimo_id = mysql_insert_id();
 		$ml_ultmo_id = $jf_ultimo_id;
+
 	} else{
-		echo mysql_error();
-		$executa = false;
+		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
 	}
 	
-	return $executa;
+	return null;
 }
 
 function jf_update($tabela, $dados, $alter, $mod = null){
-
 	/* EXPLICANDO *********************************
 	$table = "nomedatabela";
 	$dados = array(
@@ -159,6 +136,12 @@ function jf_update($tabela, $dados, $alter, $mod = null){
 	$mod = ">" ou "<" ou "=" caso nenhum o padr„o È "like"
 	
 	para setar um valor como NULL È sÛ enviar NULL, valores vazios n„o faram parte da query
+
+	// Retorno
+	retorna o erro na execuÁ„o da query,
+	- Caso sej· executada com sucesso o retorno ser· null
+	- Caso n„o sej· possivel execultar a query, retorna a query seguinda do erro
+	
 	*/
 
  	$valores = '';
@@ -174,47 +157,46 @@ function jf_update($tabela, $dados, $alter, $mod = null){
 	is_null($mod) ? $mod = "=" : $mod = "$mod" ;
 	
 	$executa = 'UPDATE '.$tabela.' Set '.$valores.' where '.$int.' '.$mod.' "'.$intv.'"';
-	$query = mysql_query($executa);
 	
-	return $executa;
+	if(mysql_query($executa) != false){
+		return null;
+	} else{
+		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
+	}
 }
 
 // PARA DELETE
 function jf_delete($tabela, $alter){
+	/*
 	
+	// Retorno
+	retorna o erro na execuÁ„o da query,
+	- Caso sej· executada com sucesso o retorno ser· null
+	- Caso n„o sej· possivel execultar a query, retorna a query seguinda do erro
+	  
+	*/
 	$int = array_keys($alter);
 	$int = $int[0];
 	$intv = $alter[$int];
+		
+	$executa = "DELETE FROM $tabela where $int = '$intv'";	
 	
-	
-	$executa = "DELETE FROM $tabela where $int = '$intv'";
-	$query = mysql_query($executa);
-	
-	return $executa;
-}
-
-function mlLimpaacento($texto){
-	$texto = ereg_replace('[¡¿¬√]', 'A', $texto);
-	$texto = ereg_replace("[·‡‚„™]","a",$texto);
-	$texto = ereg_replace("[…» ]","E",$texto);
-	$texto = ereg_replace("[ÈËÍ]","e",$texto);
-	$texto = ereg_replace("[ÌÏÓÔ]","i",$texto);
-	$texto = ereg_replace("[ÕÃŒœ]","I",$texto);
-	$texto = ereg_replace("[”“‘’]","O",$texto);
-	$texto = ereg_replace("[ÛÚÙı∫]","o",$texto);
-	$texto = ereg_replace("[⁄Ÿ€]","U",$texto);
-	$texto = ereg_replace("[˙˘˚]","u",$texto);
-	$texto = str_replace("«","C",$texto);
-	$texto = str_replace("Á","c",$texto);
-	$texto = str_replace(" ","-",$texto);
-	$texto = str_replace("'", "", $texto);		
-	$texto = str_replace('"', "", $texto);		
-	return($texto);
+	if(mysql_query($executa) != false){
+		return null;
+	} else{
+		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
+	}
 }
 
 
-//	Gerencia o array GET, onde retira o $needle (pode ser um array) caso exista em GET e monta em modo de link
+//	Gerencia o array $haystack, e retira o $needle (pode ser um array tambÈm) caso exista em $haystack e retorna em modo de link
+define("JF_URL_AMIGAVEL", "URL_AMIGAVEL");
+
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
+	/*
+	 * caso passe a constante JF_URL_AMIGAVEL para $amigavel retorna o link em formato de url amig·vel
+	 * 
+	 */
 	if($needle == 'URL_AMIGAVEL')
 		$amigavel = true;	
 
@@ -351,9 +333,9 @@ function jf_dunix($dataEnt){
 }
 
 //	FunÁ„o iconv formulada para array
-function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){ 
-	
+function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = "ISO-8859-1"){ return jf_iconv($in_charset, $out_charset, $arr); }
 
+function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
 	if (!is_array($arr)){
 		return iconv($in_charset, $out_charset, $arr);
 	}
@@ -362,12 +344,29 @@ function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
 	function array_iconv(&$val, $key, $userdata){
 		$val = iconv($userdata[0], $userdata[1], $val);
 	}
+	
 	array_walk_recursive($ret, "array_iconv", array($in_charset, $out_charset));
 	return $ret;
 }
 
+// Limpa acentuaÁ„o de uma string
+function jf_limpa_acento($texto){
+	$texto = ereg_replace('[¡¿¬√]', 'A', $texto);
+	$texto = ereg_replace("[·‡‚„™]","a",$texto);
+	$texto = ereg_replace("[…» ]","E",$texto);
+	$texto = ereg_replace("[ÈËÍ]","e",$texto);
+	$texto = ereg_replace("[ÌÏÓÔ]","i",$texto);
+	$texto = ereg_replace("[ÕÃŒœ]","I",$texto);
+	$texto = ereg_replace("[”“‘’]","O",$texto);
+	$texto = ereg_replace("[ÛÚÙı∫]","o",$texto);
+	$texto = ereg_replace("[⁄Ÿ€]","U",$texto);
+	$texto = ereg_replace("[˙˘˚]","u",$texto);
+	$texto = str_replace(array("«", "Á"), array("C", "c"),$texto);
+	return($texto);
+}
 
-function jf_urlformat($texto){
+// Formata uma string para o formato url
+function jf_formata_url($texto){
 	$texto = mb_strtolower($texto);
 	$texto = preg_replace("/[·‡‚„™]/","a",$texto);
 	$texto = preg_replace("/[ÈËÍ]/","e",$texto);
@@ -377,6 +376,19 @@ function jf_urlformat($texto){
 	$texto = str_replace("Á","c",$texto);
 	$texto = preg_replace("/[^ a-z 0-9 \t _ \/ -]/", "", $texto);	
 	$texto = str_replace(" ","-",$texto);
+	return($texto);
+}
+
+// Formata uma string para o formato "pasta"
+function jf_formata_pasta($texto){
+	$texto = mb_strtolower($texto); // muda tudo para minusculo
+	$texto = ereg_replace("[·‡‚„™]","a",$texto);
+	$texto = ereg_replace("[ÈËÍ]","e",$texto);
+	$texto = ereg_replace("[ÌÏÔÓ]","i",$texto);
+	$texto = ereg_replace("[ÛÚÙı∫]","o",$texto);
+	$texto = ereg_replace("[˙˘˚]","u",$texto);
+	$texto = str_replace("Á","c",$texto);
+	$texto = ereg_replace("[^ a-z 0-9 \t\n _ -- . \\ \/]", "", $texto);		
 	return($texto);
 }
 
@@ -474,4 +486,41 @@ function xml2array ( $xmlObject, $out = array () ){
 	return $out;
 
 }
+
+
+
+/*******************************	APELIDO DE FUN«’ES	*/
+
+function mlDUnix($data){
+	return jf_dunix($data);
+}
+
+function mLSubstr($texto, $final = 100){
+	return jf_substr($texto, $final);
+}
+
+function mLAntiInjection($sql){
+	return jf_anti_injection($sql);
+}
+
+function mLinsert($tabela, $dados){
+	return jf_insert($tabela, $dados);
+}
+
+function mLdelete($tabela, $alter){
+	return jf_delete($tabela, $alter);
+}
+
+function mLupdate($tabela, $dados, $alter, $mod = null){
+	return jf_update($tabela, $dados, $alter, $mod);
+}
+
+function jf_urlformat($texto){ 
+	return jf_formata_url($texto); 
+}	
+
+function mlLimpaacento($texto){ 
+	return jf_limpa_acento($texto); 
+}
+
 ?>

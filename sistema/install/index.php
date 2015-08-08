@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -97,7 +97,7 @@ case 'home':
 			
 			<div>
 				<label>Prefixo</label>
-				<input name="prefixo" value="ll"/>
+				<input name="prefixo" value="ll_"/>
 			</div>
 				
 		</fieldset>	
@@ -116,47 +116,55 @@ case 'instalar':
 		}
 		
 		require_once("../includes/class.leitor_sql.php"); 
-		$prefixo = $_POST['prefixo'].'_';
+		$prefixo = $_POST['prefixo'];
 			
 		echo '<h2>Progresso de instalação</h2>';
 	
 		
-		/*********************	INSTALA O BANCO	**/
-		
+		/*********************	CONECTA O BANCO	**/		
 		$conexao = mysql_connect($_POST['host'], $_POST['login'], $_POST['senha']);
-		
-		if(mysql_query('CREATE DATABASE '.$_POST['tabela']))
-			echo '<span style="font-size: 13px;">- Criando banco <strong>'.$_POST['tabela'].'</strong>: <span style="color: #080;">OK!</span> <br/></span>';
-		else
-			echo '<span style="font-size: 13px;">- Criando banco <strong>'.$_POST['tabela'].'</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 			
-		mysql_select_db($_POST['tabela'], $conexao);
+		if(mysql_select_db($_POST['tabela'], $conexao) == false){
+			echo 'A tabela <strong>'.$_POST['tabela'].'</strong> não foi encontrada, por favor crie e atualize essa página';
+			die();
+		}
+			
 
 		/*********************	INSTALA AS TABELAS	**/
 		$tp = new leitor_sql('bd.sql', 'll_', $prefixo);	
 		
 		
-		/*********************	CRIA A PASTA UPLOADS	**/		
+		/*********************	CRIA A PASTA UPLOADS	**/	
+		$frase = '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		if(!file_exists('../../uploads/usuarios')){
 			if(@mkdir('../../uploads/usuarios', 0777))
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #080;">OK!</span> <br/></span>';
-			else
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		} else {
-			echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		}
+				$frase =  '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #080;">OK!</span> <br/></span>';				
+		} 
+		echo $frase;
 		
+		$frase = '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
 		if(!file_exists('../../uploads/thumb.php')){
-			if(@copy('../includes/thumb.php', '../../uploads/thumb.php'))
-				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
-			else
-				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		} else {
-			echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
+			if(@copy('sup/thumb.php', '../../uploads/thumb.php'))
+				$frase =  '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+		}		
+		echo $frase;
+		
+		$frase = '<span style="font-size: 13px;">- Copiar aquivo <strong>thumbs.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
+		if(!file_exists('../../uploads/thumbs.php')){
+			if(@copy('sup/thumb.php', '../../uploads/thumbs.php'))
+				$frase =  '<span style="font-size: 13px;">- Copiar aquivo <strong>thumbs.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+		}		
+		echo $frase;
+		
+		$frase = '<span style="font-size: 13px;">- Copiar aquivo <strong>uploads/.htaccess</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
+		if(!file_exists('../../uploads/.htaccess')){
+			if(@copy('sup/thumbs_htaccess.php', '../../uploads/.htaccess'))
+				$frase =  '<span style="font-size: 13px;">- Copiar aquivo <strong>uploads/.htaccess</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 		}
+		echo $frase;
 		
 		/*********************	CRIA O ARQUIVO DE CONEXÃO	**/			
-		$fd = fopen('conection_base.txt', "r");
+		$fd = fopen('conection_base.ll', "r");
 
 		$in = "<?php\n";
 		while(!feof( $fd )){

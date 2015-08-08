@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,7 +11,7 @@
 */
 
 header("Content-Type: text/html; charset=ISO-8859-1",true);
-$versao = str_replace('* @Versão ', '', '* @Versão 4.7.1'); //Apenas para poupar trabalho nas trocas de versão
+$versao = str_replace('* @Versão ', '', '* @Versão 4.8.1'); //Apenas para poupar trabalho nas trocas de versão
 ?>
 
 <div id="llSobre">

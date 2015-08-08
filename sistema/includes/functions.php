@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -26,19 +26,21 @@ function navig_historic(){
 
 // define a constante ll_dir com o diretório atual de onde está o sistema
 function ll_dir(){
-	if(strstr(__DIR__ , '/'))
-		$dir = explode('/', __DIR__);
-	else 
-		$dir = explode('\\', __DIR__);
-		
-	array_pop($dir);
-	array_pop($dir);
+	$dir_c = dirname(__FILE__);
 	
-	if(strstr(__DIR__ , '/'))
-		$dir = implode('/', $dir);
+	if(strstr($dir_c , '/'))
+		$dir = explode('/', $dir_c);
+	else 
+		$dir = explode('\\', $dir_c);
+
+	array_pop($dir);
+	array_pop($dir);
+
+	if(strstr($dir_c , '/'))
+		$dir = implode('/', $dir).'/';
 	else 
 		$dir = implode('\\', $dir).'\\';
-	
+
 	define("ll_dir", $dir);
 	
 	return true;
@@ -146,7 +148,7 @@ function ll_securyt($app){
 			return true;
 		
 		foreach($appConfig->$grupo as $urls){
-			$permissao[$i] = array('plugin' => $_GET['plugin']);
+			$permissao[$i] = array('app' => $_GET['app']);
 			
 			foreach((array) $urls as $indice => $valor)
 				$permissao[$i][$indice] = ((!isset($valor) || $valor == '$') && isset($_GET[$indice]) ? $_GET[$indice] : $valor );
@@ -163,7 +165,6 @@ function ll_securyt($app){
 
 // função para testar permição do usuário
 function ll_tsecuryt($grupo = null){
-	
 	/*
 	Para usar basta puxar esta função dentro de um if() ela irá retornar true quando o usuário for desenvolverdor ou quando for especificado
 	exemplos de utilização
@@ -171,8 +172,11 @@ function ll_tsecuryt($grupo = null){
 	if(ll_tsecuryt()) // se estiver logado como desenvolvedor irá retornar true
 	if(ll_tsecuryt('admin')) // se estiver logado como admin irá retornar true
 	if(ll_tsecuryt('user')) // se estiver logado como user irá retornar true
-	if(ll_tsecuryt(array('user', 'admin'))) // se estiver logado como user ou como admin irá retornar true
+	if(ll_tsecuryt(array('user', 'admin'))) ou if(ll_tsecuryt('user,admin')) // se estiver logado como user ou como admin irá retornar true
 	*/
+	
+	if(!is_array($grupo) && strpos($grupo, ','))
+		$grupo = explode(',', $grupo);
 	
 	$grupo_user = $_SESSION['logado']['grupo'];
 	switch($grupo_user){
@@ -181,7 +185,7 @@ function ll_tsecuryt($grupo = null){
 		break;
 		
 		default:
-			if((is_array($grupo_user) && in_array($grupo, $grupo_user)) || $grupo == $grupo_user)
+			if((is_array($grupo) && in_array($grupo_user, $grupo)) || $grupo == $grupo_user)
 				return true;
 			else
 				return false;

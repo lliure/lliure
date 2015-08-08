@@ -3,7 +3,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,9 +12,10 @@
 
 header("Content-Type: text/html; charset=ISO-8859-1", true);
 require_once('../../etc/bdconf.php');
+require_once('../../includes/functions.php');
 
 $configs = $_POST['config'];
-$pluginPasta = $_POST['pasta'];
+$llAppPasta = $_POST['pasta'];
 
 $query = mysql_query(stripslashes($_POST['query']));
 
@@ -30,45 +31,48 @@ if(mysql_num_rows($query) > 0){
 	case 'icone':	// Exibição em icones -----------------------------------------------------
 		while($dados = mysql_fetch_assoc($query)){	
 			$id = $dados['id'];
-			$config = isset($configs['campo']) ? $configs[$dados[$configs['campo']]] : $configs;
-			
-			$nome = isset($config['coluna']) ? $dados[$config['coluna']] : $dados['nome'];		
-			$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
+			$config = isset($configs['campo']) ? $configs[$dados[$configs['campo']]] : $configs;	
+					
+			$nome = isset($config['coluna']) ? $dados[$config['coluna']] : $dados['nome'];
+			$nomelink = (strlen($nome) > 33 ? substr($nome, 0, 30)."..." : $nome);
 			
 			$pagInp = "name".$id;
 		
 			$click = isset($config['s_link']) ? $dados[$config['s_link']] : $config['link'].$id;
 
-			$ico = $pluginPasta.'sys/ico.png';
+			$ico = $llAppPasta.'sys/ico.png';
 
-			if(isset($config['ico'])){				
+			if(isset($config['ico'])){
 				if(is_array($config['ico'])){
 					if(isset($config['ico']['c']) && !empty($dados[$config['ico']['c']])) // se exitir e não for vázio o campo em que irá puxar o icone
 						$ico = 'includes/thumb.php?i='.$config['ico']['p'].$dados[$config['ico']['c']].':32:32:o';
 					elseif(isset($config['ico']['a'])) // se possuir um alternativo
-						$ico = $pluginPasta.$config['ico']['a'];
+						$ico = $llAppPasta.$config['ico']['a'];
 					elseif(isset($config['ico']['i'])) // se possuir um icone definido
 						$ico = $dados[$config['ico']['i']];
 				} else {
-					$ico = $pluginPasta.$config['ico'];
+					$ico = $llAppPasta.$config['ico'];
 				}
-			}
+			}	
 			
-			
-			?>
-			
-			<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" <?php echo (isset($config['tabela']) ? 'tabela="'.$config['tabela'].'"' : '').' '.(isset($config['id']) ? 'c_id = "'.$dados[$config['id']].'"' : '').' '.(isset($config['coluna']) ? 'coluna="'.$config['coluna'].'"' : ''); ?> dclick="<?php echo $click?>">
-				<div class="inter">
-					<img src="<?php echo $ico?>" alt="<?php echo $nome; ?>" />
-					<span id="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink; ?></span>
-				</div>
-			</div>
-			<?php
+			echo '<div class="listp" '
+					.'id="div'.$pagInp.'"'
+					.'rel="'.$pagInp.'"'
+					.(isset($config['tabela']) ? 'tabela="'.$config['tabela'].'"' : '')
+					.(isset($config['id']) ? 'c_id = "'.$dados[$config['id']].'"' : '')
+					.(isset($config['coluna']) ? 'coluna="'.$config['coluna'].'"' : '')
+					.(isset($config['isgrp']) ? 'permicao="'.(ll_tsecuryt($config['isgrp']) ? 'true' : 'false').'"' : '')
+					.'dclick="'.$click.'"'
+				.'>'
+					.'<div class="inter">'
+						.'<img src="'.$ico.'" alt="'.$nome.'" />'
+						.'<span id="'.$pagInp.'" title="'.$nome.'">'.$nomelink.'</span>'
+					.'</div>'
+				.'</div>';
 		}		
 		break;
 
 	case 'lista': // Exibição em lista -----------------------------------------------------
-
 		$ico = false;
 		
 		if(isset($configs['campo'])){
@@ -93,11 +97,9 @@ if(mysql_num_rows($query) > 0){
 		
 		while($dados = mysql_fetch_array($query)){	
 			$pagInp = "name".$dados['id'];
-						
+
 			$config = isset($configs['campo']) ? $configs[$dados[$configs['campo']]] : $configs;
-			
-			
-			
+
 			$click = $config['link'].$dados['id'];
 
 			$nome = isset($config['coluna']) ? $dados[$config['coluna']] : $dados['nome'];
@@ -107,12 +109,14 @@ if(mysql_num_rows($query) > 0){
 			echo '<tr id="div'.$pagInp.'"
 					class="listp"
 					rel="'.$pagInp.'"
-					dclick="'.$click.'"
-					'.(isset($config['tabela']) ? 'tabela="'.$config['tabela'].'"' : '').'
-					'.(isset($config['id']) ? 'c_id = "'.$dados[$config['id']].'"' : '').'
-					'.(isset($config['coluna']) ? 'coluna="'.$config['coluna'].'"' : '').'>
+					dclick="'.$click.'"'
+					.(isset($config['tabela']) ? 'tabela="'.$config['tabela'].'"' : '')
+					.(isset($config['id']) ? 'c_id = "'.$dados[$config['id']].'"' : '')
+					.(isset($config['coluna']) ? 'coluna="'.$config['coluna'].'"' : '')
+					.(isset($config['isgrp']) ? 'permicao="'.(ll_tsecuryt($config['isgrp']) ? 'true' : 'false').'"' : '')	
+				.'>'
 					
-					'. ($ico == true ? '<td><a href="'.$click.'"><img src="'.$config['ico'].'"></a></td>' : '' ).'
+					.($ico == true ? '<td><a href="'.$click.'"><img src="'.$config['ico'].'"></a></td>' : '' ).'
 					<td>'.str_pad($dados['id'], 7, 0, STR_PAD_LEFT).'</td>					
 					<td class="inter"><span id="'.$pagInp.'" title="'.$nome.'">'.$nomelink.'</span></td>';
 			
@@ -134,7 +138,7 @@ if(mysql_num_rows($query) > 0){
 		
 		break;
 	}
-} else { 
+} else {
 	?>
 	<script style="text/javascript">
 		jfAlert('Nenhum registro encontrado', '0.5');

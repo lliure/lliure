@@ -2,7 +2,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -113,13 +113,15 @@ function selectPag(divId){
 }
 
 function editName(){
-	var texto = $('#'+nav_selecionado).attr('title');
+	if($('#div'+nav_selecionado).attr('permicao') != 'false'){
+		var texto = $('#'+nav_selecionado).attr('title');
 
-	var coluna = $('#div'+nav_selecionado).attr('coluna');
-	coluna = (coluna == undefined ?  'nome' : coluna);
-		
-	$('#'+nav_selecionado).html('<form id="in'+nav_selecionado+'"><input type="text" class="edna" name="'+coluna+'" value="'+texto+'"/></form>');
-	$('#in'+nav_selecionado+' input').select();
+		var coluna = $('#div'+nav_selecionado).attr('coluna');
+		coluna = (coluna == undefined ?  'nome' : coluna);
+			
+		$('#'+nav_selecionado).html('<form id="in'+nav_selecionado+'"><input type="text" class="edna" name="'+coluna+'" value="'+texto+'"/></form>');
+		$('#in'+nav_selecionado+' input').select();
+	}
 }
 
 function alteraNome(){	
@@ -181,12 +183,14 @@ function jfnav_clickDelReg(selecionado){
 }
 
 function deletaArquivo(tabela, confirmed){
-	if(empty(nav_selecionado) == false){		
-		if((confirmed == true) || (confirmAlgo('este registro') == true)){
-			plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
-		
-			$('#div'+nav_selecionado).remove();
+	if($('#div'+nav_selecionado).attr('permicao') != 'false'){
+		if(empty(nav_selecionado) == false){		
+			if((confirmed == true) || (confirmAlgo('este registro') == true)){
+				plg_load('api/jfnav/delfile.php?id='+nav_selecionado+'&tabela='+tabela);
+			
+				$('#div'+nav_selecionado).remove();
+			}
+			
 		}
-		
 	}
 }

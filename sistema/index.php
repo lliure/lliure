@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -55,6 +55,10 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 	case 'app':
 		if(!empty($_GET['app']) && file_exists('plugins/'.$_GET['app'])){
+			$llAppHome = 'index.php?app='.$_GET['app'];
+			$llAppOnServer = 'onserver.php?app='.$_GET['app'];
+			$llAppPasta = 'plugins/'.$_GET['app'].'/';
+			
 			if(ll_tsecuryt() == false){
 				if(($config = @simplexml_load_file('plugins/'.$_GET['app'].'/sys/config.plg')) !== false && isset($config->seguranca) && $config->seguranca != 'public'){
 					if(ll_securyt($_GET['app']) == true)
@@ -201,7 +205,7 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 							while($dados = mysql_fetch_array($query)){
 								?>
 								<li id="appR-<?php echo $dados['id']?>">
-									<a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
+									<a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
 										<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
 									</a>
 								</li>
@@ -223,8 +227,12 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 		?>
 		<div class="both"></div>
 	</div>
+	
+	
+	<div id="rodape">
+		<a href="http://www.lliure.com.br"><img src="imagens/layout/logo_inf.png" alt="" /></a>
+	</div> 
 </div> 
-
 </body>
 
 <head>

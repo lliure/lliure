@@ -3,7 +3,7 @@
 *
 * API PHP Mailer - Plugin WAP
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -13,19 +13,21 @@
 require_once("class.phpmailer.php");
 
 if(!defined('ll_dir')){
-	if(strstr(__DIR__ , '/'))
-		$dir = explode('/', __DIR__);
-	else 
-		$dir = explode('\\', __DIR__);
-		
-	array_pop($dir);
-	array_pop($dir);
+	$dir_c = dirname(__FILE__);
 	
-	if(strstr(__DIR__ , '/'))
+	if(strstr($dir_c , '/'))
+		$dir = explode('/', $dir_c);
+	else 
+		$dir = explode('\\', $dir_c);
+
+	array_pop($dir);
+	array_pop($dir);
+
+	if(strstr($dir_c , '/'))
 		$dir = implode('/', $dir).'/';
 	else 
 		$dir = implode('\\', $dir).'\\';
-	
+
 	define("ll_dir", $dir);
 	}
 
@@ -48,8 +50,8 @@ function limpaMail($in){
 function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $header = null){	
 	$to = limpaMail($destinatario);
 	
-	if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false)
-		$llconf = false;
+	if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false || !isset($llconf->smtp->host))
+		return 'Nao foi possível encontrar as configurações de smtp';
 		
 	
 	$mail = new PHPMailer();

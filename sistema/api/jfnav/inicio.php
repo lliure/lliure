@@ -3,7 +3,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.7.1
+* @Versão 4.8.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -34,7 +34,7 @@
 	$navegador->monta();
 
 	###
-	Opção "config", essa é a mais complicada pois é nela que difinimos como vai ser o icone o clique duplo e a divercidade da busca
+	Opção "config", essa é a mais complicada pois é nela que difinimos como vai ser o icone o clique duplo e a divercidade da busca...
 
 	Assim ficaria uma configuração mais simples, no caso apenas vamos direcionar o duplo clique  para uma página (visualizar) que tenha o id "X" (por padrão o jfnav pesquisa o campo "id" e adiciona no final da url)
 	$navegador->config = array(
@@ -46,8 +46,7 @@
 	$navegador->config = array(
 				'link' => '?app=meuapp&pagina=visualizar&id=',
 				'ico' => 'img/meuico.png'
-				);
-	
+				);	
 
 	Exemplo do config com botões extras, !! só funciona como a exibição em lista !!
 	$navegador->config = array(
@@ -59,7 +58,13 @@
 						)
 				);
 
-	exemplo de montagem do config com tabelas anexadas
+	Alterando a coluna de exibição (por padrão se chama nome), desta forma vamos definir que a coluna que vamos consultar será "cor" ao invés de "nome"
+		$navegador->config = array(
+				'link' => '?app=meuapp&pagina=visualizar&id=',
+				'coluna' => 'cor'
+				);
+	
+	Exemplo de montagem do config com tabelas anexadas, isso é usado para quando a coluna principal estiver em outra tabela (um exemplo é quando utilizamos multidiomas)
 	$navegador->config = array(
 			'link' => '?app=meuapp&pagina=visualizar&id=',
 			'ico' => 'img/meuico.png',
@@ -68,6 +73,14 @@
 			'id' => 'campo_id'
 			);
 	
+	Consultando mais de um tipo de registro
+	para este fim você tera que usar da mesma forma que a de cima porem dentro de arrays, e usar o indice 'campo' para definir o campo que diferencia um do outro, e os indices dos array de configuração será a diferença
+	* 
+	$navegador->config = array(
+				'campo' => 'tipo',
+				'produto' => array ('link' => '?app=meuapp&pagina=visualizar&id='),
+				'categoria' => array ('link' => '?app=meuapp&p=categoria&id=')
+				);
 
 	-- Obsoleto --
 	Exemplo de utilização
