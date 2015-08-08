@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -106,7 +106,7 @@ function in($var,$type = 'VALUE') {
 }
 
 // função que testa a segurança de uma página
-function ll_securyt($arquivo){
+function ll_securyt($app){
 	/*
 	No aquivo config.plg contido na pasta sys do aplicativo você insere a url de onde estára o arquivo de configuração de segurança, que normalmente estára em etc/nome_do_aplicativo/segur.ll
 	
@@ -131,27 +131,26 @@ function ll_securyt($arquivo){
 	como você pode verificar não é necessário setar o primeiro get, no caso o que aponta para o aplicativo em questão
 	*/
 
-
 	$grupo = $_SESSION['logado']['grupo'];
-	$appConfig = simplexml_load_file($arquivo);
-	
-	$i = 0;
-	if($appConfig->$grupo == 'public')
-		return true;
-	
-	foreach($appConfig->$grupo as $urls){
-		$permissao[$i] = array('plugin' => $_GET['plugin']);
+	if(($appConfig = @simplexml_load_file('etc/'.$app.'/seguranca.ll')) == true){
 		
-		foreach((array) $urls as $indice => $valor)
-			$permissao[$i][$indice] = ((!isset($valor) || $valor == '$') && isset($_GET[$indice]) ? $_GET[$indice] : $valor );
+		$i = 0;
+		if($appConfig->$grupo == 'public')
+			return true;
 		
-		$final = array_merge(array_diff($_GET, $permissao[$i]), array_diff($permissao[$i], $_GET));
-			if(empty($final))
-				return true;
-		
-		$i++;
+		foreach($appConfig->$grupo as $urls){
+			$permissao[$i] = array('plugin' => $_GET['plugin']);
+			
+			foreach((array) $urls as $indice => $valor)
+				$permissao[$i][$indice] = ((!isset($valor) || $valor == '$') && isset($_GET[$indice]) ? $_GET[$indice] : $valor );
+			
+			$final = array_merge(array_diff($_GET, $permissao[$i]), array_diff($permissao[$i], $_GET));
+				if(empty($final))
+					return true;
+			
+			$i++;
+		}
 	}
-
 	return false;
 }
 

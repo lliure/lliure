@@ -1,11 +1,11 @@
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 html, body, div, span, applet, object, iframe,
@@ -80,6 +80,7 @@ html, body {
 	width:100%;
 	height:100%;
 	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+	font-size: 12px;
 	} 
 	
 body{	
@@ -128,7 +129,7 @@ span.h3{
 	}
 	
 h1	{	
-	font-size: 16px;
+	font-size: 2em;
 	margin-bottom: 3px;
 	color: #004B98;
 	font-weight: bold;
@@ -140,8 +141,8 @@ h1	{
 		}
 		
 h2{
-	font-size: 15px;
-	color: #3673A6;
+	font-size: 1em;
+	color: #9e0000;
 	margin-bottom: 15px;
 	font-weight: bold;
 	}
@@ -180,7 +181,9 @@ p{	margin: 0 0 8px 0;
 		}
 
 	label {	
-		display: block; 
+		display: block;
+		margin-bottom: 5px;
+		font-size: 1em;
 		}
 
 	label span {
@@ -189,11 +192,14 @@ p{	margin: 0 0 8px 0;
 		} 
 
 	input, textarea, select {
-		color: #336699;
+		color: #444;
 		padding: 3px;
 		outline: none;
 		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
-		font-size: 12px;
+		font-size: 1em;
+		border: 1px solid #ccc;
+		border-radius: 3px;
+		line-height: 1.5em;
 		}
 
 	select {	
@@ -202,17 +208,17 @@ p{	margin: 0 0 8px 0;
 
 	textarea {	
 		height: 100px;
-		overflow: auto; 
-		font-size: 11px;
+		overflow: auto;
 		}
 
 	button {
 		background: #999;
+		color: #fff;
 		cursor: pointer;
 		border: none;
-		font-size: 11px;
+		font-size: 0.8em;
 		margin: 0px;
-		padding: 0px;
+		padding: 8px;
 		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
 		} 
 /***********************************************/

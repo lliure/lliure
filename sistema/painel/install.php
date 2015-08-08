@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -36,10 +36,9 @@ default:
 							if(!isset($appConfig->seguranca) || $appConfig->seguranca == 'public'){
 								echo '<div class="fase"><div class="msm">As definições de segurança do aplicativo estão setadas como <strong>public</strong></div></div>';
 							} else {
-								$arqseg = array_pop(explode('/', $appConfig->seguranca));
-								if(file_exists('../plugins/'.$_GET['app'].'/sys/'.$arqseg))
+								if(file_exists('../plugins/'.$_GET['app'].'/sys/seguranca.ll'))
 									echo '<div class="fase"><div class="msm">O aplicativo possui um arquivo de configuração de permições</div></div>
-										<input name="segur" type="hidden" value="../plugins/'.$_GET['app'].'/sys/'.$arqseg.'" />';
+										<input name="segur" type="hidden" value="../plugins/'.$_GET['app'].'/sys/seguranca.ll" />';
 								else
 									echo '<div class="fase"><div class="msm msmE">Não foi possivel encontrar o arquivo de com as configuraçõs de permições ('.$arqseg.')</div></div>';
 							}
@@ -100,7 +99,7 @@ case 'instalar':
 	
 	if(isset($_POST['segur'])){
 		@mkdir('../etc/'.$_GET['app'], 0777);
-		@copy($_POST['segur'] ,'../etc/'.$_GET['app'].'/'.array_pop(explode('/', $appConfig->seguranca)) );
+		@copy($_POST['segur'] ,'../etc/'.$_GET['app'].'/seguranca.ll');
 	}
 
 	jf_insert(PREFIXO.'plugins', array('nome' => $aplicativo_nome, 'pasta' => $_GET['app']));

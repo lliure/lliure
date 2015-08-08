@@ -2,10 +2,10 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -38,6 +38,8 @@ jQuery.fn.extend({
 });
 
 function jfnav_start(){
+	$('#jfnav').html('<span class="load"><img src="api/jfnav/imagens/loading.gif" alt=""/></span>');
+
 	$('#jfnav').load('api/jfnav/jfnav.php', {query: jfnav_objetos.query, config: jfnav_objetos.config, pasta: jfnav_objetos.pasta, exibicao: jfnav_objetos.exibicao},
 		function(){
 			$('#jfnav').jfnav();

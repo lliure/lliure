@@ -1,4 +1,25 @@
-Neste aquivo estão descritas todas atualizações do Lliure e de API nativas
+Neste aquivo estão descritas todas atualizações do lliure e de API nativas
+
+-- 4.4.4 (26/04/2012)
+# [update/API] - jfnav - Agora conta com um suporte para imagens independente para cada registro na exibição de icones 
+
+
+-- 4.4.3 (20/04/2012)
+# [bug/API] - Foi detectado um problema na api de fotos, quando o usuário clicasse para renomear a imagem ficava com barras de rolagem na box e com botão de confirmar desconfigurado, além de um erro de variável
+# [bug/API] - FileUp - estafa ficando desconfigarada no chrome, e não fazia a quebra do conteúdo, assim quando em qualque contêiner não era respeitado paddings e margins do mesmo, e também não executava o o click no "input file"
+# [update] - Ajustes de layout
+
+-- 4.4.2 (14/04/2012)
+# [update] - Atualização no sistema de segurança interno
+# [update] - Alterada a forma de puxar os css para link ao invés de @import
+# [update] - Adicionado arquivo llconf.ll na pasta "etc" para gerenciar as configurações internas do lliure
+
+-- 4.4.1 (11/04/2012)
+# [bug] - Problemas no sistema de segurança quando logado com contas abaixo de "desenvolvedor"
+# [bug/API] - foto - não excluía foto, não marca como favorito
+
+-- 4.4.0 (05/04/2012)
+# [update] - Alteração de layout para lliure
 
 -- 4.3.3 (04/04/2012)
 # [bug/funcao] - jf_monta_link - ficou com alguns problemas na ultima atualização para php5
@@ -8,14 +29,14 @@ Neste aquivo estão descritas todas atualizações do Lliure e de API nativas
 
 -- 4.3.2 (29/03/2012)
 # [update] - Adicionada uma nova função ao pacote jf a jf_stradd
-# [update] - As tabelas não chegavam a 100% na formatação padrão de formularios
-# [update/API] - jfnav - A função foi atualizada com novas funcionabilidades e foi transformada em uma classe
-# [bug/API] - foto - devido a uma atualização a parte responsável pelo upload estáva con uma configuração errada
+# [update] - As tabelas não chegavam a 100% na formatação padrão de formulários
+# [update/API] - jfnav - A função foi atualizada com novas funcionalidades e foi transformada em uma classe
+# [bug/API] - foto - devido a uma atualização a parte responsável pelo upload estava com uma configuração errada
 
 -- 4.3.1 (26/03/2012)
-# [BUG] - Por questões de seguraça estava bloqueado acesso interno do sistema a arquivos swf
-# [BUG] - A função de segurança ll_secury() estava inpedindo o acesso de usuarios do tipo "user" mesmo com acesso "public"
-# [update/CSS] - formatação dos formularios padrões "classe form"
+# [BUG] - Por questões de segurança estava bloqueado acesso interno do sistema a arquivos swf
+# [BUG] - A função de segurança ll_secury() estava impedindo o acesso de usuários do tipo "user" mesmo com acesso "public"
+# [update/CSS] - formatação dos formulários padrões "classe form"
 # [update/CSS] - Adicionado reset de css
 
 -- 4.3.0 (22/03/2012)
@@ -23,11 +44,11 @@ Neste aquivo estão descritas todas atualizações do Lliure e de API nativas
 # [update] - Na tabela "PREFIXO.admin" a coluna 'tipo' foi renomeada para 'grupo' e seus valores agora são varchar(10) atualmente podem ser preenchidos como 'dev', 'admin', 'user'
 # [update] - Adicionada função para testar o grupo do usuário logado função ll_tsecuryt()
 # [update] - Modificada a forma de edição de usuários, e criado link para editar a sua conta
-# [update] - Adicionada sistema de segurança para apicativos função ll_securyt()
-# [update] - Incerido arquivo .htaccess para bloquear acessos direto a pastas
+# [update] - Adicionada sistema de segurança para aplicativos função ll_securyt()
+# [update] - Inserido arquivo .htaccess para bloquear acessos direto a pastas
 # [update] - A pasta apt_files foi renomeado para /etc
 # [update] - O arquivo config.php foi transferido para pasta /etc e renomeado para bfconf.php
-# [update] - O instalador verifica antes da instalação a permição da pasta /etc e se a pasta uploads está criada e com permição 777
+# [update] - O instalador verifica antes da instalação a permissão da pasta /etc e se a pasta uploads está criada e com permição 777
 
 -- 4.2.7 (15/03/2012)
 # [update/API] - fileup - uma nova API para ajudar o upload de arquivos únicos 
@@ -39,7 +60,7 @@ Neste aquivo estão descritas todas atualizações do Lliure e de API nativas
 # [bug] - no instalador tinha restos do corner
 
 -- 4.2.4 (10/03/2012)
-# [bug/API] - jnav quando ela não é iniciada estava com erro em uma variavel
+# [bug/API] - jnav quando ela não é iniciada estava com erro em uma variável
 
 -- 4.2.3 (10/03/2012)
 # [bug/API] - jnav ao atualizar o nome de um registro não removia o input

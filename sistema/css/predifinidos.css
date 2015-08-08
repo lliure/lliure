@@ -1,11 +1,11 @@
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 input.edna{
@@ -71,50 +71,50 @@ a.link{
 
 /**********************			FORM			**********************/
 form.form{
-	margin-bottom: 20px;
 	float: left;
 	width: 100%;
 	}
 	
 form.form fieldset{
 	clear: both;
+	padding-right: 6px;
 	}
 
 	
 	form.form fieldset legend{
 		font-size: 14px;
-		margin-bottom: 5px;
+		margin-bottom: 10px;
 		font-weight: bold;
 		color: #444;
 		}
 
-	form.form div {
+	form.form fieldset div {
 		margin-bottom: 20px;
 		display: block;
 		}
 		
-		form.form div > table{
+		form.form fieldset div > table{
 			border-collapse: separate;
 			border-spacing: 5px 0px;
 			margin: 0 -11px 0 -5px;
 			}
 
-			form.form div > table tbody{
+			form.form fieldset div > table tbody{
 				width: 100%;
 				}
 
-				form.form div > table tbody tr{
+				form.form fieldset div > table tbody tr{
 					width: 100%;
 					}
 					
-					form.form div > table tbody tr td{
+					form.form fieldset div > table tbody tr td{
 						padding-right: 6px;
 						vertical-align: top;
 						padding-bottom: 6px;
 						width: auto;
 						}
 			
-		form.form div label{
+		form.form fieldset div label{
 			float: none;
 			margin-bottom: 3px;
 			color: #555;
@@ -122,20 +122,20 @@ form.form fieldset{
 			display: block;
 			}
 			
-		form.form div label.required{
+		form.form fieldset div label.required{
 			font-weight: bold;
 			}
 			
-		form.form div label.error{
+		form.form fieldset div label.error{
 			font-size: 10px;
 			margin-top: 4px;
 			color: #999;
 			}
 				
 		
-		form.form  div input, 
-		form.form div textarea, 
-		form.form div select{
+		form.form fieldset div input, 
+		form.form fieldset div textarea, 
+		form.form fieldset div select{
 			display: block;
 			float: none;
 			border: 1px solid #CCC;
@@ -144,35 +144,40 @@ form.form fieldset{
 			color: #666;
 			border-radius: 3px;
 			background: #fff;
+			font-size: 1em;
 			}
 			
-		form.form  div input:focus,
-		form.form div textarea:focus, 
-		form.form div select:focus{
+		form.form fieldset div input:focus,
+		form.form fieldset div textarea:focus, 
+		form.form fieldset div select:focus{
 			box-shadow: 0px 0px 3px #ccc;
 			}
 		
-		form.form  div input.error, form.form div textarea.error, form.form div select.error{
+		form.form fieldset div input.error,
+		form.form fieldset div textarea.error,
+		form.form div fieldset select.error{
 			border-color: #777;
 			}
 		
-		 form.form div select{
+		 form.form fieldset div select{
 			width: 100%;
 			padding: 3px 1px;
 			margin-right: -6px;
 			}	
 		
-			form.form div select option{
+			form.form fieldset div select option{
 				padding: 0px 4px;
 				background: #eee;
 				}
 
-		form.form  div input.inatv, form.form div textarea.inatv, form.form div select.inatv{
+		form.form fieldset div input.inatv,
+		form.form div fieldset textarea.inatv,
+		form.form div fieldset select.inatv{
 			background: #e7e7e7;
 			color: #999;
 			}
 		
-		form.form  div  span.ex{
+		form.form fieldset div span.ex{
 			float: none;
 			clear: both;
 			margin-top: 2px;
@@ -193,14 +198,36 @@ form.form fieldset{
 	.mceEditor{
 		display: block;
 		margin-right: -6px;
-		}
-	
+		}	
 
 form.form a.a{
 	float: right;
 	margin: 10px;
 	margin-top: 0;
 	}
+
+form.form div.botoes {
+	margin-top: -15px;
+	}
+
+	form.form div.botoes button,
+	form.form div.botoes a{
+		background: #444;
+		padding: 10px 15px;
+		float: left;
+		color: #ddd;
+		border-radius: 3px;
+		font-size: 11px;
+		text-decoration: none;
+		margin: 0px;
+		line-height: 11px;
+		margin-right: 8px;
+		}
+
+	form.form div.botoes button:hover,
+	form.form div.botoes a:hover{
+		background: #5e5e5e;
+		}
 
 	
 /**********************			MENU SUPERIOR		**********************/
@@ -243,8 +270,10 @@ form.form a.a{
 table.table{
 	width: 100%;
 	border-collapse: separate;
-	border-spacing: 5px;
+	border-spacing: 0 0 5px 0;
+	clear: both;
 	}
+
 
 	table.table tr.alterna1{
 		background: #eee;
@@ -254,6 +283,9 @@ table.table{
 			font-weight: bold;
 			font-size: 13px;
 			color: #555;
+			padding: 5px 8px;
+			background: #ddd;
+			border-bottom: 1px solid #ccc;
 			}			
 			
 		table.table tr th.ico{
@@ -262,14 +294,15 @@ table.table{
 			}		
 			
 		table.table tr td{
-			padding: 8px 8px;
+			padding: 10px 8px;
 			font-size: 12px;
 			border: 1px solid #eee;
 			vertical-align: middle;
+			border-bottom: 1px solid #ddd;
 			}
 
 		table.table tr:hover td{
-			background: #FCFDDE;
+			background: #f5f5f5;
 			}
 			
 		table.table tr td img{

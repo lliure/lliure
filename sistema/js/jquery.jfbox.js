@@ -1,12 +1,12 @@
 
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -33,12 +33,11 @@ $(function(){
 			carrega: false,
 			campos: false,
 			position: false,
-			addclass: ''
+			addClass: ''
 		}
 		
 		//função do jquery que substitui os parametros que não foram informados pelos defaults
-		var options = jQuery.extend(sDefaults, parametros);
-		
+		var options = jQuery.extend(sDefaults, parametros);		
 		
 		$(this).bind({
 			submit: function() {
@@ -101,8 +100,8 @@ $(function(){
 			
 			$('#jfboxLoad').removeClass();
 			
-			if(options.addclass != '')
-				$('#jfboxLoad').addClass(options.addclass);
+			if(options.addClass != '')
+				$('#jfboxLoad').addClass(options.addClass);
 			
 			if((jfboxVars.position != undefined ? jfboxVars.position : options.position) == false){
 

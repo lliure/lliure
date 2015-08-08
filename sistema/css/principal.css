@@ -1,30 +1,47 @@
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 #tudo { 	
-	margin: 0 13px;
+	margin: 0;
 	position: relative;  /**/
 	text-align:left;
 	min-height: 100%;
-	font-size: 11px;	
+	font-size: 11px;
+	background: #ededed;
 	}
-		
+
 * html #tudo {height: 100%;} /* HACK PARA IE */
 	
 #topo {
 	width: 100%;
-	height: 62px;
+	height: 34px;
 	position: relative;
-	z-index: 500;
-	border-radius: 0 0 10px 10px;
+	z-index: 1000;
+	background: #a90037;
 	}
+	
+	#topo .borda-esquerda,
+	#topo .borda-direita{
+		position: absolute;
+		background: url('../imagens/layout/lliure_elementos.png') no-repeat;
+		width: 12px;
+		height: 40px;
+		top: 0px;
+		left: 0px;
+		}
+		
+	#topo .borda-direita{
+		left: auto;
+		right: 0px;
+		background-position: -15px 0;
+		}
 	
 #topo .left{
 	position: relative;
@@ -34,86 +51,109 @@
 	
 	#topo .left .logoSistema{
 		position: absolute;
-		left: 15px;
-		top: 10px;
+		left: 30px;
+		top: 7px;
 		z-index: 50;
+		background: url('../imagens/layout/logo_mini.png') no-repeat;
 		}
+		
+		#topo .left .logoSistema img{
+			width: 57px;
+			height: 18px;
+			}
 	
 	#topo .left a.addDesktop{
 		position: absolute;
 		bottom: 0px;
-		left: 57px;
+		left: 200px;
 		z-index: 100;
 		}
-
 	
-#topo .right{
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 65px;
-	width: 450px;
-	}
-	
-	#topo .right ul{
-		clear: both;
-		}	
-				
-	#topo .right ul.menu{
+	#topo .right div.menu{
 		position: absolute;
-		top: 5px;
-		right: 0;
+		top: 12px;
+		right: 14px;
 		}
 
-	#topo .right ul li{
-		float: left;
-		margin: 2px 8px;
-		}
-		
-	#topo .right ul li a{
-		float: left;
-		color: #fff;
-		}
-		
+		#topo .right div.menu ul li{
+			float: left;
+			margin-left: 16px;
+			}
 			
-	#topo .right ul.start{
-		position: absolute;
-		height: 38px;
-		bottom: 0px;
-		right: 0;
-		}
-		
-	#topo .right ul.start  li{
-		margin: 0;
-		background: url(../imagens/layout/bar.png) left center no-repeat;
-		}
-		
-		#topo .right ul.start  li:first-child{
-			background: none;
-			}
-		
-	#topo .right ul.start  li a{
-		padding: 7px 18px;
-		text-align: center;
-		}
-		
-	#topo .right ul.start  li a:hover{
-		background: url(../imagens/layout/start_hover.png)  no-repeat;
-		}
+			#topo .right div.menu ul li a{
+				float: left;
+				color: #fff;
+				}
+				
+			#topo .right div.menu ul li a:hover{
+				text-decoration: underline;
+				}
 
-		#topo .right ul.start  li a img{
-			margin-top: 5px;
-			width: 16px;
+
+	#topo .right div.start{
+		position: absolute;
+		height: 34px;
+		top: 0px;
+		right: 320px;
+		width: 20px;
+		overflow: hidden;
+		}
+		
+	#topo .right div.start:hover{
+		width: auto;
+		}
+		
+		
+		#topo .right div.start .icone{
+			width: 20px;
 			height: 16px;
+			background: url('../imagens/layout/lliure_elementos.png') -29px 0 no-repeat;
+			float: left;
+			position: relative;
+			top: 0;
+			left: 4px;
+			margin: 9px 0;
 			}
+			
+		#topo .right div.start:hover .icone{
+			background-position: -29px -19px;
+			}
+		
+		#topo .right .start ul {
+			position: relative;
+			left: 0px;
+			top: 0px;
+			float: left;
+			background: #800225;
+			}
+				
+			#topo .right .start ul  li{
+				margin: 0;
+				float: left;
+				}
+				
+				#topo .right .start ul  li a{
+					padding: 9px 18px;
+					text-align: center;
+					float: left;
+					}
+				
+				#topo .right .start ul   li a:hover{
+					background: url(../imagens/layout/start_hover.png)  no-repeat;
+					}
+
+					#topo .right .start ul   li a img{
+						width: 16px;
+						height: 16px;
+						}
 
 #conteudo {
-	z-index: 1000;
+	z-index: 500;
 	background: none; 
-	margin-top: 17px;
 	padding-bottom: 17px;
 	position: relative;
-	}	
+	margin: 17px 13px 0;
+	}
 	
 		
 #rodape {
@@ -121,7 +161,7 @@
 	position: absolute;
 	bottom: 0; 
 	height: 15px;
-	left: 0px;
+	left: 0;
 	text-align: right;
 	}
 	
@@ -129,9 +169,9 @@
 	#rodape span{
 		display: block;
 		font-size: 10px;
+		padding-right: 15px;
 		}
 		
 		#rodape  a{
 			color: #999;
 			}
-		

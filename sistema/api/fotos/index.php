@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -48,7 +48,16 @@ $(function(){
 	carregaFotos();		
 	
 	$('#foto_file_').uploadify({
-		'uploader'  : 'api/fotos/uploadify.swf',	}, 'script'    : 'api/fotos/uploadify.php?array=<?php echo $galeriaAPI['tabela'].'*'.$galeriaAPI['ligacaoCampo'].'*'.$galeriaAPI['ligacaoId']; ?>',	}, 'cancelImg' : 'api/fotos/cancel.png',	}, 'folder'    : '<?php echo $galeriaAPI['dir']; ?>',	}, 'auto'      : true,	}, 'fileExt'     : '*.jpg;*.png',	}, 'fileDesc'    : 'Arquivos de imagem (.jpg e .png)',	}, 'buttonText'  : 'Selecionar fotos',	}, 'multi'     : true,	}, 'onAllComplete'  : function(event,data) {
+		'uploader'  : 'api/fotos/uploadify.swf',
+		'script'    : 'api/fotos/uploadify.php?array=<?php echo $galeriaAPI['tabela'].'*'.$galeriaAPI['ligacaoCampo'].'*'.$galeriaAPI['ligacaoId']; ?>',
+		'cancelImg' : 'api/fotos/cancel.png',
+		'folder'    : '<?php echo $galeriaAPI['dir']; ?>',
+		'auto'      : true,
+		'fileExt'     : '*.jpg;*.png',
+		'fileDesc'    : 'Arquivos de imagem (.jpg e .png)',
+		'buttonText'  : 'Selecionar fotos',
+		'multi'     : true,
+		'onAllComplete'  : function(event,data) {
 			carregaFotos();
 		}
 	});

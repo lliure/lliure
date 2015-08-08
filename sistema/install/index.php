@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -17,7 +17,7 @@ case 'index':
 	?>
 	<html>
 	<head>
-		<title>Intalador Lliure</title>
+		<title>Intalador lliure</title>
 		
 		<style  type="text/css">
 			@import "../css/base.css";
@@ -27,7 +27,7 @@ case 'index':
 	</head>
 	<body>
 		<div class="container">
-			<h1>Instalação do Lliure</h1>
+			<h1>Instalação do lliure</h1>
 			<div class="instalador">
 				<?php
 				$ac = (isset($_GET['p']) ? $_GET['p'] : 'home');

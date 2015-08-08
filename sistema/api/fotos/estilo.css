@@ -1,3 +1,15 @@
+/**
+*
+* lliure CMS
+*
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+
 /**********************			uploadify			**********************/
 .uploadifyQueueItem {
 	background-color: #F5F5F5;
@@ -111,12 +123,16 @@ div.ediFoto {
 		div.ediFoto form input{
 			width: 225px;
 			float: left;
-			padding: 0;
+			padding: 4px;
 			font-size: 11px;
-			margin: 2px 0;
+			margin: 0;
 			}
 			
 		div.ediFoto form .botao{
 			float: right;
-			margin: 2px 0 ;
+			margin: 0;
+			}
+			
+		div.ediFoto form .botao button{
+			padding: 6px 14px;
 			}

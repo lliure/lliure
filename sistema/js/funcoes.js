@@ -1,14 +1,15 @@
 
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 function ajax() {
    try {
       xmlhttp = new XMLHttpRequest();
@@ -118,11 +119,15 @@ function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 
 /*************************************************************/
 
-function plg_load(url){
+function plg_load(url, callback){ // APELIDO PARA ll_load
+	return ll_load(url, callback);
+}
+
+function ll_load(url, callback){
 	if(url == 'load')
 		$('#tudo').prepend('<div id="plg_load"></div>');
 	else
-		$('#plg_load').load(url);
+		$('#plg_load').load(url, callback);
 }
 
 function plg_sessionFix(){

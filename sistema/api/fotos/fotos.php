@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -37,7 +37,7 @@ if(mysql_num_rows($query) == 0){
 		if(empty($slt['id'])){
 			$principal = mysql_fetch_assoc(mysql_query($sql.' order by RAND() limit 1'));
 			
-			jf_update(PREFIXO.$tabela, array($capa_campo => $principal['id']), array('id' => $id));
+			jf_update(PREFIXO.$tabela_app, array($capa_campo => $principal['id']), array('id' => $id));
 			$capa_foto = $principal['id'];
 				
 			echo '<div class="mensagem"><span>Foi selecionada aleatoriamente uma foto como principal. Para alterar basta posicionar o cursor em cima da foto desejada e clicar em  <img src="api/fotos/star_fav.png" alt="Marcar capa" /></span></div>';
@@ -87,7 +87,7 @@ if(mysql_num_rows($query) == 0){
 			$('.favorite').click(function(){
 				var id = $(this).attr('idfoto');
 
-					$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela.'&campo='.$capa_campo.'&fk='.$id.'&foto=';?>'+id, abreBox: false}, function(){
+				$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela_app.'&campo='.$capa_campo.'&fk='.$id.'&foto=';?>'+id, abreBox: false}, function(){
 					$('#div'+capa).css('background', '#fff');			
 					$('#div'+id).css('background', '#fa0');					
 					capa = id;

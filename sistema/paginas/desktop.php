@@ -1,12 +1,12 @@
 <?php
 /**
 *
-* Plugin CMS
+* lliure CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -14,9 +14,8 @@ $pluginTable = PREFIXO."desktop";
 $consulta = "select * from ".$pluginTable." order by nome asc";
 $query = mysql_query($consulta);
 ?>
-
 <script type="text/javascript">
-	$().ready(function() {
+	$(function() {
 		$('.bodyhome').jfnav();
 	});
 </script>

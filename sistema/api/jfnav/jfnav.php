@@ -3,10 +3,10 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.3.3
-* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
-* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
-* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @versão 4.4.4
+* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -21,14 +21,14 @@ $query = mysql_query(stripslashes($_POST['query']));
 if(mysql_error() != false)
 	die('Erro na consulta mysql: <strong>'.$_POST['query'].'</strong>');
 	
-if(mysql_num_rows($query) > 0){	
+if(mysql_num_rows($query) > 0){
 	$exibicoes = array('icones', 'lista');
 	
 	switch(in_array($_POST['exibicao'], $exibicoes) ? $_POST['exibicao'] : 'icones'){
 		
 	
 	case 'icones':	
-		while($dados = mysql_fetch_array($query)){	
+		while($dados = mysql_fetch_assoc($query)){	
 			$id = $dados['id'];
 			$nome = $dados['nome'];
 			
@@ -36,10 +36,20 @@ if(mysql_num_rows($query) > 0){
 			
 			if(isset($config['campo'])){			
 				$click = $config[$dados[$config['campo']]]['link'].$id;
-				$ico = (isset($config[$dados[$config['campo']]]['ico'])?$config[$dados[$config['campo']]]['ico']:"sys/ico.png");
+				$ico = (isset($config[$dados[$config['campo']]]['ico'])? $pluginPasta.$config[$dados[$config['campo']]]['ico'] : "sys/ico.png");
 			} else {		
 				$click = $config['link'].$id;
-				$ico = (isset($config['ico'])?$config['ico']:"sys/ico.png");
+
+				$ico = $pluginPasta.'sys/ico.png';
+				
+				if(isset($config['ico']) && is_array($config['ico'])){
+					if(!empty($dados[$config['ico']['c']]))
+						$ico = 'includes/thumb.php?i='.$config['ico']['p'].$dados[$config['ico']['c']].':32:32:o';
+					elseif(isset($config['ico']['a']))
+						$ico = $pluginPasta.$config['ico']['a'];
+				} elseif(isset($config['ico'])) {					
+					$ico = $pluginPasta.$config['ico'];
+				}				
 			}	
 			
 			/*
@@ -53,15 +63,15 @@ if(mysql_num_rows($query) > 0){
 					$liglink = '0';
 				}
 			} else {
-				
 			}
 			*/
+			
 			$liglink = '0';
 			$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
 			?>	
 			<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" lig="<?php echo $liglink?>" dclick="<?php echo $click?>">
 				<div class="inter">
-					<img src="<?php echo $pluginPasta.$ico?>" alt="<?php echo $nome?>" />
+					<img src="<?php echo $ico?>" alt="<?php echo $nome?>" />
 					<span id="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink?></span>
 				</div>
 			</div>
