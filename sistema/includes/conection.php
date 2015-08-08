@@ -4,16 +4,17 @@ session_start();
 $hostname_conexao = "localhost";
 $username_conexao = "root";
 $password_conexao = "vertrigo";
-$banco_conexao = "lliure_1";  
+$banco_conexao = "logquim";  
 
-define("FILES", "../files");
-define("SUFIXO", "plugin_");
+define("PREFIXO", "plugin_");
 define("SISTEMA", "sistema");
 
-if(($conexao = @mysql_pconnect($hostname_conexao, $username_conexao, $password_conexao)) == false){
-	echo "Falha na conexão: Servidor, login ou senha incorretos <br>";
-}
-if(@mysql_select_db("$banco_conexao", $conexao) == false){
-	echo "Falha na conexão: base de dados não encontrada";
-}
+
+$conexao = mysql_pconnect($hostname_conexao, $username_conexao, $password_conexao) or die("Site em manutenção");
+	
+mysql_select_db("$banco_conexao", $conexao);
+
+$DadosLogado  = (isset($_SESSION['logado'])? $_SESSION['logado'] : '');
+
+$extendeTopPlugin = '<style type="text/css">#conteudo{background: url("imagens/layout/fundo_branco.png") repeat-x;}</style>';
 ?>

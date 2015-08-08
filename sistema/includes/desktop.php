@@ -12,7 +12,7 @@ if(isset($_GET['nome'])){
 	
 		header("Content-Type: text/html; charset=ISO-8859-1", true);
 		
-		$tabela = SUFIXO."desktop";
+		$tabela = PREFIXO."desktop";
 		$dados['nome'] = $_GET['nome'];
 		$dados['link'] = $url;
 		$dados['imagem'] = "plugins/".$pasta."/sys/ico.png";
@@ -21,7 +21,7 @@ if(isset($_GET['nome'])){
 		
 		mLinsert($tabela, $dados);
 	?>
-	<img src="erro.jpg" onerror="alert('A página <?php echo $_GET['nome']?> foi adicionada com sucesso ao seu desktop!')" class="imge"/>
+	<img src="erro.jpg" onerror="mLaviso('A página <?php echo $_GET['nome']?> foi adicionada com sucesso ao seu desktop!')" class="imge"/>
 	<?php
 } else {
 	?>

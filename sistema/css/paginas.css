@@ -1,3 +1,8 @@
+#jfboxLoad h1{
+	margin-bottom: 15px;
+	}
+
+
 /**********************			LOGIN			**********************/
 form.login{
 	width: 289px;
@@ -21,9 +26,11 @@ form.login span.botao{
 	float: right;
 	}
 	
-/**********************			HOME			**********************/
+/**********************			java navigator			**********************/
 div.listp {
 	padding: 4px;
+	z-index: 10;
+	position: relative;
 	float: left;
 	border: 1px solid #fff;
 	}
@@ -36,8 +43,8 @@ div.listpSelct {
 	}
 
 div.listp .inter{
-	width: 70px;
-	height: 50px;
+	width: 93px;
+	height: 67px;
 	float: left;
 	text-align: center;
 	}
@@ -46,3 +53,47 @@ div.listp .inter span{
 	display: block;
 	margin: 3px 0 0 0;
 	}
+	
+/**********************			Install modal			**********************/
+.install-box{
+	margin-top: 15px;
+	font-size: 12px;
+	}
+	
+	.install-box h2{
+		margin-bottom: 5px;
+		}
+	
+	.install-box .log{
+		background: #ddd;
+		padding: 10px;
+		}
+		
+		.install-box .log .padding{
+			width:100%;
+			height: 300px;
+			overflow: auto;
+			}
+			
+	
+/**********************			Acesso rápido			**********************/
+.ARbox{
+	background: #ddd;
+	padding: 15px;
+	font-size: 12px;
+	margin-bottom: 20px;
+	}
+	
+	.ARbox span{
+		float: left;
+		position: relative;
+		margin: 0 7px;
+		}
+		
+		.ARbox span a{
+			display: none;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			}
+	

@@ -1,42 +1,15 @@
 <?php 
-	if(file_exists('install') == true) {
-		Header("location: install");
-	}
+require_once("includes/conection.php"); 
 
-	require_once("includes/conection.php"); 
-	require_once("includes/functions.php"); 
-	require_once("includes/acoes.php"); 
+if(!isset($_SESSION['logado']))
+	header('location: paginas/login.php');
+require_once("includes/functions.php"); 
+
+$plgThemer = (isset($DadosLogado) && !empty($DadosLogado['themer']) ? $DadosLogado['themer'] : 'default' );
+
+require_once('themer/'.$plgThemer.'/padrao.php');
 	
-	if(!empty($_GET)){
-		$keyGet = array_keys($_GET);
-		if($keyGet['0'] == 'plugin' and isset($_GET['plugin'])){
-			$pageatual = '?'.$_SERVER['QUERY_STRING'];
-						
-			if(isset($_SESSION['historicoNav'])){
-				if($pageatual == $_SESSION['historicoNav'][count($_SESSION['historicoNav'])-2]){
-					array_pop($_SESSION['historicoNav']);
-				} elseif(isset($keyGet[1])){
-					if(in_array($pageatual, $_SESSION['historicoNav']) == false){
-						$_SESSION['historicoNav'][] = $pageatual;
-					}
-				} else {
-					unset($_SESSION['historicoNav']);
-					$_SESSION['historicoNav'][0] = $pageatual;
-				}
-				
-				$historico = $_SESSION['historicoNav'];				
-			} else {
-				$_SESSION['historicoNav'][0] = $pageatual;
-				$historico = $_SESSION['historicoNav'];
-			}
-
-			retornaLink($historico);
-		}
-	} else{
-		if(isset($_SESSION['historicoNav'])){
-			unset($_SESSION['historicoNav']);
-		}		
-	}
+navig_historic();
 ?>
 
 
@@ -44,81 +17,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<link rel="SHORTCUT ICON" href="imagens/layout/favicon.ico" type="image/x-icon" />
+	<meta name="author" content="Jeison Frasson" />
+	<meta name="DC.creator.address" content="contato@newsmade.com.br" />
+	<meta name="DC.creator " content="Jeison Frasson" />
+
+	<script type="text/javascript" src="api/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="api/tiny_mce/plugins/tinybrowser/tb_tinymce.js.php"></script>
 	
-	<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
-	<script type="text/javascript" src="js/tiny_mce//plugins/tinybrowser/tb_tinymce.js.php"></script>
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/funcoes.js"></script>
 	<script type="text/javascript" src="js/javaNavigator.js"></script>
 	
-<title>sistema Plugin</title>
+	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
+	<script type="text/javascript" src="js/jquery.maskedinput-1.2.2.js"></script>
+	<script type="text/javascript" src="js/jquery.corner.js"></script>
+	
+	<title>sistema Plugin</title>
 
-<style type="text/css" media="screen">
-	@import "css/base.css";
-	@import "css/principal.css";
-	@import "css/paginas.css";
-	@import "css/predifinidos.css";
-	/*@import "themer/moonlight/estilo.css";*/
-</style>
+	<style type="text/css" media="screen">
+		@import "css/base.css";
+		@import "css/principal.css";
+		@import "css/paginas.css";
+		@import "css/predifinidos.css";
+		@import "css/jfbox.css";
+		<?php
+		echo '@import "themer/'.$plgThemer.'/estilo.css";';
+		echo (isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?  '@import "plugins/'.$_GET['plugin'].'/estilo.css"; ' : '' );
+		?>
+	</style>
 
-
+	<script type="text/javascript">
+		$(document).ready(function(){
+			<?php
+			if(isset($_SESSION['aviso'])){
+				echo 'mLaviso("'.$_SESSION['aviso'][0].'", "'.$_SESSION['aviso'][1].'");';
+				unset($_SESSION['aviso']);
+			}
+			?>
+			$('body').append('<div id="atlSession"></div>');
+			
+			setInterval(function(){
+				$("#atlSession").load("includes/session_start.php");
+			},1000*60*10);
+		});
+	</script>
 </head>
+
 
 <body onkeyup="disparaPorTec(event)">
 <div id="tudo">
 	<div id="topo">
 		<div class="left">
-			<a href="index.php" class="logoSistema"></a>
+			<a href="index.php" class="logoSistema"><img src="<?php echo 'themer/'.$plgThemer.'/logo.png'?>"/></a>
 		</div>
 		<?php
 		if(!empty($DadosLogado)){ ?>
 		<div class="right">
 			<ul class="menu">
 				<li><a href="index.php">Home</a></li>
-				<li><a href="?usuarios">Usuarios</a></li>
+				<li><a href="?usuarios">Usuários</a></li>
 			<?php
 			if($DadosLogado['tipo'] == 1){ 
 				?>
-				<li><a href="?plugin">Plugins</a></li>
+				<li><a href="?plugin">Aplicativos</a></li>
 				<?php
 			}
 			?>
-				<li><a href="?acao=logout">Sair</a></li>
+				<li><a href="acoes.php?logout">Sair</a></li>
 			</ul>
 			<?php 
 			
 			if($DadosLogado['tipo'] == 1){
 				?>
-				<ul class="start">
+				<ul class="start" id="appRapido">
 				<?php
-					$consulta = "select a.idPlug, b.pasta, b.nome from 
-						".SUFIXO."start as a
+					$consulta = "select b.* from 
+						".PREFIXO."start as a
 						
-						left join ".SUFIXO."plugins as b
+						left join ".PREFIXO."plugins as b
 						on a.idPlug = b.id
 					";
 					$query = mysql_query($consulta);
-					
-					if(mysql_num_rows($query) > 0){
-						while($dados = mysql_fetch_array($query)){
-						$folder= $dados['pasta'];
-						?>
-						<li>
-							<a href="?plugin=<?php echo $folder?>" title="<?php echo $dados['nome']?>">
-								<img src="plugins/<?php echo $folder?>/sys/ico.png" alt="" />
-							</a>
-						</li>
-						<?php
-						}
-					} ?>
+
+					while($dados = mysql_fetch_array($query)){
+					?>
+					<li id="appR-<?php echo $dados['id']?>">
+						<a href="?plugin=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>">
+							<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
+						</a>
+					</li>
+					<?php
+					}
+					?>
 					
 				</ul>
 				<?php
 				if(!empty($_GET)){
 					$keyGet = array_keys($_GET);
 					if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
-					?>
-				<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="Adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
-					<?php 
+						?>
+						<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="Adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
+						<?php 
 					}
 				} 
 			} 
@@ -131,19 +131,37 @@
 
 	<div id="conteudo">
 		<div class="marding">
-			<?php require_once(requirePage()); ?>
+			<?php 	
+			if(!empty($DadosLogado)){
+				if(isset($_GET['plugin'])){
+					if(!empty($_GET['plugin'])){
+						$pagina = "plugins/".$_GET['plugin']."/start.php";
+					} else {
+						$pagina = "painel/plugins.php";
+					}
+				} elseif(isset($_GET['usuarios'])) {
+					$pagina = "paginas/usuarios.php";
+				} else {
+					$pagina = "paginas/desktop.php";
+				}
+			} else {
+				$pagina = "paginas/login.php";
+			}
+
+			require_once($pagina);
+			?>
 			<div class="both"></div>
 		</div>
+		<div class="both"></div>
 	</div>
 	
-
-	
-</div> 
 	<div id="rodape">
 		<span class="desenvolvidopor">
 			<a href="http://www.newsmade.com.br">Desenvolvido por Jeison Frasson</a>
 		</span>
 	</div>
+</div> 
+
 </body>
 
 </html>

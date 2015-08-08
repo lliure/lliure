@@ -1,39 +1,38 @@
 <?php
-require_once("mLfunctions.php");
+require_once("jf.funcoes.php"); 	// include no pacote JF funções
+require_once("jnav.php"); 			// include na API Jnav
 
-//	Efetuar login
-function Login($login, $senha){
-	$consulta = mysql_query("SELECT * FROM ".SUFIXO."admin WHERE Login = '$login' AND Senha = '$senha'") or die(mysql_error());
-	if(mysql_num_rows($consulta) > 0){
-		return true;
-	}
-	else{
-		return false;
-	}
-}
-
-//	REQUIRE PAGINA
-function requirePage(){
-	global $DadosLogado;
-	
-	if(!empty($DadosLogado)){
-		if(isset($_GET['plugin'])){
-			if(!empty($_GET['plugin'])){
-				$get = $_GET['plugin'];
-				$pagina = "plugins/$get/start.php";
+function navig_historic(){
+	if(!empty($_GET)){
+		$keyGet = array_keys($_GET);
+		if($keyGet['0'] == 'plugin'){
+			$pageatual = '?'.$_SERVER['QUERY_STRING'];
+						
+			if(isset($_SESSION['historicoNav'])){
+				if($pageatual == $_SESSION['historicoNav'][count($_SESSION['historicoNav'])-2]){
+					array_pop($_SESSION['historicoNav']);
+				} elseif(isset($keyGet[1])){
+					if(in_array($pageatual, $_SESSION['historicoNav']) == false){
+						$_SESSION['historicoNav'][] = $pageatual;
+					}
+				} else {
+					unset($_SESSION['historicoNav']);
+					$_SESSION['historicoNav'][0] = $pageatual;
+				}
+				
+				$historico = $_SESSION['historicoNav'];
 			} else {
-				$pagina = "painel/plugins.php";
+				$_SESSION['historicoNav'][0] = $pageatual;
+				$historico = $_SESSION['historicoNav'];
 			}
-		} elseif(isset($_GET['usuarios'])) {
-			$pagina = "paginas/usuarios.php";
-		} else {
-			$pagina = "paginas/desktop.php";
-		}
-	} else {
-		$pagina = "paginas/login.php";
-	}
 
-	return $pagina;
+			retornaLink($historico);
+		}
+	} else{
+		if(isset($_SESSION['historicoNav'])){
+			unset($_SESSION['historicoNav']);
+		}		
+	}
 }
 
 //	GERA MENSAGEM
@@ -46,6 +45,10 @@ function mensagemAviso($mensagem){
 			</span>";
 }
 
+function alert($mensagem, $tempo = null){
+		echo '<img src="error.jpg" onerror="mLaviso(\''.$mensagem.'\' '.(!is_null($tempo) ? '\''.$tempo.'\'' : '').')" class="imge" alt="" />';
+	}
+
 function loadPage($url, $tempo = 0){
 	$tempo = ($tempo != 0?", '".$tempo."'":'');
 	?><img src="erro.jpg" onerror="loadPage('<?php echo $url?>'<?php echo $tempo?>)" class="imge"><?php
@@ -56,7 +59,6 @@ function retornaLink($historico, $mods = 0, $modsQnt = 1){
 	global $backNome ;
 	
 	if($mods === 'save'){
-		
 		for($i = 0; $i < $modsQnt;$i++){
 			array_pop($_SESSION['historicoNav']); // APAGA ESSA PÁGINA DO HISTÓRICO
 		}
@@ -72,7 +74,7 @@ function retornaLink($historico, $mods = 0, $modsQnt = 1){
 		$backNome = "Voltar";
 	} else {
 		$backReal = "index.php";
-		$backNome = "Voltar a área de trabalho";
+		$backNome = "Voltar à área de trabalho";
 	}
 };
 
@@ -88,8 +90,6 @@ function in($var,$type = 'VALUE') {
 	$in = substr($in,0,-1);
 	return $in;
 }
-// 
-//JNAVIGATOR
-require_once("jnav.php");
+
 
 ?>

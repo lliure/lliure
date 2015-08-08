@@ -6,16 +6,22 @@
 	largura valor fixo
 	altura se for igual a largura basta colocar "0";
 	tipo padrao é p , os tipos poden ser: 
-			"o" = para redimencinar para o tamanho final (adciona bordas brancas para completar a medida menor)
-			"p" = redimenciona proporcionalmente, mantendo a medida maior da imagem igual a medida menor da thumb
-		
-
+			"o" = Objetiva, redimencina para o tamanho final (adciona bordas brancas para completar a medida menor)
+			"p" = Proporcional, mantendo a medida maior da imagem igual a medida menor da thumb
+			"c" = Corte, corta a imagem centralizada no tamanho escolhido
+			"r" = Relativo, a medida que estiver faltando é redimencionada para o valor relativo a original
 */
+$http = '';
+
+if(strstr($_GET['i'], 'http://')){
+	$_GET['i'] = substr($_GET['i'], 7);
+	$http = "http://";
+}
 
 $dados = explode(':', $_GET['i']);
 
-$imagemOriginal = $dados['0'];
-$wid = $dados['1'];
+$imagemOriginal = $http.$dados['0'];
+$wid = ($dados['1'] == 0? $dados['2'] : $dados['1']);
 $hei = (!isset($dados['2']) || $dados['2'] == 0? $dados['1'] : $dados['2']);
 
 $thumbType = (isset($dados['3'])?$dados['3']:'p');
@@ -37,6 +43,24 @@ $origem_y = ImagesY($im);
 
 
 switch($thumbType){
+	case 'r':
+		if($dados['1'] > $dados['2']) {
+			$widn = $dados['1'];			
+			$percent = $dados['1']*100/$origem_x;
+			
+			$hein = $percent*$origem_y/100;
+		} else {
+			$hein = $dados['2'];
+			$percent = $dados['2']*100/$origem_y;
+			
+			$widn = $percent*$origem_x/100;
+		}
+		
+		$left = 0;
+		$top = 0;
+		
+		$img = imagecreatetruecolor($widn, $hein);
+	break;
 
 	case 'o':
 	case 'p':
@@ -119,7 +143,7 @@ echo $widn." x ".$hein;
 imagecopyresampled($img, $im, $left, $top, 0, 0, $widn, $hein, $origem_x, $origem_y);
 
 if(stristr($imagemOriginal, ".jpg") != false){
-	imagejpeg($img);
+	imagejpeg($img, '', 100);
 } elseif(stristr($imagemOriginal, ".png") != false){
 	imagepng($img);
 } elseif(stristr($imagemOriginal, ".gif") != false){

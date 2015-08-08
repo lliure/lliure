@@ -1,0 +1,15 @@
+#topo{
+	background: url("red_Nose.jpg") center top repeat-x;
+}
+
+#topo .right ul.menu a{
+	color: #013A5E;
+}
+
+.menuSub a{
+	color: #013A5E;
+}
+
+h2, span.h2 	{
+	color: #013A5E;
+}

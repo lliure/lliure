@@ -1,0 +1,46 @@
+#jfboxFundo {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:5000;
+	background: #000;
+	display:none;
+	}
+
+
+#jfboxMargin{
+	position:absolute;
+	display:none;
+	z-index:5001;
+	background: #fff;
+	text-align: left;
+	padding: 25px;
+	border: 1px solid #000;
+	}
+		
+	#jfboxLoad{
+		left:0;
+		top:0;
+		overflow: auto;
+		}
+		
+#gifJfbox{
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index:6000;
+	}
+	
+#jfAviso{
+	display: none;
+	position:absolute;
+	z-index:5002;
+	width: 420px;
+	}
+	
+	#jfAviso .msm{
+		background: #DDDDDD; 
+		padding: 20px;
+		color: #7E7D7D;
+		font-size: 12px;
+		}

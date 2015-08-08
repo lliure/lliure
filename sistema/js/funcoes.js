@@ -105,7 +105,6 @@ function mLHidden(divId){ // ESCONDE ITEM POR visibility (ID_DO_ITEM)
 	document.getElementById(divId).style.visibility = 'hidden';
 }
 
-
 function show_hide(id) { // OCULTA E MOSTRA ITENS (ID_DO_ITEM)
 	if (document.getElementById(id).style.display=='none') {
 		document.getElementById(id).style.display='block';
@@ -125,6 +124,44 @@ function loadPage(url, tempo){ // CARREGA UMA PÁGINA POR JS (URL_DA_PAGINA, TEMP
 	} else {
 		document.location = url;
 	}
+}
+
+document.write('<div id="exectAjax"></div>');
+document.write('<img src="imagens/layout/loading.gif" style="display: none;" id="loadImg" />');
+
+ajaxBox = new ajax();
+function mLExectAjax(pagina){
+	document.getElementById('loadImg').style.display = "block";
+	
+	ajaxBox.open("get",pagina,true);
+	ajaxBox.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	
+	ajaxBox.onreadystatechange=function() {
+		if(ajaxBox.readyState==4) {
+			document.getElementById('loadImg').style.display = "none";
+			document.getElementById('exectAjax').innerHTML = ajaxBox.responseText; 
+		}
+	}
+	ajaxBox.send(null);
+}
+
+document.write('<div id="mLAviso" style="display: none;"><div id="mLAvisoInter"></div><a href=\'javascript: void(0)\' onclick=\"fechaAviso()\" class=\'close\'>X</a></div>');
+function mLaviso(texto, tempo){
+	var tempo = (tempo > 0?parseInt(tempo):2);
+	
+	$(document).jfaviso(texto, tempo);
+	/*
+	
+
+	$('#mLAvisoInter').html(texto);
+	$("#mLAviso").slideDown(200);
+
+	setTimeout("fechaAviso()", tempo*1000); 
+	*/
+}
+
+function fechaAviso(){
+	$('#mLAviso').slideUp(300);
 }
 
 
@@ -147,10 +184,9 @@ function selecionartodos(ret){
 }
 
 function nomeDaPagina(){
-	var nome;
-	do {
-		nome = prompt ("Qual será a identificação dessa página em seu desktop?");
+	var	nome = prompt("Qual será a identificação dessa página em seu desktop?");
+	
+	if (nome!=null && nome!=""){
+		mLExectAjax('includes/desktop.php?nome='+nome);
 	}
-	while (nome == null || nome == "");
-	mLExectAjax('includes/desktop.php?nome='+nome);
 }

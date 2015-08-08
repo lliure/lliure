@@ -1,134 +1,124 @@
 <?php
-	$tabela = SUFIXO."admin";
-	
-	$consulta = "select * from ".$tabela.($DadosLogado['tipo'] == 1?'':" where tipo = '0'");
-	
-	$campos = array (
-			'nome' => '',
-			'login' => '',
-			'senha' => '',
-			'tipo' => ''
-			);
-if(empty($_GET['usuarios'])){
-	if(isset($_GET['novo'])){
 
-		$dados = array(
-					'nome' => 'Novo',
-					'login' => 'Novo',
-					'senha' => md5(time()),
-					'tipo' => '0'
-					);
-		mLinsert($tabela, $dados);
+if(!empty($_POST)){
+	require_once("../includes/conection.php"); 
+	require_once("../includes/mLfunctions.php"); 
+
+	if(empty($_POST['senha'])){
+		unset($_POST['senha']);
+	} else{
+		$_POST['senha'] = md5($_POST['senha']."0800");
 	}
+	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
+	
+	mLupdate(PREFIXO."admin", $_POST, array('id' => $_GET['id']));
+	
+	$_SESSION['aviso'][0] = "Alteração realizada com sucesso!";
+	header('location: ../index.php?usuarios');
+}
 
+echo $extendeTopPlugin;
+
+$tabela = PREFIXO."admin";
+$consulta = "select * from ".$tabela.($DadosLogado['tipo'] == 1?'':" where tipo = '0'");
+
+$campos = array (
+		'nome' => '',
+		'login' => '',
+		'senha' => '',
+		'themer' => '',
+		'tipo' => ''
+		);
+		
+if(empty($_GET['usuarios'])){
 	$query = mysql_query($consulta." order by nome ASC");
 	?>
-	<br/>
-	<span class="botao"><a href="?usuarios&amp;novo">Novo usuário</span></span>
-	<div class="both"></div>
+	<script type="text/javascript">
+		$(document).ready(function(){	
+			$(".jfbox").jfbox({abreBox: false}, function(){
+				$(document).jfaviso('Novo usuário criado com sucesso!', 1);
+			}); 
+		});
+	</script>
+	<br>
+	<span class="botao"><a href="paginas/ajax.novo_usuario.php" class="jfbox">Criar usuário</a></span>
+	<br>
+	<br>
+	<br>
 	<?php
-	while($dados = mysql_fetch_array($query)){
-		$nome = explode(" ", $dados['nome']);
-		$nome = $nome['0'];	
-		$id = $dados['id'];		?>
+
+	$pastas = 'paginas';
+	$click['link'] = '?usuarios=';
+	$click['ico'] = "../../imagens/layout/user.png";
+	$pluginTable = 'plugin_admin';
 	
-		<div class="listp">
-			<div class="inter">
-				<a href="?usuarios=<?php echo $id?>"><img src="imagens/layout/user.png" alt="<?php echo $nome?>" /></a>
-				<a href="?usuarios=<?php echo $id?>"><span><?php echo $nome?></span></a>
-			</div>
-		</div>
-	<?php
-	}
+	$mensagemVazio = "Nenhum usuário encontrado.";
+	jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $click, $ligs);
+
 } else {
-$idUser = $_GET['usuarios'];
-
-	if(isset($_GET['save'])){ 		
-		foreach($_POST as $chave => $valor){
-			$campos[$chave] = $valor;
-		}
-			
-		$alter['id'] = $idUser;
-		if(empty($campos['senha'])){
-			unset($campos['senha']);
-		} else{
-			$campos['senha'] = md5($campos['senha']."0800");
-		}
-		
-		if(!isset($_POST['tipo'])){
-			unset($campos['tipo']);
-		}
-		
-		mLupdate($tabela, $campos, $alter);
-		?>
-		<span class="mensagem"><span>Alteração realizada com sucesso</span></span>
-
-		<meta http-equiv="refresh" content="1; URL=?usuarios">
-	<?php		
-	} elseif(isset($_GET['del'])){
+	$consulta = $consulta.($DadosLogado['tipo'] == 1?' where':" and").' id="'.$_GET['usuarios'].'"';
+	$query = mysql_query($consulta);
+	$dados = mysql_fetch_array($query);
 	
-		$user['id'] = $idUser;
-		mLdelete($tabela, $user);
-		?>
-		<span class="mensagem"><span>Usuario apagado com sucesso</span></span>
-
-		<meta http-equiv="refresh" content="3; URL=?usuarios">
-	<?php
-	} else {
-		$consulta = $consulta.($DadosLogado['tipo'] == 1?' where':" and")." id=$idUser";
-		$query = mysql_query($consulta);
-		$dados = mysql_fetch_array($query);
-		
-			foreach($campos as $chave => $valor){
-				$$chave = $dados[$chave];
-			}
+	foreach($campos as $chave => $valor){
+		$$chave = $dados[$chave];
+	}
 	?>
-		<script type="text/javascript">
-			function Save(){
-				document.getElementById('form').action="?usuarios=<?php echo $idUser?>&save";
-				document.getElementById('form').submit();
-			}
-		</script>
+	
 	<div class="boxCenter">
-		<form method="post" class="form" id="form">
-
-				<div class="label">
-					<span>Nome</span>
-					<div class="input"><input type="text" value="<?php echo $nome?>" name="nome" /></div>
-					<span class="ex">Nome do usuario. <strong>Campo obrigatorio</strong></span>
-				</div>
-				
-				<div class="label">
-					<span>Login</span>
-					<div class="input"><input type="text" value="<?php echo $login?>" name="login" /></div>
-					<span class="ex">Login utilizado para acessar o painel. <strong>Campo obrigatorio</strong></span>
-				</div>
-				
-				<div class="label">
-					<span>Senha</span>
-					<div class="input"><input type="password" value="" name="senha" /></div>
-					<span class="ex">Deixe em branco para manter a senha atual. <strong>Campo opcional</strong></span>
-				</div>		
-				<?php
-				if($DadosLogado['tipo'] == 1){
-					?>
-					<div class="label">
-						<span>Tipo</span>
-						<select name="tipo">
-							<option value="0">Usuário</option>
-							<option value="1" <?php echo ($tipo == 1?'selected':'')?>>Desenvolvedor</option>
-						</select>
-						<span class="ex">Nivel do usuário. <strong>Campo opcional</strong></span>
-					</div>
+		<form method="post" class="form" action="paginas/usuarios.php?id=<?php echo $_GET['usuarios']?>">
+			<div>
+				<label>Nome</label>
+				<input type="text" value="<?php echo $nome?>" name="nome" />
+				<span class="ex">Nome do usuario. <strong>Campo obrigatorio</strong></span>
+			</div>
+			
+			<div>
+				<label>Login</label>
+				<input type="text" value="<?php echo $login?>" name="login" />
+				<span class="ex">Login utilizado para acessar o painel. <strong>Campo obrigatorio</strong></span>
+			</div>
+			
+			<div>
+				<label>Senha</label>
+				<input type="password" value="" name="senha" />
+				<span class="ex">Deixe em branco para manter a senha atual. <strong>Campo opcional</strong></span>
+			</div>		
+			
+			<div>
+				<label>Tema</label>
+				<select name="themer">
 					<?php
-				}
+					$dir = "themer/";
+					$dh = opendir($dir);
+
+					while (false !== ($filename = readdir($dh))) {
+						if ( $filename != "." && $filename != "..") {
+							echo '<option '.($filename == $plgThemer ? 'selected' :'').'>'.$filename.'</optino>';
+						}
+					}
+					?>
+				</select>
+			</div>
+			<?php				
+			if($DadosLogado['tipo'] == 1){
 				?>
-				<a href="javascript: void(0)" onclick="Save()" title="Salvar alterações" class="a"><img src="imagens/icones/save.png" alt="salvar"	/></a>
-				
-				<a href="?usuarios=<?php echo $idUser?>&del" onclick="return confirmAlgo('esse usuário')" title="Excluir usuário" class="a"><img src="imagens/icones/no.png" alt="Apagar Usuario"	/></a>
+				<div>
+					<label>Tipo</label>
+					<select name="tipo">
+						<option value="0">Usuário</option>
+						<option value="1" <?php echo ($tipo == 1?'selected':'')?>>Desenvolvedor</option>
+					</select>
+					<span class="ex">Nivel do usuário. <strong>Campo opcional</strong></span>
+				</div>
+				<?php
+			}
+			?>
+			<span class="botao"><a href="?usuarios">Voltar</a></span>
+			
+			<span class="botao"><button type="submit">Salvar</button></span>
 		</form>
 	</div>
-		<?php	
-	}
+	<?php	
 }
 ?>

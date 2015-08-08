@@ -1,14 +1,9 @@
 #tudo { 	
 	width: 100%;
-	height:100%;
-	overflow:auto;
-	
 	position: relative;  /**/
-	margin:0 auto;
 	text-align:left;
 	min-height: 100%;
-	font-size: 11px;
-	
+	font-size: 11px;	
 	}
 		
 * html #tudo {height: 100%;} /* HACK PARA IE */
@@ -18,7 +13,7 @@
 	height: 165px;
 	position: relative;
 	z-index: 500;
-	background: url(../imagens/layout/wave2.jpg) center top repeat-x;
+	background: url(../imagens/layout/bg.jpg) center top repeat-x;
 	}
 	
 #topo .left{
@@ -26,12 +21,9 @@
 	}	
 	
 #topo .left .logoSistema{
-	width: 211px;
-	height: 80px;
 	position: absolute;
 	left: 15px;
 	top: 10px;
-	background: url(../imagens/layout/logo.png) center top repeat-x;
 	}
 	
 #topo .right{
@@ -49,17 +41,18 @@
 		position: absolute;
 		top: 10px;
 		right: 0;
+		
 		}
 		
 	#topo .right a.desktop{
 		position: absolute;
-		bottom: -5px;
+		bottom: 0px;
 		right: 6px;
 		}
 		
 	#topo .right ul.start{
 		position: absolute;
-		bottom: 20px;
+		bottom: 30px;
 		right: 0;
 		}
 		
@@ -92,16 +85,15 @@
 			}
 
 #conteudo {
-	padding: 10px 0 40px 0;
-	margin-top: -70px;
 	z-index: 1000;
-	background: url('../imagens/layout/fundo_branco.png') repeat-x;
+	background: none; 
+	top: -70px;
 	position: relative;
 	}	
 	
 	#conteudo .marding{
-		margin: 0 10px;
-		z-index: 13;
+		padding: 10px 10px 30px 10px;
+		z-index: 30;
 		position: relative;
 		}
 		
@@ -109,15 +101,15 @@
 	width:	100%;
 	position: absolute;
 	bottom: 0; 
-	height: 22px;
-	right: 21px;
+	height: 15px;
+	left: 0px;
 	text-align: right;
 	}
 	
 		
 	#rodape span{
-		padding: 5px 0 0 0;
-		display: inline-block;
+		margin-right: 10px;
+		display: block;
 		font-size: 10px;
 		color: #fff;
 		}

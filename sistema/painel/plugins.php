@@ -1,34 +1,53 @@
-<span class="h2">Painel de plugins</span>
-<style type="text/css">#conteudo{background: none;}</style>
+<h1>Painel de aplicativos</h1>
 <div class="menuSub">
-	<a href="<?php echo $backReal?>" title="voltar"><img src="imagens/icones/back.png" alt="voltar"/><span><?php echo $backNome?></span></a>  
-	<a href="<?php echo $backReal?>" title="voltar"><img src="painel/img/installer.png" alt="voltar"/><span>Instalar/Desinstalar plugins</span></a>  
+	<a href="<?php echo $backReal?>" title="Voltar"><img src="<?php echo $plgIcones."br_prev.png"?>" alt=""/><span><?php echo $backNome?></span></a>  
+	<a href="painel/menu-rapido.php" title="Acesso rápido" class="rapido"><img src="<?php echo $plgIcones."lighting.png"?>" alt=""/><span>Acesso rápido</span></a>  
 	<div class="both"></div>
 </div>
 
-<?php
-	$consulta = "select * from ".SUFIXO."plugins";
+<div id="container" >
+	<?php
+	
+	$consulta = "select * from ".PREFIXO."plugins";
 	$query = mysql_query($consulta);
 	
 	if(mysql_num_rows($query) > 0){
-		while($dados = mysql_fetch_array($query)){
-		$nome = $dados['nome'];
-		$pasta = $dados['pasta'];
-		?>
-		<div class="listp">
-			
-			<div class="inter">
-				<a href="?plugin=<?php echo $pasta?>"><img src="plugins/<?php echo $pasta?>/sys/ico.png" alt="<?php echo $nome?>" /></a>
-				<a href="?plugin=<?php echo $pasta?>"><span><?php echo $nome?></span></a>
-			</div>
-			
-		</div>
-		<?php
-		}
-	} else {
-		?>
-		<span class="mensagem"><span>Nenhum plugin instalado</span></span>
-		<?php
+		while($dados = mysql_fetch_array($query))
+		$aplicativos[$dados['pasta']] = $dados['nome'];
 	}
-	
+
+
+   if ($handle=opendir("plugins")) { 
+	  while (false!==($file=readdir($handle))) {
+		 if ($file!="." && $file!="..") { 
+			if(isset($aplicativos[$file])){
+				?>
+				<div class="listp">
+					<div class="inter">
+						<a href="?plugin=<?php echo $file?>"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
+						<a href="?plugin=<?php echo $file?>"><span><?php echo $aplicativos[$file]?></span></a>
+					</div>
+				</div>
+				<?php
+			} else {
+				?>
+				<div class="listp">
+					<div class="inter">
+						<a href="painel/install.php?app=<?php echo $file?>" class="install"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
+						<a href="painel/install.php?app=<?php echo $file?>" class="install"><span>Instalar</span></a>
+					</div>
+				</div>
+				<?php
+			}
+		 }
+	  }
+	  closedir($handle); 
+   } else {
+		mLAviso('Houve um erro ao tentar abrir o diretório de aplicativos');
+   }
 ?>
+	<script>
+		$('.install').jfbox({width: 420, height: 440});
+		$('.rapido').jfbox({width: 420, height: 440});
+	</script>
+</div>

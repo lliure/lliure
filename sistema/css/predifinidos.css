@@ -11,7 +11,7 @@ div.allhome{
 	left: 0;
 	height: 300px;
 	width: 100%;
-	
+	background: #f00;
 	}	 
 	
 div.bodyhome{
@@ -19,7 +19,17 @@ div.bodyhome{
 	z-index: 13;
 	position: relative;
 	padding-top: 5px;
+	width: 100%;
 	}
+	
+	div.bodyhome .listp{
+		cursor: pointer;
+		}
+		
+		div.bodyhome .inter img{
+			width: 32px;
+			}
+		
 	
 div.boxCenter{
 	width: 600px;
@@ -51,14 +61,19 @@ a.link{
 	}
 
 /**********************			FORM			**********************/
-	
-form.form div.label {
+form.form{
+	margin-bottom: 20px;
+	float: left;
+	width: 100%;
+	}
+
+form.form div {
 	margin-bottom: 10px;
 	display: block;
-	float: none;
+	margin-right: 6px;
 	}
 	
-form.form div.label span{
+form.form div label{
 	float: none;
 	margin-bottom: 3px;
 	color: #1770BF;
@@ -66,43 +81,58 @@ form.form div.label span{
 	display: block;
 	}
 	
-form.form  div.label  span.ex{
+form.form  div  span.ex{
 	float: none;
-	border: 1px solid #ccc;
-	background: #F0F0EE;
-	margin: 3px 0 0 0px;
-	padding: 2px 4px;
-	color: #999;
-	font-size: 10px;
 	clear: both;
+	margin-top: 2px;
+	padding: 2px 3px;
+	background: #e7e7e7;
+	border-bottom: 1px solid #ddd;
+	display: block;
+	width: 100%;
+	color: #aaa;
+	font-size: 10px;
 	}
 	
-form.form div.label div.input{
+form.form .label div.input{
 	display: block;
 	float: none;
 	border:1px solid #CCC;
 	padding: 4px 4px;
+
 	}
 	
-form.form  div.label div.input input, form.form div.label textarea{
-	border-width: 0;
-	padding: 0;
-	margin: 0;
-	}
-	
-form.form div.label textarea.normal{
-	border:1px solid #CCC;
-	padding: 4px 4px;
-	}
-	
-form.form div.label input, form.form div.label textarea{
+form.form  div input, form.form div textarea, form.form div select{
+	display: block;
+	float: none;
+	border: 1px solid #CCC;
 	width: 100%;
-	font-size: 11px;
+	padding: 2px;
 	}
+	
+ form.form div select{
+	padding: 0px 2px;
+	}
+	
+	 form.form div select option{
+		padding: 2px 4px;
+		}
+	
+	form.form .label select{
+		padding: 1px 0 0 0;
+		display: block;
+	}
+	
 	
 form.form div.label textarea.editor{
-	height: 350px;
+	height: 500px;
 	}
+	
+	.mceEditor{
+		display: block;
+		margin-right: -6px;
+		}
+	
 
 form.form a.a{
 	float: right;
@@ -110,18 +140,121 @@ form.form a.a{
 	margin-top: 0;
 	}
 		
+	
+/**********************			MENU SUPERIOR		**********************/
+.menuSub{
+	display: block;
+	background: url(../imagens/layout/topmenu.png) repeat-x;
+	margin: 0 -10px;
+	padding: 0 30px;
+	height: 45px;
+	}
+	
+.menuSub a, .menuSub button{
+	float: left;
+	margin: 3px 5px 0px 5px;
+	padding: 6px 7px 9px 7px;
+	}
+	
+.menuSub a img, .menuSub button img{
+	float: left;
+	margin-top: 4px;
+	}
+.menuSub a span, .menuSub button span {
+	float: left;
+	margin: 5px 0 0 5px;
+	} 
+	.menuSub button span {
+		color: #fff;
+		font-size: 12px;
+		margin-top: 3px;
+	}
+	
+.menuSub a:hover, .menuSub button:hover{
+	background: url(../imagens/layout/topmenu_hover.png) repeat-x;
+	}
+	
+	
+	
+	
+/**********************			TABELA			**********************/
+table.table{
+	width: 100%;
+	}
+		
+table.table th.ico{
+	width: 50px;
+	text-align: center;
+	}
+	
+table.table tr th{
+	padding-bottom: 5px;
+	}
+
+	
+table.table tr.alterna1{
+	background: #eee;
+	}	
+	
+table.table tr:hover td{
+	background: #FCFDDE;
+	}
+	
+table.table td{
+	padding: 1px 4px;
+	font-size: 12px;
+	border: 1px solid #eee;
+	}
+	
+table.table td.ico{
+	text-align: center;
+	}
+	
+/**********************			PAGINACAO			**********************/
+div.paginacao{
+	}
+	
+div.paginacao span{
+	color: #ddd;
+	}
+	
+	
 /**********************			GALERIA INTER			**********************/
 
-div.galdiv{
+div.api-fotos{
+	clear: both;
+	}
+	
+	div.api-fotos .seletor{
+		width: 100%;
+		text-align: center;
+		}
+		
+		div.api-fotos .seletor span.ex{
+			display: block;
+			font-size: 10px;
+			color: #ccc;
+			}
+
+div.api-fotos div.galdiv{
 	float:left;
-	margin: 3px;
+	margin: 4px;
 	padding: 3px;
-	border: 1px solid #ccc;
+	border: 1px solid #D3D3D3;
 	position: relative;
+	float: left;
+	}
+	
+div div.galdiv .img{
+	width: 70px;
+	height: 60px;
+	float: left;
 	}
 	
 div.galdiv .divblock{
-	visibility: hidden;
+	display: none;
+	position: absolute;
+	width: 70px;
 	}
 
 div.galdiv .trash{
@@ -151,70 +284,4 @@ div.ediFoto form{
 	
 div.ediFoto form input{
 	width: 200px;
-	}
-	
-/**********************			MENU SUPERIOR		**********************/
-.menuSub{
-	display: block;
-	background: url(../imagens/layout/topmenu.png) repeat-x;
-	margin: 0 -10px;
-	padding: 0 30px;
-	height: 45px;
-	}
-	
-.menuSub a{
-	float: left;
-	margin: 3px 5px 0px 5px;
-	padding: 5px 7px 8px 7px;
-	}
-	
-.menuSub a img{
-	float: left;
-	}
-.menuSub a span{
-	float: left;
-	margin: 5px 0 0 5px;
-	}
-	
-.menuSub a:hover{
-	background: url(../imagens/layout/topmenu_hover.png) repeat-x;
-	}
-	
-/**********************			TABELA			**********************/
-table.table{
-	width: 100%;
-	}
-		
-table.table th.ico{
-	width: 50px;
-	text-align: center;
-	}
-	
-table.table tr th{
-	padding-bottom: 5px;
-	}
-
-	
-table.table tr.alterna1{
-	background: #eee;
-	}	
-	
-table.table tr:hover{
-	background: #FCFDDE;
-	}
-	
-table.table td{
-	padding: 1px 4px;
-	border: 1px solid #eee;
-	}
-table.table td.ico{
-	text-align: center;
-	}
-	
-/**********************			PAGINACAO			**********************/
-div.paginacao{
-	}
-	
-div.paginacao span{
-	color: #ddd;
 	}
