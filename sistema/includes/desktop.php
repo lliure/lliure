@@ -3,14 +3,14 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 header("Content-Type: text/html; charset=ISO-8859-1", true);
-require_once("conection.php"); 
+require_once("../etc/bdconf.php"); 
 require_once("functions.php"); 
 
 

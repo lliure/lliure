@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -52,7 +52,6 @@ if(stristr($imagemOriginal, ".jpg") != false){
 $origem_x = ImagesX($im);
 $origem_y = ImagesY($im);
 
-
 switch($thumbType){
 	case 'r':
 		if($dados['1'] > $dados['2']) {
@@ -71,7 +70,7 @@ switch($thumbType){
 		$top = 0;
 		
 		$img = imagecreatetruecolor($widn, $hein);
-	break;
+		break;
 
 	case 'o':
 	case 'p':
@@ -114,7 +113,7 @@ switch($thumbType){
 			imagefill($img, 0, 0, $white); 
 		}			
 
-	break;
+		break;
 	
 	
 	case 'c':
@@ -145,16 +144,14 @@ switch($thumbType){
 		$top = ($hei-$hein)/2;
 		
 		$img = imagecreatetruecolor($wid, $hei);
-	break;
+		
+		break;
 }
-/*
-echo $wid." x ".$hei."<br/>";
-echo $widn." x ".$hein;
- */
+
 imagecopyresampled($img, $im, $left, $top, 0, 0, $widn, $hein, $origem_x, $origem_y);
 
 if(stristr($imagemOriginal, ".jpg") != false){
-	imagejpeg($img, '', 100);
+	imagejpeg($img, NULL, 100);
 } elseif(stristr($imagemOriginal, ".png") != false){
 	imagepng($img);
 } elseif(stristr($imagemOriginal, ".gif") != false){

@@ -2,7 +2,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -46,13 +46,14 @@
 	display: none;
 	position:absolute;
 	z-index:5002;
-	width: 420px;
+	width: 420px;	
 	}
 	
 	#jfAviso .msm{
-		background: #DDDDDD; 
+		background: #ccc; 
+		box-shadow: 0 0 15px #ddd;
 		padding: 20px;
-		color: #7E7D7D;
+		color: #717171;
 		font-size: 12px;
 		border-radius: 10px 10px 10px 10px;
 		}

@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -15,14 +15,34 @@ require_once("jf.funcoes.php"); 	// include no pacote JF funções
 // Apelido de funcoes
 function plg_historic($mods = null, $modsQnt = 1){
 	return ll_historico($mods, $modsQnt);
-}
+	}
 
 function navig_historic(){
 	return ll_historico('inicia');
-}
+	}
 
 
 ///***///
+
+// define a constante ll_dir com o diretório atual de onde está o sistema
+function ll_dir(){
+	if(strstr(__DIR__ , '/'))
+		$dir = explode('/', __DIR__);
+	else 
+		$dir = explode('\\', __DIR__);
+		
+	array_pop($dir);
+	array_pop($dir);
+	
+	if(strstr(__DIR__ , '/'))
+		$dir = implode('/', $dir);
+	else 
+		$dir = implode('\\', $dir).'\\';
+	
+	define("ll_dir", $dir);
+	
+	return true;
+	}
 
 	
 function ll_historico($mods = null, $modsQnt = 1){

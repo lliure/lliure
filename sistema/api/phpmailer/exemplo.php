@@ -19,6 +19,7 @@ $mail->Password = 'senha'; // Senha do servidor SMTP
 $mail->From = "web@dlorem.com.br"; // Seu e-mail
 $mail->FromName = "Jeison"; // Seu nome
 
+
 // Define os destinatário(s)
 // =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 $mail->AddAddress('web@lorem.com.br', 'Fulano da Silva');

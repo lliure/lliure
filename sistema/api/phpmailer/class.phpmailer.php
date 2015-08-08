@@ -673,7 +673,7 @@ class PHPMailer {
       $PHPMAILER_LANG["authenticate"]         = 'SMTP Error: Could not authenticate.';
       $PHPMAILER_LANG["from_failed"]          = 'The following From address failed: ';
       $PHPMAILER_LANG["recipients_failed"]    = 'SMTP Error: The following ' .
-      $PHPMAILER_LANG["data_not_accepted"]    = 'SMTP Error: Data not accepted.';
+      $PHPMAILER_LANG["data_not_accepted"]    = 'SMTP Error: Data not accepted. ';
       $PHPMAILER_LANG["connect_host"]         = 'SMTP Error: Could not connect to SMTP host.';
       $PHPMAILER_LANG["file_access"]          = 'Could not access file: ';
       $PHPMAILER_LANG["file_open"]            = 'File Error: Could not open file: ';

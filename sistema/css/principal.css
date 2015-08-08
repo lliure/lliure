@@ -2,7 +2,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -102,9 +102,7 @@
 	
 	#topo .right div.start .width{
 		width: 600px;
-		background: #eae;
-		border: 5px solid #a00037;
-		border-width: 3px 0;
+		padding-top: 3px;
 		}
 		
 		#topo .right div.start .icone{
@@ -124,7 +122,6 @@
 			left: 0px;
 			top: 0px;
 			float: left;
-			background: #800225;
 			background: #ededed;
 			border-radius: 3px;		
 			}

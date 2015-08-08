@@ -3,7 +3,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -70,6 +70,7 @@ if(mysql_num_rows($query) > 0){
 	case 'lista': // Exibição em lista -----------------------------------------------------
 
 		$ico = false;
+		
 		if(isset($configs['campo'])){
 			$ico = $configs;
 			$ico = array_pop($ico);
@@ -92,7 +93,10 @@ if(mysql_num_rows($query) > 0){
 		
 		while($dados = mysql_fetch_array($query)){	
 			$pagInp = "name".$dados['id'];
+						
 			$config = isset($configs['campo']) ? $configs[$dados[$configs['campo']]] : $configs;
+			
+			
 			
 			$click = $config['link'].$dados['id'];
 

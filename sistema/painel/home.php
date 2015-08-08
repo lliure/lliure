@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -60,44 +60,52 @@ echo app_bar('Painel de controle', $botoes);
 	
 	<div class="bloco">
 		<h2>Aplicativos</h2>
-		<?php		
+		<?php
+		$appFolder = array();
+		$erroAbrirDir = false;
 		$consulta = "select * from ".PREFIXO."plugins";
 		$query = mysql_query($consulta);
 		
-		if(mysql_num_rows($query) > 0){
+		if(mysql_num_rows($query) > 0)
 			while($dados = mysql_fetch_array($query))
 			$aplicativos[$dados['pasta']] = $dados['nome'];
-		}
 
-
-		if ($handle=opendir("plugins")) { 
-		  while (false !== ($file = readdir($handle))) {
-			 if (strstr($file, '.') == false) {
-				
-					if(isset($aplicativos[$file])){
-						?>
-						<div class="listp">
-							<div class="inter">
-								<a href="?app=<?php echo $file?>"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
-								<a href="?app=<?php echo $file?>"><span><?php echo $aplicativos[$file]?></span></a>
-							</div>
-						</div>
-						<?php
-					} elseif(ll_tsecuryt()) {
-						?>
-						<div class="listp">
-							<div class="inter">
-								<a href="painel/install.php?app=<?php echo $file?>" class="install"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
-								<a href="painel/install.php?app=<?php echo $file?>" class="install"><span>Instalar</span></a>
-							</div>
-						</div>
-						<?php
-					}
-			 }
-		  }
-		  closedir($handle); 
+		if ($handle=opendir("plugins")) {
+			while (false !== ($file = readdir($handle))) 
+				if (strstr($file, '.') == false) 
+						$appFolder[] = $file;
+			 
+			closedir($handle);
 		} else {
-			jfAlert('Houve um erro ao tentar abrir o diretório de aplicativos');
+			$erroAbrirDir = true;
+		}		
+		
+		natcasesort($appFolder);
+		
+		if($erroAbrirDir == false) {
+			foreach($appFolder as $chave => $file){
+				if(isset($aplicativos[$file])){
+					?>
+					<div class="listp">
+						<div class="inter">
+							<a href="?app=<?php echo $file?>"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
+							<a href="?app=<?php echo $file?>"><span><?php echo $aplicativos[$file]?></span></a>
+						</div>
+					</div>
+					<?php
+				} elseif(ll_tsecuryt()) {
+					?>
+					<div class="listp">
+						<div class="inter">
+							<a href="painel/install.php?app=<?php echo $file?>" class="install"><img src="plugins/<?php echo $file?>/sys/ico.png" alt="<?php echo $file?>" /></a>
+							<a href="painel/install.php?app=<?php echo $file?>" class="install"><span>Instalar</span></a>
+						</div>
+					</div>
+					<?php
+				}
+			}
+		} else {
+			echo '<script type="text/javascript"> jfAlert("Houve um erro ao tentar abrir o diretório de aplicativos") </script>';			
 		}
 		?>
 	</div>

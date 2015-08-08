@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -15,6 +15,10 @@ if(!file_exists("etc/bdconf.php"))
 
 require_once("etc/bdconf.php"); 
 require_once("includes/functions.php");
+
+
+// Identifica o diretório atual do sistema
+ll_dir();
 
 if(!isset($_SESSION['logado'])) {
 	$_SESSION['ll_url'] = jf_monta_link($_GET);
@@ -94,10 +98,15 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 
 require_once("includes/gerenciamento_api.php"); 
 
+//Inicia o histórico
 ll_historico('inicia');
 
-$plgThemer = $DadosLogado['themer']['pasta'];
-$plgIcones = $DadosLogado['themer']['icones'];
+//Inicia o Tema atual 	
+if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados.ll'))){
+	$ll_icones = $ll_tema->icones;
+	$plgIcones = $ll_icones;
+}
+// 
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -132,9 +141,12 @@ $plgIcones = $DadosLogado['themer']['icones'];
 		.(isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?
 			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['plugin'].'/estilo.css">'
 			: '' )
+			
 		.(isset($_GET['app']) && !empty($_GET['app'])  && file_exists('plugins/'.$_GET['app'].'/estilo.css') ?
 			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['app'].'/estilo.css">'
-			: '' );
+			: '' )
+
+		.'<link rel="stylesheet" type="text/css" href="temas/'.$ll_tema->id.'/estilo.css">';
 	?>
 </head>
 

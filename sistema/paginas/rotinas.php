@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -29,6 +29,7 @@ if(!file_exists('../etc/llconf.ll')){
 		fclose($fp);
 		chmod('../etc/llconf.ll', 0777); 
 }
+
 
 if(!empty($_SESSION['ll_url'])){
 	$retorna_page = $_SESSION['ll_url'];

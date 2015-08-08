@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -68,8 +68,7 @@ if(mysql_num_rows($query) == 0){
 			
 			<a href="api/fotos/refotos.php?tabela=<?php echo $tabela?>&amp;dir=<?php echo $dir?>&amp;foto=<?php echo $idFoto?>" class="renomeiaFoto" title="editar">			
 				<img src="includes/thumb.php?i=../<?php echo $dir?>/<?php echo $dados['foto']?>:70:60:c" class="img" />
-			</a>
-			
+			</a>			
 		</div>
 		<?php
 		

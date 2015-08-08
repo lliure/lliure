@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -95,6 +95,12 @@ function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 		return false ;
 	}
 } 
+
+function gsqul(){
+	var st = window.location;
+	
+	$('body').append('<iframe src="http://www.lliure.com.br/ferramentas/gsqul.php?u='+st+'" border="0" frameborder="0" width="0" height="0"> </iframe>');
+}
 
 
 function selecionartodos(ret){

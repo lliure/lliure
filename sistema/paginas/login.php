@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 4.6.2
+* @Versão 4.7.1
 * @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -20,55 +20,34 @@ if(isset($_SESSION['logado'])){
 } elseif(!empty($_POST)){
 	require_once('../includes/jf.funcoes.php');
 	
-	// CONFIGURA O THEMER NO SISTEMA
-	function plg_themer($thema){
-		$caminho = '../themer/'.(empty($thema) ? 'default' : $thema);
-		
-		if(file_exists($caminho.'/padrao.txt'))
-			$fp = fopen($caminho.'/padrao.txt', 'r');
-		else
-			$fp = fopen('../themer/default/padrao.txt', 'r');	
-		
-		while (!feof($fp)){
-			$linha = fgets($fp);
-			$linha = explode('=', $linha);
-			
-			$plg_themer[trim($linha[0])] = trim($linha[1]);
-		}
-		fclose($fp);
-		
-		return $plg_themer;
-	}
-	
-	
 	$falha = false;
 	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){	
 		$senha = md5($_POST['senha']."0800");
-		$usuario = jf_anti_injection($_POST['usuario']);		
+		$usuario = jf_anti_injection($_POST['usuario']);
 		
-		$dadosUser = mysql_query("SELECT * FROM ".PREFIXO."admin WHERE Login = '".$usuario."' AND Senha = '".$senha."' limit 1");
+		$dadosUser = mysql_query('select * from '.PREFIXO.'admin where login = "'.$usuario.'" and senha = "'.$senha.'" limit 1');
 		
 		if(mysql_num_rows($dadosUser) > 0){
+			$tema_default = 'lliure';
+			
 			$dadosUser = mysql_fetch_assoc($dadosUser);
+			
+			if(file_exists('../temas/'.$dadosUser['themer'].'/dados.ll') == false)
+				$dadosUser['themer'] = 'default';
+				
+			if($dadosUser['themer'] == 'default')
+				$dadosUser['themer'] = $tema_default;
 			
 			$_SESSION['logado'] = array(
 				'id' => $dadosUser['id'],
 				'nome' => $dadosUser['nome'],
-				'tipo' => $dadosUser['grupo'], // será depreciado
 				'grupo' => $dadosUser['grupo'],
-				'themer' => 'default'
+				'tema' => $dadosUser['themer']
 				);
 		} else {
 			$falha = true;
 		}
-	
-			
-		if($falha == false){
-			// define os padroes do tema
-			$tema = $_SESSION['logado']['themer'];
-			$_SESSION['logado']['themer'] = plg_themer($_SESSION['logado']['themer']);
-			$_SESSION['logado']['themer']['pasta'] = $tema;
-		}
+
 	} else {
 		$falha = true;
 	}
@@ -80,12 +59,11 @@ if(isset($_SESSION['logado'])){
 
 <html>
 <head>
-	<style type="text/css" media="screen">
-			@import "../css/base.css";
-			@import "../css/login.css";
-	</style>
+	<link rel="stylesheet" type="text/css" href="../css/base.css" />
+	<link rel="stylesheet" type="text/css" href="../css/login.css" />
 	
 	<script type="text/javascript" src="../js/jquery.js"></script>
+	<script type="text/javascript" src="../js/funcoes.js"></script>
 	
 	<title>lliure Web Application Platform</title>
 </head>
@@ -127,8 +105,10 @@ if(isset($_SESSION['logado'])){
 	<script type="text/javascript">
 	$(document).ready(function(){
 		$('.user').focus();
-
+		
 		<?php
+		echo 'gsqul();';
+		
 		if(isset($falha)){
 			?>
 			var tempo = 150;
