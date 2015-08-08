@@ -1,8 +1,0 @@
-CREATE TABLE  `sgs_mapa` (
-  `id` int(11) NOT NULL auto_increment,
-  `nome` varchar(25) NOT NULL,
-  `titulo` varchar(200) default NULL,
-  `conteudo` text,
-  `embed` text,
-  PRIMARY KEY  (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;

@@ -1,6 +1,0 @@
-nome: Agenda
-tipo: agenda
-link: ?agenda
-linkEdit: ?plugin=agenda
-tabela: agenda
-container

@@ -1,6 +1,0 @@
-nome: Catálogo
-tipo: catalogo
-link: ?catalogo
-linkEdit: ?plugin=catalogo
-tabela: catalogo
-container
