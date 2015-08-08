@@ -3,8 +3,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -30,12 +30,15 @@ function jf_file_get_contents($url, $timeout = 10) {
 
 //	Anti injection
 function jf_anti_injection($sql) {
-	if(is_array($sql))
+	if(is_array($sql)){
 		foreach($sql as $chave => $valor)
 			$sql[$chave] = jf_anti_injection($valor);
-	else
-		$sql = mysql_real_escape_string($sql);
-		
+	} else {
+		$sql = preg_replace(sql_regcase("/(%0a|%0d|Content-Type:|bcc:|to:|cc:|Autoreply:|from|select|insert|delete|where|drop table|show tables|--|\\\\)/"), "", $sql);
+		$sql = trim($sql); # Remove espaços vazios.
+		$sql = addslashes($sql); # Adiciona barras invertidas à uma string.
+	}
+	
 	return $sql;
 }
 
@@ -74,7 +77,22 @@ function jf_token($caso){
 	}
 }
 
-function jf_insert($tabela, $dados){
+
+
+function jf_result($tabela, $dados, $coluna){
+	if(is_array($dados)){
+		$chave = array_keys($dados);
+		$where = $chave[0].' = "'.$dados[$chave[0]].'"';
+	} else{
+		$where = $dados;
+	}
+	
+	$var = @mysql_result(mysql_query('select '.$coluna.' from '.$tabela.' where '.$where.' limit 1'), 0);
+	
+	return $var;
+}
+
+function jf_insert($tabela, $dados, $print = false){
 	/*
 	//Descrição
 	jf_insert(string $tabela, array $dados)
@@ -100,15 +118,53 @@ function jf_insert($tabela, $dados){
 	retorna também a variável  $jf_ultimo_id que é o valor auto-increment retornado neste insert 
 	*/
 	
-	$valores = '';
+	/*$valores = '';
 	$colunas = '';
 	foreach($dados as $chaves => $valor){
 		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 		$valores .= (empty($valores)? '' : ',').$valor;
 		$colunas .= (empty($colunas)? '' : ', ').$chaves;
+	}*/
+	
+	$return = null;
+	
+	$Chaves = array_keys($dados);
+	
+	if (is_array($dados[$Chaves[0]])){
+	
+		$colunas = null;
+		foreach($dados as $chave => $valor){
+			foreach($valor as $chave1 => $valor1){
+				$colunas [$chave1] = $chave1;
+			}
+		}
+	
+		$valores = '';
+		foreach($dados as $chave => $valor){
+			$unicValores = null;
+			foreach($colunas as $valor1){
+				$unicValores[] = (isset($valor[$valor1])? addslashes($valor[$valor1]): 'NULL');
+			}
+			$valores .= ($valores == ''? '': ', ') . '("' . implode('", "', $unicValores) .'")';
+		}
+		
+		$colunas = implode(', ', $colunas);
+	
+	}else{
+	
+		$valores = '';
+		$colunas = '';
+		foreach($dados as $chave => $valor){
+			$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+			$valores .= (empty($valores)? '' : ', ').$valor;
+			$colunas .= (empty($colunas)? '' : ', ').$chave;
+		}
+		$valores = '(' . $valores . ')';
+		
 	}
 	
-	$executa = 'INSERT INTO '.$tabela.' ('.$colunas.') values ('.$valores.')';
+	
+	$executa = 'INSERT INTO ' . $tabela . ' (' . $colunas . ') values ' . $valores;
 	if(mysql_query($executa) != false){
 		global $ml_ultmo_id;
 		global $jf_ultimo_id;
@@ -116,14 +172,17 @@ function jf_insert($tabela, $dados){
 		$jf_ultimo_id = mysql_insert_id();
 		$ml_ultmo_id = $jf_ultimo_id;
 
-	} else{
-		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
+	} else {
+		$return = '<strong>Query:</strong> '.htmlentities($executa).'  <strong>Erro:</strong> '.htmlentities(mysql_error());
 	}
 	
-	return null;
+	if($print)
+		$return = $executa;
+	
+	return $return;
 }
 
-function jf_update($tabela, $dados, $alter, $mod = null){
+function jf_update($tabela, $dados, $alter, $mod = null, $print = false){
 	/* EXPLICANDO *********************************
 	$table = "nomedatabela";
 	$dados = array(
@@ -143,26 +202,36 @@ function jf_update($tabela, $dados, $alter, $mod = null){
 	- Caso não sejá possivel execultar a query, retorna a query seguinda do erro
 	
 	*/
-
+	$return = null;
  	$valores = '';
 	foreach($dados as $chaves => $valor){
 		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 		$valores .= (empty($valores)?' ':', ').$chaves.' = '.$valor;
 	}
 	
+	$where = '';
+	$operador = is_null($mod) || $mod ? "=" : $mod ;	
+	foreach($alter as $chave => $valor){
+		$where .= (!empty($where) ? ' and ' : '' ) . $chave . ' ' . $operador . ' "' . $valor. '" ';
+	}
+	
+	/*
 	$int = array_keys($alter);
 	$int = $int[0];
 	$intv = $alter[$int];
+	*/
 	
-	is_null($mod) ? $mod = "=" : $mod = "$mod" ;
 	
-	$executa = 'UPDATE '.$tabela.' Set '.$valores.' where '.$int.' '.$mod.' "'.$intv.'"';
+	$executa = 'UPDATE '.$tabela.' Set '.$valores.' where '.$where;
 	
-	if(mysql_query($executa) != false){
-		return null;
-	} else{
-		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
+	if(mysql_query($executa) == false){
+		$return = '<strong>Query:</strong> '.htmlentities($executa).'  <strong>Erro:</strong> '.htmlentities(mysql_error());
 	}
+	
+	if($mod === true || $print == true)
+		$return = $executa;
+	
+	return $return;
 }
 
 // PARA DELETE
@@ -175,16 +244,21 @@ function jf_delete($tabela, $alter){
 	- Caso não sejá possivel execultar a query, retorna a query seguinda do erro
 	  
 	*/
-	$int = array_keys($alter);
-	$int = $int[0];
-	$intv = $alter[$int];
+	
+	$del = '';
+	foreach($alter as $chave => $valor){
+		if(!empty($del))
+			$del .= ' and ';
+			
+		$del .= $chave.' = "'.$valor.'"';
+	}
 		
-	$executa = "DELETE FROM $tabela where $int = '$intv'";	
+	$executa = 'DELETE FROM '.$tabela.' where '.$del;	
 	
 	if(mysql_query($executa) != false){
 		return null;
 	} else{
-		return '<strong>Query:</strong> '.$executa.'  <strong>Erro:</strong> '.mysql_error().'';
+		return '<strong>Query:</strong> '.htmlentities($executa).'  <strong>Erro:</strong> '.htmlentities(mysql_error()).'';
 	}
 }
 
@@ -230,10 +304,10 @@ function jf_monta_link($haystack, $needle = null, $amigavel = false){
 	return $final;
 }
 
-function jf_substr($texto, $final = 100){
+function jf_substr($texto, $final = 100, $complemento = ''){
 	if(strlen($texto) > $final){
 		$final = strrpos(substr($texto, 0, $final), " ");
-		$texto = substr($texto, 0 , $final)." ...";
+		$texto = substr($texto, 0 , $final).$complemento;
 	} 
 	return $texto;
 }
@@ -333,7 +407,9 @@ function jf_dunix($dataEnt){
 }
 
 //	Função iconv formulada para array
-function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = "ISO-8859-1"){ return jf_iconv($in_charset, $out_charset, $arr); }
+function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = "ISO-8859-1"){ 
+		return jf_iconv($in_charset, $out_charset, $arr); 
+}
 
 function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
 	if (!is_array($arr)){
@@ -382,13 +458,13 @@ function jf_formata_url($texto){
 // Formata uma string para o formato "pasta"
 function jf_formata_pasta($texto){
 	$texto = mb_strtolower($texto); // muda tudo para minusculo
-	$texto = ereg_replace("[áàâãª]","a",$texto);
-	$texto = ereg_replace("[éèê]","e",$texto);
-	$texto = ereg_replace("[íìïî]","i",$texto);
-	$texto = ereg_replace("[óòôõº]","o",$texto);
-	$texto = ereg_replace("[úùû]","u",$texto);
+	$texto = preg_replace("/[áàâãª]/","a",$texto);
+	$texto = preg_replace("/[éèê]/","e",$texto);
+	$texto = preg_replace("/[íìîï]/","i",$texto);
+	$texto = preg_replace("/[óòôõº]/","o",$texto);
+	$texto = preg_replace("/[úùû]/","u",$texto);
 	$texto = str_replace("ç","c",$texto);
-	$texto = ereg_replace("[^ a-z 0-9 \t\n _ -- . \\ \/]", "", $texto);		
+	$texto = preg_replace("/[^ a-z 0-9 \t\n _ -- . \\ \/]/", "", $texto);		
 	return($texto);
 }
 
@@ -487,6 +563,27 @@ function xml2array ( $xmlObject, $out = array () ){
 
 }
 
+
+// converte um array para Objeto
+function jf_ato($array) {
+    if(!is_array($array)) {
+        return $array;
+    }
+    
+    $object = new stdClass();
+    if (is_array($array) && count($array) > 0) {
+      foreach ($array as $name=>$value) {
+         $name = strtolower(trim($name));
+         if (!empty($name)) {
+            $object->$name = arrayToObject($value);
+         }
+      }
+      return $object;
+    }
+    else {
+      return FALSE;
+    }
+}
 
 
 /*******************************	APELIDO DE FUNÇÕES	*/

@@ -1,5 +1,16 @@
 Neste aquivo estão descritas todas atualizações do lliure (lê-se lhiura) e de API nativas
 
+-- 4.9.1 (São Bernardo) (24/05/2013)
+# [bug] - Faltando arquivo "index.php" na pasta install
+# [bug] - Erro de compatibilidade dos jquery maskinput
+
+-- 4.9.0 (São Bernardo) (18/11/2012)
+# [update] - Nova função jf_result(), adicionado ao pacote jf.funções
+# [update] - No processo de instalação agora é possivel deixar o campo senha vazio
+# [update] - A função jf_delete() agora aceita um array() na 2ª instrução (para o where) 
+# [bug] - na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
+# [update] - na na biblioteca jf.funcoes
+
 -- 4.8.1 (São Bernardo) (17/10/2012)
 # [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores
 # [bug] - em functions.php a função ll_dir dependia da constante __DIR__ que foi adiciona na versão 5 do php, então não funcionava nas anteriores

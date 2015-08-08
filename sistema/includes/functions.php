@@ -3,8 +3,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -48,6 +48,7 @@ function ll_dir(){
 
 	
 function ll_historico($mods = null, $modsQnt = 1){
+
 	global $backReal;
 	global $backNome ;
 
@@ -132,11 +133,11 @@ function ll_securyt($app){
 	<user> é o nome do grupo que tera permissão para acessar a url
 		para configurar coloque a chave do get depois o valor, caso possa acessar qualquer valor dentro deste get utilize '$' como valor
 		exemplos para as urls:
-		plugin=teste&p=usuarios			=	<user> <p>usuarios</p> </user>
-		plugin=teste&p=modulos			=	<user> <p>modulos</p> </user>
-		plugin=teste&p=usuarios&id=5	=	<user> <p>usuarios</p> <id>$</id> </user>
-		plugin=teste&p=usuarios&id=10	=	<user> <p>usuarios</p> <id>$</id></user>
-		plugin=teste					=	<user></user>
+		app=teste&p=usuarios			=	<user> <p>usuarios</p> </user>
+		app=teste&p=modulos			=	<user> <p>modulos</p> </user>
+		app=teste&p=usuarios&id=5	=	<user> <p>usuarios</p> <id>$</id> </user>
+		app=teste&p=usuarios&id=10	=	<user> <p>usuarios</p> <id>$</id></user>
+		app=teste					=	<user></user>
 	como você pode verificar não é necessário setar o primeiro get, no caso o que aponta para o aplicativo em questão
 	*/
 

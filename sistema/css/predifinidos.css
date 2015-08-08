@@ -2,8 +2,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -368,7 +368,36 @@ div.paginacao span{
 	}
 
 
+.paginacao{
+	padding-top: 20px;
+	}
 	
+	.paginacao li{
+		float: left;
+		margin-right: 5px;
+		}
+	
+		.paginacao li a{
+			float: left;
+			min-width: 16px;
+			line-height: 35px;
+			background: #ccc;
+			text-align: center;
+			border-radius: 3px;
+						
+			padding: 0 10px;
+			
+			box-sizing: content-box;
+			-moz-box-sizing: content-box;
+			-webkit-box-sizing: content-box;
+			}
+			
+			
+		.paginacao li a.current{
+			background: #4F4F4F;
+			color: #fff;
+			}
+				
 /**********************			JFBOX			**********************/
 #jfboxLoad h1{
 	font-size: 1.5em;

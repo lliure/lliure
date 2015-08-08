@@ -3,8 +3,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -123,7 +123,7 @@ function plg_load(url, callback){ ///////// APELIDO PARA ll_load
 	return ll_load(url, callback);
 }
 
-function ll_load(url, data, callback){		
+function ll_load(url, data, callback){
 	if(url == 'load'){
 		$('#tudo').prepend('<div id="plg_load"></div>');
 	} else {

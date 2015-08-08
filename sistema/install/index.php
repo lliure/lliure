@@ -3,8 +3,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -110,7 +110,7 @@ break;
 
 case 'instalar':
 	if(!file_exists('../etc/bdconf.php')){	
-		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['senha']) || empty($_POST['tabela']) || !isset($_POST['uploads']) || !isset($_POST['etc']) || jf_token($_POST['token']) != true){
+		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['tabela']) || !isset($_POST['uploads']) || !isset($_POST['etc']) || jf_token($_POST['token']) != true){
 			echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
 			break;
 		}
@@ -151,7 +151,7 @@ case 'instalar':
 		
 		$frase = '<span style="font-size: 13px;">- Copiar aquivo <strong>thumbs.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>';
 		if(!file_exists('../../uploads/thumbs.php')){
-			if(@copy('sup/thumb.php', '../../uploads/thumbs.php'))
+			if(@copy('sup/thumbs.php', '../../uploads/thumbs.php'))
 				$frase =  '<span style="font-size: 13px;">- Copiar aquivo <strong>thumbs.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 		}		
 		echo $frase;

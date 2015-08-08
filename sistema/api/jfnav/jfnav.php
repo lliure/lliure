@@ -3,8 +3,8 @@
 *
 * API jfnav - Plugin CMS
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -103,8 +103,9 @@ if(mysql_num_rows($query) > 0){
 			$click = $config['link'].$dados['id'];
 
 			$nome = isset($config['coluna']) ? $dados[$config['coluna']] : $dados['nome'];
-	
-			$nomelink = (strlen($dados['nome']) > 33 ? substr($nome, 0, 30) : $nome);
+			
+			$nomelink = !empty($config['coluna'])?$config['coluna']:$dados['nome'];
+			$nomelink = (strlen($nomelink) > 33 ? substr($nome, 0, 30) : $nome);
 			
 			echo '<tr id="div'.$pagInp.'"
 					class="listp"

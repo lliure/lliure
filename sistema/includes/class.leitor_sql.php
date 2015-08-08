@@ -25,7 +25,7 @@
 * @since Mar 15, 2004
 * @version 1.1.2
 * @author Alfred Reinold Baudisch<alfred_baudisch@hotmail.com>
-* @update Jeison Frasson <contato@grapestudio.com.br>
+* @update Jeison Frasson <jomadee@lliure.com.br>
 */
 class leitor_sql {
     /**

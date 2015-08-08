@@ -3,8 +3,8 @@
 *
 * lliure WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -125,6 +125,7 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 	<script type="text/javascript" src="api/tiny_mce/tiny_mce.js"></script>
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/funcoes.js"></script>
 	<script type="text/javascript" src="js/jquery.jfkey.js"></script>
 	<script type="text/javascript" src="js/jquery.easing.js"></script>

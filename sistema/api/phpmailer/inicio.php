@@ -3,8 +3,8 @@
 *
 * API PHP Mailer - Plugin WAP
 *
-* @Versão 4.8.1
-* @Desenvolvedor Jeison Frasson <contato@grapestudio.com.br>
+* @Versão 4.9.1
+* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -47,31 +47,46 @@ function limpaMail($in){
 }
 
 
-function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $header = null){	
+function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $header = null, $conf = null){	
 	$to = limpaMail($destinatario);
 	
-	if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false || !isset($llconf->smtp->host))
-		return 'Nao foi possível encontrar as configurações de smtp';
+	if(!empty($conf)){		
+		$smtp = (object) $conf;
 		
+		/*
+		$conf = array(
+			'host' => 'mail.newsmade.com.br',
+			'usuario' => 'syn+newsmade.com.br',
+			'usuario' => '102030',
+			'autenticacao' => true,
+			'porta' => 25
+			)
+		*/
+	} else {
+		if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false || !isset($smtp->host))
+			return 'Nao foi possível encontrar as configurações de smtp';
+		else
+			$smtp = $llconf;
+	}
 	
 	$mail = new PHPMailer();
 
 	$mail->IsSMTP(); 
-	$mail->Host = $llconf->smtp->host;	
+	$mail->Host = $smtp->host;	
 		
-	if(isset($llconf->smtp->autenticacao))
-		$mail->SMTPAuth = (boolean) $llconf->smtp->autenticacao;	
+	if(isset($smtp->autenticacao))
+		$mail->SMTPAuth = (boolean) $smtp->autenticacao;	
 	
 	
-	if(isset($llconf->smtp->porta))
-		$mail->Port = (int) $llconf->smtp->porta;	
+	if(isset($smtp->porta))
+		$mail->Port = (int) $smtp->porta;	
 		
 	/*
-	//if(isset($llconf->smtp->seguranca))
-		//$mail->SMTPSecure = $llconf->smtp->seguranca;	
+	//if(isset($smtp->seguranca))
+		//$mail->SMTPSecure = $smtp->seguranca;	
 	*/
-	$mail->Username = $llconf->smtp->usuario;
-	$mail->Password = $llconf->smtp->senha;
+	$mail->Username = $smtp->usuario;
+	$mail->Password = $smtp->senha;
 	
 
 	// remetente
@@ -79,7 +94,7 @@ function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $head
 	if(isset($header['from'])) {
 		$from = limpaMail($header['from']);
 	} else {
-		$from['mail'] = $llconf->smtp->usuario;
+		$from['mail'] = $smtp->usuario;
 		$from['nome'] = '';
 	}
 	
