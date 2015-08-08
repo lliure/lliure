@@ -1,7 +1,24 @@
+
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
 $().ready( function(){
-$('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
+	$('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 				+'<div id="jfboxFundo"></div><img src="imagens/jfbox/loading.gif" id="gifJfbox" alt="" style="display: none;">'
 				+'<div id="jfAviso"></div>');
+				
+	$('#jfboxFundo').click(function () {
+		fechaJfbox();
+		return false;
+	});
  });
  
  jQuery.fn.extend({
@@ -13,7 +30,8 @@ $('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 			abreBox: true,
 			carrega: false,
 			campos: false,
-			position: false
+			position: false,
+			addclass: ''
 		}
 		
 		//função do jquery que substitui os parametros que não foram informados pelos defaults
@@ -33,11 +51,9 @@ $('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 			click: function() {
 				if(typeof $(this).attr('href') !== "undefined" && $(this).attr('href')){
 					var carrega = $(this).attr('href');
-
-					loadJfbox(carrega, null, this);
-
-					if(options.abreBox == true)
-						abreJfbox();
+					
+					
+					loadJfbox(carrega, null, options.abreBox, this);
 
 					return false;
 				}
@@ -46,13 +62,10 @@ $('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 		});	
 		
 		if(options.carrega){
-			loadJfbox(options.carrega, options.campos); 
-			
-			if($('#jfboxMargin').css('display') == 'none' && options.abreBox == true)
-				abreJfbox();
+			loadJfbox(options.carrega, options.campos, options.abreBox); 
 		}
 		
-		function loadJfbox(carrega, campos, nthis){
+		function loadJfbox(carrega, campos, abreBox, nthis){
 			nthis = nthis != 'undefined' ? nthis : null;
 			gifJfbox();
 						
@@ -64,6 +77,9 @@ $('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 				gifJfbox(true);
 				
 				
+				if($('#jfboxMargin').css('display') == 'none' && abreBox == true)
+					abreJfbox();	
+				
 				if(typeof callback == 'function') //checa se o retorno é uma função
 					callback.call(this, nthis); // executa
 	
@@ -74,90 +90,149 @@ $('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 	
 		function abreJfbox(){
 			var scrollX = $(window).scrollTop();
-		
-			$('#jfboxLoad').css({width: options.width, height: options.height})
+
+			$('#jfboxLoad').css({width: (jfboxVars.width != undefined ? jfboxVars.width : options.width), height: options.height})
 
 			//Carrega o height e width da Janela
 			var winH = $(window).height();
 			var winW = $(window).width();
 			
-			if(options.position == false){
-				$('#jfboxMargin').css('top',  (winH/2-($('#jfboxMargin').height()+20)/2)+scrollX);
-				$('#jfboxMargin').css('left', winW/2-($('#jfboxMargin').width()+20)/2);
-			} else {
-				if(options.position[0] != 0)
-					$('#jfboxMargin').css('top',  options.position[0]);
-				
-				if(options.position[1] != 0)
-					$('#jfboxMargin').css('left',  options.position[1]);
-			}
-			$('#jfboxMargin').fadeIn(150);
+			$('#jfboxLoad').removeClass();
 			
+			if(options.addclass != '')
+				$('#jfboxLoad').addClass(options.addclass);
+			
+			if((jfboxVars.position != undefined ? jfboxVars.position : options.position) == false){
+
+				$('#jfboxMargin').css({'top': ((winH-($('#jfboxMargin').height()+50))/2)+scrollX, 'left': winW/2-($('#jfboxMargin').width()+35)/2, 'right': 'auto', 'button': 'auto'});
+				
+			} else {
+				(options.position[2] == 'button' 
+						? $('#jfboxMargin').css({'top':  'auto', 'button': options.position[0]})
+						: $('#jfboxMargin').css({'top':  options.position[0], 'button': 'auto'})
+				);
+				
+				(options.position[3] == 'right' 
+						? $('#jfboxMargin').css({'right':  options.position[1], 'left': 'auto'})
+						: $('#jfboxMargin').css({'right':  'auto', 'left': options.position[1]})
+				);
+			}
+
+			$('#jfboxMargin').fadeIn(150);
+
 			var maskHeight = $(document).height();
 			var maskWidth = $(window).width();
 
 			$('#jfboxFundo').css({'width':maskWidth,'height':maskHeight});
-			$('#jfboxFundo').fadeTo(300,0.7);			
-			
-			$('#jfboxFundo').click(function () {
-				fechaJfbox();
-				return false;
-			});		
+			$('#jfboxFundo').fadeTo(300,0.7);
 		}
-		
-		function gifJfbox(fechar){
-			if(typeof fechar !== "undefined" && fechar){
-				$('#gifJfbox').css({display: 'none'});
-			} else {
-				var scrollX = $(window).scrollTop();
-				var winH = $(window).height();
-				var winW = $(window).width();
-				
-				$('#gifJfbox').css('top',  (winH/2-32/2)+scrollX);
-				$('#gifJfbox').css('left', winW/2-32/2);
-				
-				$('#gifJfbox').css({display: 'block'});
-				
-			}
-		}
-		
 	},	
 	
 	jfaviso: function (texto, tempo){	/************************************************************	EXTENÃO DE AVISO	*/
-		if(typeof tempo == "undefined" && !tempo)
+		jfAlert(texto, tempo);
+	}
+
+});
+
+function gifJfbox(fechar){
+	if(typeof fechar !== "undefined" && fechar){
+		$('#gifJfbox').css({display: 'none'});
+	} else {
+		var scrollX = $(window).scrollTop();
+		var winH = $(window).height();
+		var winW = $(window).width();
+		
+		$('#gifJfbox').css('top',  (winH/2-32/2)+scrollX);
+		$('#gifJfbox').css('left', winW/2-32/2);
+		
+		$('#gifJfbox').css({display: 'block'});
+		
+	}
+}
+
+function jfAlert(texto, tempo){
+	if(typeof tempo == "undefined" && !tempo)
 			tempo = 2;
 			
-		tempo = tempo*1000;
-		
-		$("#jfAviso").html('<div class="msm">'+texto+'</div>');
+	tempo = tempo*1000;
+	
+	$("#jfAviso").html('<div class="msm">'+texto+'</div>');
 
-		var scrollX = $(window).scrollTop();
-		var winW = $(window).width();
-		var winH = $(window).height();
-		$('#jfAviso .msm').corner(10);			
+	var scrollX = $(window).scrollTop();
+	var winW = $(window).width();
+	var winH = $(window).height();
+	
+	winW = winW/2-($('#jfAviso').width()+20)/2;
+	winH = (winH/2-(($('#jfAviso').height()+40)/2))+scrollX;
+	
+	$('#jfAviso').css({top: winH, left: winW});
+	
+	$('#jfAviso').stop(true, true).fadeIn(300, function(){
 		
-		winW = winW/2-($('#jfAviso').width()+20)/2;
-		winH = (winH/2-(($('#jfAviso').height()+40)/2))+scrollX;
+		setTimeout(function(){
+			$("#jfAviso").stop(true, true).fadeOut(300, function(){
+				$('#jfAviso').html('');
+			});
+		}, tempo);
 		
-		$('#jfAviso').css({top: winH, left: winW});
-		
-		$('#jfAviso').stop(true, true).fadeIn(300, function(){
+	});	
+}
+
+function jfboxVars(){ 
+	jfboxVars.width = undefined;
+	jfboxVars.height = undefined;
+	jfboxVars.inputTest = undefined;
+	jfboxVars.position = undefined;
+}
+
+function jfConfirm(texto){	
+	$("#jfAviso").html('<div class="msm">'+texto+'</div> <span class="fechar"></span>');
+
+	var scrollX = $(window).scrollTop();
+	var winW = $(window).width();
+	var winH = $(window).height();
+	
+	winW = winW/2-($('#jfAviso').width()+20)/2;
+	winH = (winH/2-(($('#jfAviso').height()+40)/2))+scrollX;
+	
+	$('#jfAviso').css({top: winH, left: winW});
+	
+	$('#jfAviso').stop(true, true).fadeIn(300, function(){
 			
-			setTimeout(function(){
-				$("#jfAviso").fadeOut(300, function(){
-					$('#jfAviso').html('');
-				});
-			}, tempo);
-			
-		});				
-				
-	}
-});
-		
+	});	
+}
+
+
+
 function fechaJfbox(){
-	$('#jfboxMargin').fadeOut(150);
-	$('#jfboxFundo').fadeOut(300);
-	$('#jfboxLoad').html('');
+	var temtexto = false;
+	
+	if(jfboxVars.inputTest == true){
+		$('#jfboxLoad textarea, #jfboxLoad input[type=text]').each(function(){
+			if($(this).val() != '')
+				temtexto = true;
+		});
+	
+		if(temtexto == true){
+			if(confirm("Você preencheu alguns campos nesta página, tem certeza que deseja fechá-la?")) {
+				jfboxVars.inputTest = false;
+				fechaJfbox();
+			} else {
+				return false;
+			}
+		} else {
+			jfboxVars.inputTest = false;
+			fechaJfbox();
+		}
+			
+	
+	} else {		
+		$('#jfboxMargin').fadeOut(150);
+		$('#jfboxFundo').fadeOut(300);
+		$('#jfboxLoad').html('');
+		
+		jfboxVars();
+	}
 	return false;
 }
 

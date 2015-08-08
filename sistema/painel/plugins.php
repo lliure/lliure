@@ -1,9 +1,23 @@
-<h1>Painel de aplicativos</h1>
-<div class="menuSub">
-	<a href="<?php echo $backReal?>" title="Voltar"><img src="<?php echo $plgIcones."br_prev.png"?>" alt=""/><span><?php echo $backNome?></span></a>  
-	<a href="painel/menu-rapido.php" title="Acesso rápido" class="rapido"><img src="<?php echo $plgIcones."lighting.png"?>" alt=""/><span>Acesso rápido</span></a>  
-	<div class="both"></div>
-</div>
+<?php
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+$botoes = array(
+	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome),
+	array('href' => 'painel/menu-rapido.php', 'img' => $plgIcones.'lighting.png', 'title' => 'Acesso rápido', 'attr' => 'class="rapido"')
+	);
+
+
+echo app_bar('Painel de aplicativos', $botoes);
+?>
 
 <div id="container" >
 	<?php

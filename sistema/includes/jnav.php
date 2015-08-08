@@ -1,46 +1,60 @@
 <?php
-function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs = null){
-/*
-Documentação da função
-
-$query
-	Exemplo de utilização
-	$consulta = "select * from tabela";
-	$query = mysql_query($consulta);
-	
-$pluginTable
-	Exemplo de utilização
-	$pluginTable = 'tabela'; // Básicamente é a tabela que está sendo utilizada o motivo de ter que mostra-lo é que será utilizado pelo JS
-	
-$Pastas
-	Exemplo de utilização
-	$pastas = 'sistema/pasta'; // Básicamente é a pasta em que está o plugin, é utilizado para selecionar icones
-	
-	ou 
-	
-	$pastas['pp'] = Pasta do Plugin // igual o acima;
-	$pastas['plp'] = Pasta que o plugin faz interação, essa caso não exista o sistema retorna uma mensagem dizendo que a pasta não existe
-	
-$mensagemVazio
-	Exemplo de utilização
-	$mensagemVazio = 'nada foi encontrado'; 	//É a mensagem exibida caso não seja encontrado nenhum resultado na busca		
-
-$link
-	Exemplo de utilização
-	$link['campo'] = 'tipo';		// É o diferencial entre os dois tipos de itens no caso terá é o campo que os diferencia na base de dados
-
-	$link['t1']['link'] = "?acoes=editar&amp;id="; 	//$link['Y']['link'] onde Y é o mesmo que o anterior
-	$link['t1']['ico'] = "/img/album.png";			//$link['Y']['ico'] onde Y é o mesmo que o anterior
-
-	$link['t2']['link'] = "?gal=";					//$link['t2']['link'] = ao link que o usuario será direcionado em caso click	
-	$link['t2']['ico'] = "/img/book.png";			//$link['t2']['ico'] = é a imagem 
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
 */
 
+function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs = null){
+	/*
+	Documentação da função
+
+	$query
+		Exemplo de utilização
+		$consulta = "select * from tabela";
+		$query = mysql_query($consulta);
+		
+	$pluginTable
+		Exemplo de utilização
+		$pluginTable = 'tabela'; // Básicamente é a tabela que está sendo utilizada o motivo de ter que mostra-lo é que será utilizado pelo JS
+		
+	$Pastas
+		Exemplo de utilização
+		$pastas = 'sistema/pasta'; // Básicamente é a pasta em que está o plugin, é utilizado para selecionar icones
+		
+		ou 
+		
+		$pastas['pp'] = Pasta do Plugin // igual o acima;
+		$pastas['plp'] = Pasta que o plugin faz interação, essa caso não exista o sistema retorna uma mensagem dizendo que a pasta não existe
+		
+	$mensagemVazio
+		Exemplo de utilização
+		$mensagemVazio = 'nada foi encontrado'; 	//É a mensagem exibida caso não seja encontrado nenhum resultado na busca		
+
+	$link
+		Exemplo de utilização
+		$link['campo'] = 'tipo';		// É o diferencial entre os dois tipos de itens no caso terá é o campo que os diferencia na base de dados
+
+		$link['t1']['link'] = "?acoes=editar&amp;id="; 	//$link['Y']['link'] onde Y é o mesmo que o anterior
+		$link['t1']['ico'] = "/img/album.png";			//$link['Y']['ico'] onde Y é o mesmo que o anterior
+
+		$link['t2']['link'] = "?gal=";					//$link['t2']['link'] = ao link que o usuario será direcionado em caso click	
+		$link['t2']['ico'] = "/img/book.png";			//$link['t2']['ico'] = é a imagem 
+	*/
+	
+	global $jnav_registros;
+	
 	$pluginPasta = (is_array($pastas)?$pastas['pp']:$pastas);
 	?>
 	<script type="text/javascript">
-		$().ready(function() {
+		$(function() {
 			$('#bodyhome').jfnav();
+			$('.listp').corner('4px');
 		});
 	</script>
 	
@@ -52,6 +66,8 @@ $link
 		<?php
 		if(mysql_num_rows($query) > 0){
 			while($dados = mysql_fetch_array($query)){
+				$jnav_registros++;
+				
 				$id = $dados['id'];
 				$nome = $dados['nome'];
 				
@@ -66,6 +82,7 @@ $link
 				}	
 				
 				if(!is_null($ligs)){
+					echo "aqui";
 					$ligModIdint = ($ligModId == "notnull"?" != '' and id = '".$id."'" : "= '".$ligModId.$id."'");
 					$consulta = mysql_query("select ".$ligCampo." from ".$ligTabela." where ".$ligCampo." ".$ligModIdint." limit 1");
 					if(mysql_num_rows($consulta) > 0){
@@ -79,15 +96,16 @@ $link
 				
 				$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
 				?>	
-				<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" click="<?php echo $liglink?>" dclick="<?php echo $click?>">
+				<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" lig="<?php echo $liglink?>" dclick="<?php echo $click?>">
 					<div class="inter">
 						<img src="<?php echo $pluginPasta.$ico?>" alt="<?php echo $nome?>" />
-						<span id="<?php echo $pagInp?>"  rel="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink?></span>
+						<span id="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink?></span>
 					</div>
 				</div>
 				<?php
 			}
 		} else { 
+			$tempo = 0;
 			if(is_array($pastas) and isset($pastas['plp'])) {
 				if(file_exists($pastas['plp']) != true){
 					if(@mkdir($pastas['plp'], 0777 ) == true){
@@ -111,7 +129,7 @@ $link
 function jNavigatorInner($ultimo_id, $ondblclick, $icone, $nome){
 	$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
 	
-	return '<div class="listp" id="divname'.$ultimo_id.'" rel="name'.$ultimo_id.'" click="0" dclick="'.$ondblclick.$ultimo_id.'">'
+	return '<div class="listp" id="divname'.$ultimo_id.'" rel="name'.$ultimo_id.'" lig="0" click="0" dclick="'.$ondblclick.$ultimo_id.'">'
 				.'<div class="inter">'
 					.'<img src="'.$icone.'" alt="'.$nome.'" />'
 					.'<span id="name'.$ultimo_id.'" rel="name'.$ultimo_id.'"  title="'.$nome.'">'.$nomelink.'</span>'

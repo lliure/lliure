@@ -1,17 +1,31 @@
 <?php 
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+if(!file_exists("includes/conection.php")) 
+	header('location: install/index.php');
+
 require_once("includes/conection.php"); 
 
 if(!isset($_SESSION['logado']))
 	header('location: paginas/login.php');
+	
 require_once("includes/functions.php"); 
 
-$plgThemer = (isset($DadosLogado) && !empty($DadosLogado['themer']) ? $DadosLogado['themer'] : 'default' );
-
-require_once('themer/'.$plgThemer.'/padrao.php');
-	
 navig_historic();
-?>
 
+$plgThemer = $DadosLogado['themer']['pasta'];
+$plgIcones = $DadosLogado['themer']['icones'];
+
+?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
@@ -27,9 +41,10 @@ navig_historic();
 	
 	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/funcoes.js"></script>
+	<script type="text/javascript" src="js/jquery.jfkey.js"></script>
+	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
 	<script type="text/javascript" src="js/javaNavigator.js"></script>
 	
-	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
 	<script type="text/javascript" src="js/jquery.maskedinput-1.2.2.js"></script>
 	<script type="text/javascript" src="js/jquery.corner.js"></script>
 	
@@ -42,35 +57,36 @@ navig_historic();
 		@import "css/predifinidos.css";
 		@import "css/jfbox.css";
 		<?php
-		echo '@import "themer/'.$plgThemer.'/estilo.css";';
 		echo (isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?  '@import "plugins/'.$_GET['plugin'].'/estilo.css"; ' : '' );
 		?>
+		
+		#topo{
+			background: url("<?php echo 'themer/'.$plgThemer.'/bg.jpg'?>") center top repeat-x;
+		}		
+		
 	</style>
 
-	<script type="text/javascript">
-		$(document).ready(function(){
-			<?php
-			if(isset($_SESSION['aviso'])){
-				echo 'mLaviso("'.$_SESSION['aviso'][0].'", "'.$_SESSION['aviso'][1].'");';
-				unset($_SESSION['aviso']);
-			}
-			?>
-			$('body').append('<div id="atlSession"></div>');
-			
-			setInterval(function(){
-				$("#atlSession").load("includes/session_start.php");
-			},1000*60*10);
-		});
-	</script>
+
 </head>
 
 
-<body onkeyup="disparaPorTec(event)">
+<body>
 <div id="tudo">
 	<div id="topo">
 		<div class="left">
 			<a href="index.php" class="logoSistema"><img src="<?php echo 'themer/'.$plgThemer.'/logo.png'?>"/></a>
+			<?php
+			if(!empty($_GET)){
+				$keyGet = array_keys($_GET);
+				if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
+					?>
+					<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="addDesktop" title="Adicionar essa página ao desktop"><img src="imagens/layout/add_desktop.png" alt="" /></a>
+					<?php 
+				}
+			} 
+			?>
 		</div>
+		
 		<?php
 		if(!empty($DadosLogado)){ ?>
 		<div class="right">
@@ -110,17 +126,8 @@ navig_historic();
 					<?php
 					}
 					?>
-					
 				</ul>
 				<?php
-				if(!empty($_GET)){
-					$keyGet = array_keys($_GET);
-					if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
-						?>
-						<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="Adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
-						<?php 
-					}
-				} 
 			} 
 		?>
 		</div>
@@ -130,28 +137,25 @@ navig_historic();
 	</div>
 
 	<div id="conteudo">
-		<div class="marding">
-			<?php 	
-			if(!empty($DadosLogado)){
-				if(isset($_GET['plugin'])){
-					if(!empty($_GET['plugin'])){
-						$pagina = "plugins/".$_GET['plugin']."/start.php";
-					} else {
-						$pagina = "painel/plugins.php";
-					}
-				} elseif(isset($_GET['usuarios'])) {
-					$pagina = "paginas/usuarios.php";
+		<?php 	
+		if(!empty($DadosLogado)){
+			if(isset($_GET['plugin'])){
+				if(!empty($_GET['plugin'])){
+					$pagina = "plugins/".$_GET['plugin']."/start.php";
 				} else {
-					$pagina = "paginas/desktop.php";
+					$pagina = "painel/plugins.php";
 				}
+			} elseif(isset($_GET['usuarios'])) {
+				$pagina = "paginas/usuarios.php";
 			} else {
-				$pagina = "paginas/login.php";
+				$pagina = "paginas/desktop.php";
 			}
+		} else {
+			$pagina = "paginas/login.php";
+		}
 
-			require_once($pagina);
-			?>
-			<div class="both"></div>
-		</div>
+		require_once($pagina);
+		?>
 		<div class="both"></div>
 	</div>
 	
@@ -163,5 +167,25 @@ navig_historic();
 </div> 
 
 </body>
+
+<head>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			<?php
+			if(isset($_SESSION['aviso'])){
+				echo 'mLaviso("'.$_SESSION['aviso'][0].'", "'.$_SESSION['aviso'][1].'");';
+				unset($_SESSION['aviso']);
+			}
+			?>
+			$('body').append('<div id="atlSession"></div>');
+			
+			setInterval(function(){
+				$("#atlSession").load("includes/session_start.php");
+			},1000*60*10);
+			
+			$('#topo').corner('bl br 10px');
+		});
+	</script>
+</head>
 
 </html>

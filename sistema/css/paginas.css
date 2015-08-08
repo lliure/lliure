@@ -1,30 +1,17 @@
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 #jfboxLoad h1{
 	margin-bottom: 15px;
 	}
 
-
-/**********************			LOGIN			**********************/
-form.login{
-	width: 289px;
-	margin: 0 auto;
-	z-index: 13;
-	padding-top: 20px;
-	position: relative;
-	}
-		
-form.login label span{
-	display: block;
-	float: none;
-	margin-bottom: 3px;
-	}
-form.login label input{
-	width: 100%;
-	margin-bottom: 10px;
-	}
-	
-form.login span.botao{
-	float: right;
-	}
 	
 /**********************			java navigator			**********************/
 div.listp {
@@ -75,6 +62,21 @@ div.listp .inter span{
 			overflow: auto;
 			}
 			
+			
+	.install-box form{
+		margin-top: 30px;
+		}
+			
+		.install-box form label{
+			float: left;
+			margin: 3px 5px 0 0;
+			}
+			
+		.install-box form input{
+			float: left;
+			padding: 2px;
+			font-size: 11px;
+			}
 	
 /**********************			Acesso rápido			**********************/
 .ARbox{

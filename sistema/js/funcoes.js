@@ -1,3 +1,14 @@
+
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 function ajax() {
    try {
       xmlhttp = new XMLHttpRequest();
@@ -83,6 +94,12 @@ function substr(f_string, f_start, f_length) {
 }
 
 /////////////////////////////////////////////////////////////////////
+function ajustaForm(){	
+	$('form select').width(function(){
+		$(this).width($(this).width()+10);
+	});
+}
+
 
 function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
 	if(texto.indexOf('?') > 0){

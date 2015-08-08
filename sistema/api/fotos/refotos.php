@@ -1,4 +1,14 @@
 <?php
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 header("Content-Type: text/html; charset=ISO-8859-1",true);
 require_once("../../includes/conection.php"); 
 require_once("../../includes/mLfunctions.php"); 
@@ -14,10 +24,10 @@ if(!empty($_POST)){
 	
 	mLupdate($tabelaAtu, $campos, $alter);
 	?>
-	Descrição alterada com sucesso!
+	<div style="text-align: center; font-size: 11px; margin-top: 120px;">Descrição alterada com sucesso!</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			setTimeout("fechaJfbox()", 500);
+			setTimeout("fechaJfbox()", 1000);
 			
 		});
 	</script>
@@ -30,14 +40,13 @@ if(!empty($_POST)){
 
 	$dir = $_GET['dir']."/";
 	?>	
-	<div style="width: 320px;">
-		<img src="includes/thumb.php?i=../<?php echo $dir.$foto?>:325:200:c" />
+	
+	<div class="ediFoto">
+		<img src="includes/thumb.php?i=../<?php echo $dir.$foto?>:325:230:c" />
 		
-		<form method="post" class="form jfbox" action="api/fotos/refotos.php?tabela=<?php echo $_GET['tabela']?>&amp;foto=<?php echo $_GET['foto']?>">
-			<div>
-				<input type="text" name="descricao" value="<?php echo $nome?>">
-			</div>
-			<span class="botao"><button type="submit">vai</button></span>
+		<form method="post" class=" jfbox" action="api/fotos/refotos.php?tabela=<?php echo $_GET['tabela']?>&amp;foto=<?php echo $_GET['foto']?>">
+			<input type="text" name="descricao" value="<?php echo $nome?>">
+			<span class="botao"><button type="submit">Confirmar</button></span>
 		</form>
 	</div>
 	<?php

@@ -1,17 +1,96 @@
 <?php
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
 /*******************************	VARIAVEIS	*/
 $diasdasemana = array ("Domingo", "Segunda-Feira", "Terça-Feira","Quarta-Feira","Quinta-Feira","Sexta-Feira", "Sábado",);
 $meses = array("0","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
 
-//	AntiInjection
-function mLAntiInjection($sql) {
-	$sql = preg_replace(sql_regcase("/(from|select|insert|delete|where|drop table|show tables|#|\*|--|\\\\)/"),"",$sql);
-	$sql = trim($sql);
-	$sql = strip_tags($sql);
-	$sql = addslashes($sql);
+
+/*******************************	APELIDO DE FUNÇÕES	*/
+//	ALTERA DATA PARA UNIX
+function mlDUnix($data){
+	return jf_dunix($data);
+}
+
+//	funcão substr melhorada
+function mLSubstr($texto, $final = 100){
+	return jf_substr($texto, $final);
+}
+
+//	funcão de anti injection
+function mLAntiInjection($sql){
+	return jf_anti_injection($sql);
+}
+
+
+function mLinsert($tabela, $dados){
+	return jf_insert($tabela, $dados);
+}
+
+function mLdelete($tabela, $alter){
+	return jf_delete($tabela, $alter);
+}
+
+function mLupdate($tabela, $dados, $alter, $mod = null){
+	return jf_update($tabela, $dados, $alter, $mod);
+}
+
+/*******************************	FUNÇÕES	*/
+
+// Alternativa para file_get_contents()
+function jf_file_get_contents($url, $timeout = 10) {
+	$ch = curl_init();
+	curl_setopt ($ch, CURLOPT_URL, $url);
+	curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+	$file_contents = curl_exec($ch);
+	curl_close($ch);
+	return ($file_contents) ? $file_contents : FALSE;
+}
+
+//	Anti injection
+function jf_anti_injection($sql) {
+	$sql = mysql_real_escape_string($sql);
 	return $sql;
 }
-//	GERA MENSAGEM
+
+// FUNÇÃO PARA TRABALHAR COM TOKEN
+function jf_token($caso){
+	switch($caso){
+		default:
+			if(isset($_SESSION['plg_token']) && $_SESSION['plg_token'] == $caso)
+				return true;
+			else
+				return false;
+			
+		break;
+		
+		case 'exibe':
+			if(isset($_SESSION['plg_token']))
+				return $_SESSION['plg_token'];
+			else
+				return false;
+		break;
+		
+		case 'novo':
+			$token = rand();
+			$_SESSION['plg_token'] = $token;
+			return $token;
+		break;
+	}
+}
+	
+	
+//	GERA MENSAGEM	
 function mlAviso($mensagem, $close = 1){
 	$id = uniqid(time());
 	return "<span id='".$id."' class='mensagem'>
@@ -20,65 +99,79 @@ function mlAviso($mensagem, $close = 1){
 			</span>";
 }
 
-//	ALTERA DATA PARA UNIX			(APELIDO)
-function mlDUnix($data){
-	return jf_dunix($data);
+function jf_insert($tabela, $dados){
+	/*
+	//Descrição
+	jf_insert(string $tabela, array $dados)
+	monta e execulta uma query de insert em mysql	
+		
+	// Parametros
+	$table
+	nome da tabela que estará sendo feito o insert
+	
+	$dados
+	Dados que serão inseridos na tabela em forma de array
+		
+	$dados = array(
+			'coluna' 	=>	'dado',
+			'coluna2' 	=>	'dado2'
+			);	
+
+	// Retorno
+	retorna a query montada para conferência, porem ela será execultada 
+	retorna também a variável  $jf_ultimo_id que é o valor auto-increment retornado neste insert 
+	*/
+	
+	$valores = '';
+	$colunas = '';
+	foreach($dados as $chaves => $valor){
+		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+		$valores .= (empty($valores)? '' : ',').$valor;
+		$colunas .= (empty($colunas)? '' : ', ').$chaves;
+	}
+	
+	$executa = "INSERT INTO $tabela ($colunas) values ($valores)";
+	if(mysql_query($executa) != false){
+		global $ml_ultmo_id;
+		global $jf_ultimo_id;
+		
+		$jf_ultimo_id = mysql_insert_id();
+		$ml_ultmo_id = $jf_ultimo_id;
+	} else{
+		echo mysql_error();
+		$executa = false;
+	}
+	
+	return $executa;
 }
 
-//	funcão substr melhorada		(APELIDO)
-function mLSubstr($texto, $final = 100){
-	jf_substr($texto, $final);
-}
+function jf_update($tabela, $dados, $alter, $mod = null){
 
-function mLinsert($tabela, $dados){
 	/* EXPLICANDO *********************************
 	$table = "nomedatabela";
 	$dados = array(
 			'coluna' 	=>	'dados',
 			'coluna2' 	=>	'dados2'
-			);	
-	$rId = é o retorno se for "1" retorna o Id incerido, caso "nulo" retorna uma string com a Query para verificações
+			);
+			
+	$alter = $alter['coluna'] = "Valor";
+
+	$mod = ">" ou "<" ou "=" caso nenhum o padrão é "like"
+	
+	para setar um valor como NULL é só enviar NULL, valores vazios não faram parte da query
 	*/
-	
-	$valores = '';
-	foreach($dados as $chaves => $valor){
-		$valores .= (empty($valores)? "'".addslashes($valor)."'" : ", '".addslashes($valor)."'");
-		(!isset($colunas)? $colunas = $chaves : $colunas = $colunas.", ".$chaves);
-	}
-	
-	$executa = "INSERT INTO $tabela ($colunas) values ($valores)";
-	$query = mysql_query($executa);
-	
-	global $ml_ultmo_id;
-	$ml_ultmo_id = mysql_insert_id();
-	
-	return $executa;
-}
-
-function mLupdate($tabela, $dados, $alter, $mod = 0){
-
-/* EXPLICANDO *********************************
-$table = "nomedatabela";
-$dados = array(
-		'coluna' 	=>	'dados',
-		'coluna2' 	=>	'dados2'
-		);
-		
-$alter = $alter['coluna'] = "Valor";
-
-$mod = ">" ou "<" ou "=" caso nenhum o padrão é "like"
-*/
 
  	$valores = '';
-	foreach($dados as $chaves => $valor)
-		$valores .= (empty($valores)? $chaves."='".addslashes($valor)."'" : ", ".$chaves."='".addslashes($valor)."'");
-	
+	foreach($dados as $chaves => $valor){
+		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+		$valores .= (empty($valores)?' ':', ').$chaves.' = '.$valor;
+	}
 	
 	$int = array_keys($alter);
 	$int = $int[0];
 	$intv = $alter[$int];
 	
-	($mod == "0"?$mod="=": $mod="$mod");
+	is_null($mod) ? $mod = "=" : $mod = "$mod" ;
 	
 	$executa = "UPDATE $tabela Set $valores where $int $mod '$intv'";
 	$query = mysql_query($executa);
@@ -87,7 +180,7 @@ $mod = ">" ou "<" ou "=" caso nenhum o padrão é "like"
 }
 
 // PARA DELETE
-function mLdelete($tabela, $alter){
+function jf_delete($tabela, $alter){
 	
 	$int = array_keys($alter);
 	$int = $int[0];
@@ -120,7 +213,7 @@ function mlLimpaacento($texto){
 }
 
 
-///////////////////////////////	Gerencia o array GET, onde retira o $needle (pode ser um array) caso exista em GET e monta em modo de link
+//	Gerencia o array GET, onde retira o $needle (pode ser um array) caso exista em GET e monta em modo de link
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
 	
 	if($needle == URL_AMIGAVEL)
@@ -164,7 +257,7 @@ function jf_substr($texto, $final = 100){
 	return $texto;
 }
 
-////////////////////////////	Multiplos botoes submit em um form
+//	Gerencia multiplos botoes submit em um form
 function jf_form_actions(){
 	/*
 	Para usar
@@ -192,7 +285,20 @@ function jf_form_actions(){
     }
 }
 
+//	Arredondamento de Inteiros
 function jf_roundint($val, $arredondaPor = 10){
+	/*
+	//Descrição
+	jf_roundint(string $val [, int $arredondaPor])
+	Arredonda um valor para inteiro para um valor sequencial inteiro	
+	
+	//Exemplos
+	jf_roundint(7); 	// retorna "10"
+	jf_roundint(54, 5);	// retorna "55"
+	jf_roundint(38, 5);	// retorna "40"
+	jf_roundint(38, 7);	// retorna "35"
+	*/
+	
 	$resto = $val%$arredondaPor;
 
 	if($resto <= ($arredondaPor/2))
@@ -245,10 +351,14 @@ function jf_dunix($dataEnt){
 	return $formata;
 }
 
-function jf_iconv($in_charset, $out_charset, $arr){
+//	Função iconv formulada para array
+function jf_iconv($in_charset, $out_charset, $arr){ 
+	
+
 	if (!is_array($arr)){
 		return iconv($in_charset, $out_charset, $arr);
 	}
+	
 	$ret = $arr;
 	function array_iconv(&$val, $key, $userdata){
 		$val = iconv($userdata[0], $userdata[1], $val);
@@ -266,8 +376,8 @@ function jf_urlformat($texto){
 	$texto = ereg_replace("[óòôõº]","o",$texto);
 	$texto = ereg_replace("[úùû]","u",$texto);
 	$texto = str_replace("ç","c",$texto);
+	$texto = ereg_replace("[^ a-z 0-9 \t _ \/ -]", "", $texto);	
 	$texto = str_replace(" ","-",$texto);
-	$texto = str_replace(array('\'','"','\\','/', '?', '%', ',', '.', ':', ';'), '', $texto);		
 	return($texto);
 }
 ?>

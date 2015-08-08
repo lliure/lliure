@@ -1,0 +1,59 @@
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+.container{
+	width: 640px;
+	margin: 0 auto;
+	padding: 20px 0;
+	}
+	
+h1{
+	margin-bottom: 20px;
+	font-size: 19px; 
+	}
+	
+	
+.instalador{
+	border: 1px solid #ccc;
+	padding: 28px;
+	text-align: left;
+	font-size: 11px;
+	}
+	
+	form{
+		margin-left: 80px;
+		position: relative;
+		}
+	
+	form div{
+		margin-bottom: 14px;
+		}
+		
+		form label{
+			margin-bottom: 7px;
+			}
+		
+		form input{
+			padding: 7px;
+			color: #777;
+			width: 250px;
+			}
+			
+	form button{
+		position: absolute;
+		top: 50%;
+		left: 315px;
+		width: 100px;
+		height: 60px;
+		margin-top: -30px;
+		font-weight: bold;
+		color: #fff;
+		background: #004b98;
+		}

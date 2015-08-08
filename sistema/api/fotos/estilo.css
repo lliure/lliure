@@ -1,0 +1,119 @@
+/**********************			uploadify			**********************/
+.uploadifyQueueItem {
+	background-color: #F5F5F5;
+	border: 2px solid #E5E5E5;
+	font: 11px Verdana, Geneva, sans-serif;
+	margin-top: 5px;
+	padding: 10px;
+	width: 350px;
+}
+.uploadifyError {
+	background-color: #FDE5DD !important;
+	border: 2px solid #FBCBBC !important;
+}
+.uploadifyQueueItem .cancel {
+	float: right;
+}
+.uploadifyQueue .completed {
+	background-color: #E5E5E5;
+}
+.uploadifyProgress {
+	background-color: #E5E5E5;
+	margin-top: 10px;
+	width: 100%;
+}
+.uploadifyProgressBar {
+	background-color: #0099FF;
+	height: 3px;
+	width: 1px;
+}
+
+
+/**********************			GALERIA INTER			**********************/
+div.api-fotos{
+	clear: both;
+	}
+	
+	div.api-fotos .seletor{
+		width: 100%;
+		text-align: center;
+		}
+		
+		div.api-fotos .seletor span.ex{
+			display: block;
+			font-size: 10px;
+			color: #ccc;
+			}
+			
+div.api-fotos div#api_fotos_galeria{
+	margin: 0 -12px 0 -4px;
+	}
+	
+	#api_fotos_galeria .mensagem{
+		margin: 0 4px;
+		}
+		
+	div.api-fotos div.galdiv{
+		float:left;
+		margin: 4px;
+		padding: 3px;
+		border: 1px solid #D3D3D3;
+		position: relative;
+		float: left;
+		}
+		
+	div div.galdiv .img{
+		width: 72px;
+		height: 60px;
+		float: left;
+		}
+		
+	div.galdiv .divblock{
+		display: none;
+		position: absolute;
+		width: 70px;
+		}
+
+	div.galdiv .trash{
+		position: absolute;
+		top: 3px;
+		right: 3px;
+		}
+			
+	div.galdiv .favorite{
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		}
+	
+/*	Editar foto	*/
+div.ediFoto {
+	display: block;
+	width: 325px;
+	margin: 0 auto;
+	text-align: center;
+	}
+	
+	div.ediFoto img{
+		margin-bottom: 10px;
+		display: block;
+		}
+	
+	div.ediFoto form{
+		clear: both;
+		width: 100%;
+		margin: 0;
+		}	
+		
+		div.ediFoto form input{
+			width: 225px;
+			float: left;
+			padding: 0;
+			font-size: 11px;
+			margin: 2px 0;
+			}
+			
+		div.ediFoto form .botao{
+			float: right;
+			margin: 2px 0 ;
+			}

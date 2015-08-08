@@ -1,3 +1,13 @@
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 * {		margin: 0px; 
 		padding: 0px; 
 		font-family: Verdana, tahoma, "Ubuntu","Ubuntu Beta","Bitstream Vera Sans","DejaVu Sans";
@@ -26,7 +36,7 @@ body{
 				("progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"+this.src+"')")+
 				(this.onbeforeprint="this.runtimeStyle.filter='';this.src='"+this.src+"'").substr(0,0)+
 				String(this.alphaxLoaded=true).substr(0,0)+
-				(this.src="imagens/layout/blank.gif").substr(0,0)
+				(this.src="../imagens/layout/blank.gif").substr(0,0)
 			)
 			:
 			this.runtimeStyle.filter=""
@@ -76,19 +86,24 @@ span.h3{
 	font-weight: bold;
 	}
 	
-h1, span.h1 	{	
+h1	{	
 	font-size: 16px;
 	margin-bottom: 3px;
 	color: #004B98;
 	}
+	
+	div.linhaFina{
+		font-size: 11px;
+		margin: -12px 0 16px;
+		}
 		
-h2, span.h2 	{
+h2{
 	font-size: 15px;
-	color: #EB3D00;
-	margin-bottom: 3px;
+	color: #3673A6;
+	margin-bottom: 15px;
 	}
 			
-h3 ,span.h3	{
+h3 {
 	font-size: 13px;
 	color: #6AC334;
 	margin-bottom: 3px;
@@ -193,11 +208,12 @@ span.botao a{
 span.botao a:hover{
 	color: #00344F;
 	}
+	
 		
-span.mensagem{
+div.mensagem{
 		margin: 0 -2px 5px -2px;
-		padding: 4px 0px;
-		width: 100%;
+		padding: 8px;
+		padding-bottom: 3px;
 		display: block;
 		clear: both;
 		background: #FCFDDE;
@@ -206,28 +222,25 @@ span.mensagem{
 		font-size: 12px;
 		color: #7D7D7D;
 		}
-		
-	span.mensagem span{
-		padding: 2px 18px 2px 8px;
+			
+	div.mensagem span{
 		display: block;
+		margin-bottom: 5px;
 		}
-
-	span.mensagem a.close{
-		position: absolute;
-		font-weight: bold;
-		font-size: 12px;
-		top: 2px;
-		right: 4px;
-		}
-	
-	span.mensagem span span{
+		
+	div.mensagem span.red{
 		display: inline;
 		color: #a00;
 		font-weight: bold;
 		}
 		
-	span.mensagem span span.blue{
+	div.mensagem span.blue{
 		color: #00a;
+		}
+		
+	div.mensagem a{
+		font-weight: bold;
+		color: #3573A6;
 		}
 	
 	

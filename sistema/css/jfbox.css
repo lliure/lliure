@@ -1,9 +1,19 @@
+/**
+*
+* Plugin CMS
+*
+* @versão 4.0.1
+* @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
+* @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
+* @licença http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 #jfboxFundo {
 	position:absolute;
 	left:0;
 	top:0;
 	z-index:5000;
-	background: #000;
+	background: none;
 	display:none;
 	}
 
@@ -43,4 +53,5 @@
 		padding: 20px;
 		color: #7E7D7D;
 		font-size: 12px;
+		border-radius: 10px 10px 10px 10px;
 		}
