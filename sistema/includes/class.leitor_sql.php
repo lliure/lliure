@@ -23,8 +23,9 @@
 * Para qualquer tipo de banco de dados, bastando somente alterar a função de query e erro
 *
 * @since Mar 15, 2004
-* @version 1.1
+* @version 1.1.2
 * @author Alfred Reinold Baudisch<alfred_baudisch@hotmail.com>
+* @update Jeison Frasson <contato@grapestudio.com.br>
 */
 class leitor_sql {
     /**
@@ -227,28 +228,19 @@ class leitor_sql {
     * @since Mar 15, 2004
     * @access private
     */
-    function executa_consulta($sql, $msg_ok = false, $msg_erro = false, $insert = false)
-    {
-        if($this->query_sql($sql))
-        {
+    function executa_consulta($sql, $msg_ok = false, $msg_erro = false, $insert = false){
+        if($this->query_sql($sql)){
             if($insert)
-            {
-                $this->foi[$insert]++;
-            }
+				isset($this->foi[$insert]) ? $this->foi[$insert]++ : $this->foi[$insert] = 1;
 
             if($msg_ok)
-            {
                 echo $msg_ok;
-            }
-        }
-        else
-        {
+            
+        } else {
             if($msg_erro)
-            {
                 echo $msg_erro;
-            }
 
-            $this->erros[$sql] = $this->erro_sql();
+			$this->erros[$sql] = $this->erro_sql();
         }
     }
 

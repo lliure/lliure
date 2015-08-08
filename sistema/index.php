@@ -3,13 +3,12 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
 if(!file_exists("includes/conection.php")) 
 	header('location: install/index.php');
 
@@ -19,6 +18,7 @@ if(!isset($_SESSION['logado']))
 	header('location: paginas/login.php');
 	
 require_once("includes/functions.php"); 
+require_once("includes/gerenciamento_api.php"); 
 
 navig_historic();
 
@@ -43,10 +43,13 @@ $plgIcones = $DadosLogado['themer']['icones'];
 	<script type="text/javascript" src="js/funcoes.js"></script>
 	<script type="text/javascript" src="js/jquery.jfkey.js"></script>
 	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
-	<script type="text/javascript" src="js/javaNavigator.js"></script>
 	
 	<script type="text/javascript" src="js/jquery.maskedinput-1.2.2.js"></script>
 	<script type="text/javascript" src="js/jquery.corner.js"></script>
+	
+	<?php
+		echo $apigem->js; 
+	?>
 	
 	<title>sistema Plugin</title>
 
@@ -57,13 +60,13 @@ $plgIcones = $DadosLogado['themer']['icones'];
 		@import "css/predifinidos.css";
 		@import "css/jfbox.css";
 		<?php
+		echo $apigem->css; 
 		echo (isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?  '@import "plugins/'.$_GET['plugin'].'/estilo.css"; ' : '' );
 		?>
 		
 		#topo{
 			background: url("<?php echo 'themer/'.$plgThemer.'/bg.jpg'?>") center top repeat-x;
-		}		
-		
+		}
 	</style>
 
 

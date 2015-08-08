@@ -1,4 +1,8 @@
 <?php
+session_start();
+if(!isset($_SESSION['logado']))
+	header('location: ../../../../index.php');
+
 /*
 TinyBrowser 1.41 - A TinyMCE file browser (C) 2008  Bryn Jones
 (author website - http://www.lunarvis.com)
@@ -22,6 +26,7 @@ error_reporting(0);
 
 // set script time out higher, to help with thumbnail generation
 set_time_limit(240);
+
 
 $tinybrowser = array();
 

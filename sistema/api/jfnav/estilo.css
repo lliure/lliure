@@ -1,0 +1,29 @@
+/**********************			Listagem em ícones		**********************/
+div.listp {
+	padding: 4px;
+	z-index: 10;
+	position: relative;
+	float: left;
+	border: 1px solid #fff;
+	border-radius: 4px;
+	}
+
+div.listpSelct {	
+	padding: 3px;
+	float: left;
+	border: 1px solid #E3E3E3;
+	background: #C2E4F0;
+	}
+
+div.listp .inter{
+	width: 93px;
+	height: 67px;
+	float: left;
+	text-align: center;
+	}
+
+div.listp .inter span{
+	display: block;
+	margin: 3px 0 0 0;
+	}
+	

@@ -2,7 +2,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,35 +12,6 @@
 	margin-bottom: 15px;
 	}
 
-	
-/**********************			java navigator			**********************/
-div.listp {
-	padding: 4px;
-	z-index: 10;
-	position: relative;
-	float: left;
-	border: 1px solid #fff;
-	}
-
-div.listpSelct {	
-	padding: 3px;
-	float: left;
-	border: 1px solid #E3E3E3;
-	background: #C2E4F0;
-	}
-
-div.listp .inter{
-	width: 93px;
-	height: 67px;
-	float: left;
-	text-align: center;
-	}
-
-div.listp .inter span{
-	display: block;
-	margin: 3px 0 0 0;
-	}
-	
 /**********************			Install modal			**********************/
 .install-box{
 	margin-top: 15px;
@@ -61,10 +32,30 @@ div.listp .inter span{
 			height: 300px;
 			overflow: auto;
 			}
+	
+	.install-box form .fase{
+		border-bottom: 1px dotted #888;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+		float: left;
+		width: 100%;
+		}
+			
+	.install-box form .msm{
+		margin-bottom: 10px;
+		color: #0a0;
+		}
+			
+	.install-box form .msm.msmE{
+		color: #a00;
+		}
 			
 			
-	.install-box form{
-		margin-top: 30px;
+	.install-box form .msmex{
+		color: #888;
+		margin: -10px 0 10px;
+		display: block;
+		font-size: 9px;
 		}
 			
 		.install-box form label{
@@ -76,6 +67,11 @@ div.listp .inter span{
 			float: left;
 			padding: 2px;
 			font-size: 11px;
+			}
+			
+		.install-box form  .botao{
+			clear: both;
+			margin-top: 10px;
 			}
 	
 /**********************			Acesso rápido			**********************/

@@ -1,15 +1,14 @@
 <?php
 /**
 *
-* Plugin CMS
+* Jfnav
 *
-* @versão 4.0.1
+* @versão 2.0.0
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-
 function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs = null){
 	/*
 	Documentação da função
@@ -51,77 +50,30 @@ function jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $link, $ligs 
 	
 	$pluginPasta = (is_array($pastas)?$pastas['pp']:$pastas);
 	?>
-	<script type="text/javascript">
-		$(function() {
-			$('#bodyhome').jfnav();
-			$('.listp').corner('4px');
-		});
-	</script>
 	
 	<input id="namTable" type="hidden" value="<?php echo $pluginTable?>"/>
 	<input type="hidden" id="idPag" value="" />
 	<input type="hidden" id="linked" value="" />
 
-	<div class="bodyhome" id="bodyhome">
-		<?php
-		if(mysql_num_rows($query) > 0){
-			while($dados = mysql_fetch_array($query)){
-				$jnav_registros++;
-				
-				$id = $dados['id'];
-				$nome = $dados['nome'];
-				
-				$pagInp = "name".$id;
-				
-				if(isset($link['campo'])){			
-					$click = $link[$dados[$link['campo']]]['link'].$id;
-					$ico = (isset($link[$dados[$link['campo']]]['ico'])?$link[$dados[$link['campo']]]['ico']:"sys/ico.png");
-				} else {		
-					$click = $link['link'].$id;
-					$ico = (isset($link['ico'])?$link['ico']:"sys/ico.png");
-				}	
-				
-				if(!is_null($ligs)){
-					echo "aqui";
-					$ligModIdint = ($ligModId == "notnull"?" != '' and id = '".$id."'" : "= '".$ligModId.$id."'");
-					$consulta = mysql_query("select ".$ligCampo." from ".$ligTabela." where ".$ligCampo." ".$ligModIdint." limit 1");
-					if(mysql_num_rows($consulta) > 0){
-						$liglink = ($ligUrl == 'off'?'off':$ligUrl.(strpos($ligUrl, "?") != false?"&amp;":"?")."tabela=".$ligTabela."&campo=".$ligCampo."&modid=".$ligModId."&id=".$id);
-					} else {
-						$liglink = '0';
-					}
-				} else {
-					$liglink = '0';
-				}
-				
-				$nomelink = (strlen($nome) > 33? substr($nome, 0, 30)."...":$nome);
-				?>	
-				<div class="listp" id="div<?php echo $pagInp?>" rel="<?php echo $pagInp?>" lig="<?php echo $liglink?>" dclick="<?php echo $click?>">
-					<div class="inter">
-						<img src="<?php echo $pluginPasta.$ico?>" alt="<?php echo $nome?>" />
-						<span id="<?php echo $pagInp?>" title="<?php echo $nome?>"><?php echo $nomelink?></span>
-					</div>
-				</div>
-				<?php
-			}
-		} else { 
-			$tempo = 0;
-			if(is_array($pastas) and isset($pastas['plp'])) {
-				if(file_exists($pastas['plp']) != true){
-					if(@mkdir($pastas['plp'], 0777 ) == true){
-						$mensagemVazio = "O sistema criou automaticamente a pasta ".$pastas['plp'];
-						$tempo = 2;
-					} else{
-						$mensagemVazio = "O sistema não conseguiu criar a pasta <strong>".$pastas['plp']."</strong>. Crie manualmente em seu sistema para o funcionamento correto do plugin";
-						$tempo = 60;
-					}
-				}
-			}
+	<div class="bodyhome" id="jfnav">
 		
-			?><img src="error.jpg" onerror="mLaviso('<?php echo $mensagemVazio?>', '<?php echo $tempo?>')" class="imge" alt="" /><?php
-		}
-		?>
 	</div>
+	
+	<script type="text/javascript">
+		var config_objeto;
+		jfnav_objetos.query = '<?php echo addslashes($query); ?>'; 		
+		jfnav_objetos.pasta = '<?php echo $pluginPasta; ?>'; 		
+		
+		<?php
+		$jnav_config = json_encode($link);
+		echo 'jfnav_objetos.config = '.$jnav_config.';';
+		?>			
+
+		
+		$(function() {
+			jfnav_start();
+		});
+	</script>
 	
 	<?php
 }
@@ -136,4 +88,5 @@ function jNavigatorInner($ultimo_id, $ondblclick, $icone, $nome){
 				.'</div>'
 			.'</div>';
 }
+
 ?>

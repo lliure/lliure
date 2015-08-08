@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -166,15 +166,17 @@ jQuery.fn.extend({
 			}
 		}
 		
-		this.keydown(function(e) {		
+		this.keydown(function(e) {
 			if($.inArray(e.keyCode, keySplit) > -1){ // Verifica se a tecla prcionada é a mesma que foi selecionada
 				if(typeof callback == 'function'){ //checa se o retorno é uma função
-					callback.call(this, e.keyCode); // executa a função de retorno
-					
+					if(callback.call(this, e.keyCode, options) != true) // executa a função de retorno
+						e.preventDefault();
+				} else {
 					if(options === false){ // caso queria que a tecla sejá anulada 
 						e.preventDefault();
 					}
 				}
+				
 			}
 		});
 	}

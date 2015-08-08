@@ -32,6 +32,8 @@
 /**********************			GALERIA INTER			**********************/
 div.api-fotos{
 	clear: both;
+	float: left;
+	width: 100%;
 	}
 	
 	div.api-fotos .seletor{
@@ -47,6 +49,7 @@ div.api-fotos{
 			
 div.api-fotos div#api_fotos_galeria{
 	margin: 0 -12px 0 -4px;
+	background: #eaa;
 	}
 	
 	#api_fotos_galeria .mensagem{
@@ -60,6 +63,7 @@ div.api-fotos div#api_fotos_galeria{
 		border: 1px solid #D3D3D3;
 		position: relative;
 		float: left;
+		border-radius: 3px;
 		}
 		
 	div div.galdiv .img{

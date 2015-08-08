@@ -2,7 +2,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -13,7 +13,7 @@
 	left:0;
 	top:0;
 	z-index:5000;
-	background: none;
+	background: #000;
 	display:none;
 	}
 
@@ -25,7 +25,6 @@
 	background: #fff;
 	text-align: left;
 	padding: 25px;
-	border: 1px solid #000;
 	}
 		
 	#jfboxLoad{

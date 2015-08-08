@@ -3,12 +3,13 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 require_once('../../includes/conection.php');
 require_once('../../includes/jf.funcoes.php');
 
@@ -54,21 +55,25 @@ if(mysql_num_rows($query) < 1){
 			<div class="divblock">
 				<a href="javascript: void(0)" idfoto="<?php echo $idFoto?>" arquivo="<?php echo $file?>" class="trash" title="Apagar Imagem"><img src="api/fotos/delete.png" alt="apagar" /></a>
 			
-			<?php if(isset($capa_foto)){ ?>
+			<?php 
+			if(isset($capa_foto)){ 
+				?>
 				<a href="javascript: void(0)" idfoto="<?php echo $idFoto?>" class="favorite" title="Marcar como principa"><img src="api/fotos/star_fav.png" alt="Marcar capa" /></a>	
-			<?php } ?>
+				<?php 
+			} 
+			?>
 			</div>
 			
 			<a href="api/fotos/refotos.php?tabela=<?php echo $tabela?>&amp;dir=<?php echo $dir?>&amp;foto=<?php echo $idFoto?>" class="renomeiaFoto" title="editar">			
 				<img src="includes/thumb.php?i=../<?php echo $dir?>/<?php echo $dados['foto']?>:70:60:c" class="img" />
 			</a>
+			
 		</div>
 		<?php
 	}
 	
 	?>
 	<script>
-		
 	$(function(){
 		<?php
 		if(isset($capa_foto)){
@@ -79,7 +84,7 @@ if(mysql_num_rows($query) < 1){
 			$('.favorite').click(function(){
 				var id = $(this).attr('idfoto');
 				
-				$(document).jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela?>&campo=<?php echo $capa_campo?>&fk=<?php echo $id?>&foto='+id, abreBox: false}, function(){
+				$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela?>&campo=<?php echo $capa_campo?>&fk=<?php echo $id?>&foto='+id, abreBox: false}, function(){
 					$('#div'+capa).css('background', '#fff');			
 					$('#div'+id).css('background', '#fa0');					
 					capa = id;
@@ -89,7 +94,6 @@ if(mysql_num_rows($query) < 1){
 		}
 		?>
 	
-		$('.galdiv').corner('3px');
 		$(".renomeiaFoto").jfbox({width: 325, height: 270}); 
 		
 		$('.galdiv').bind({
@@ -104,11 +108,14 @@ if(mysql_num_rows($query) < 1){
 		
 		$('.trash').click(function(){
 			var id = $(this).attr('idfoto');
-			$(document).jfbox({carrega: 'api/fotos/deletimg.php?tabela=<?php echo $tabela?>&id='+id+'&arquivo='+$(this).attr('arquivo'), abreBox: false}, function(){
+			
+			$().jfbox({carrega: 'api/fotos/deletimg.php?tabela=<?php echo $tabela?>&id='+id+'&arquivo='+$(this).attr('arquivo'), abreBox: false}, function(){
 				$('#div'+id).fadeOut(200);
 			});
 		});	
 	});
 	</script>
 	<?php
-}?>	
+}
+
+?>	

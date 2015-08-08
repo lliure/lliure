@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -23,20 +23,25 @@ default:
 		<div class="log">
 			<div class="padding">
 				<?php
-				if(file_exists('../plugins/'.$_GET['app'].'/sys/install.php')){
-					require_once('../plugins/'.$_GET['app'].'/sys/install.php');
-
-				} elseif(file_exists('../plugins/'.$_GET['app'].'/sys/bd.sql')){
-					echo 'Este aplicativo possui um arquivo de Banco de dados. <br>Para instalar preencha o campo abaixo.';
+				if(file_exists('../plugins/'.$_GET['app'].'/sys/bd.sql')){
 					?>
 					<form action="painel/install.php?ac=instalar&amp;app=<?php echo $_GET['app']?>" class="jfbox">
-						<fieldset>
+						<?php
+						echo '<div class="fase"><div class="msm">Arquivo de configuração do Banco de dados: OK</div></div>';
+						if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg')){
+							echo '<div class="fase"><div class="msm">Arquivo de configuração interna: OK</div></div>';
+						} else {
+							echo '<div class="fase"><div class="msm msmE">Arquivo de configuração interna: ERRO</div><span class="msmex">Por favor adicione manualmente o nome do aplicativo</span>';
+							?>
 							<div>
 								<label>Nome</label>
 								<input type="text" name="nome"/>
 							</div>
-							<span class="botao"><button type="submit">Instalar</button></span>
-						</fieldset>
+							<?php
+							echo "</div>";
+						}
+						?>							
+						<span class="botao"><button type="submit">Instalar Aplicativo</button></span>
 					</form>
 					<?php
 				} else {
@@ -63,7 +68,6 @@ case 'instalar':
 	
 	$_POST =  jf_iconv('UTF-8', 'ISO-8859-1', $_POST);
 	
-	
 	$bd = '../plugins/'.$_GET['app'].'/sys/bd.sql';
 	$tp = new leitor_sql($bd);
 	
@@ -73,11 +77,18 @@ case 'instalar':
 		
 		foreach($folders as $key => $folder)
 			@mkdir($dirbase.trim($folder), 0777);
+	}
+	
+	if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg')){
+		$appConfig = simplexml_load_file('../plugins/'.$_GET['app'].'/sys/config.plg');
 		
+		$aplicativo_nome = $appConfig->nome;
+	} else {
+		$aplicativo_nome = $_POST['nome'];
 	}
 		
 	
-	jf_insert(PREFIXO.'plugins', array('nome' => $_POST['nome'], 'pasta' => $_GET['app']));
+	jf_insert(PREFIXO.'plugins', array('nome' => $aplicativo_nome, 'pasta' => $_GET['app']));
 	?><br><br>
 	<span><strong>Instalação realizada com sucesso!</strong></span><br><br>
 	<span style="font-size: 11px;">Esta instalação foi referente apenas ao banco de dados e pastas, não foram arquivos de configuração, leia com atenção o arquivo sobre a instalação deste aplicativo para seu pleno funcionamento</span><br><br>

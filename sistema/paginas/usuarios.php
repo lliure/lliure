@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.0.1
+* @versão 4.1.8
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -12,7 +12,7 @@
 
 if(!empty($_POST)){
 	require_once("../includes/conection.php"); 
-	require_once("../includes/mLfunctions.php"); 
+	require_once("../includes/jf.funcoes.php"); 
 
 	if(empty($_POST['senha'])){
 		unset($_POST['senha']);
@@ -41,7 +41,7 @@ if(!empty($_POST)){
 		unset($_POST['imagem']);
 		
 	
-	mLupdate(PREFIXO."admin", $_POST, array('id' => $_GET['id']));
+	jf_update(PREFIXO."admin", $_POST, array('id' => $_GET['id']));
 
 	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
 
@@ -57,7 +57,7 @@ if(!empty($_POST)){
 
 if(empty($_GET['usuarios'])){
 	$botoes[] =	array('href' => 'index.php', 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
-	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="jfbox"');
+	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
 	$botoes[] =	array('href' => '?usuarios', 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
 }
@@ -69,20 +69,19 @@ $consulta = "select * from ".$tabela.($DadosLogado['tipo'] == 1?'':" where tipo 
 
 
 if(empty($_GET['usuarios'])){
-	$query = mysql_query($consulta." order by nome ASC");
+	$query = $consulta." order by nome ASC";
 
-	$pastas = 'paginas';
+	$pastas = '';
 	$click['link'] = '?usuarios=';
-	$click['ico'] = "../../imagens/layout/user.png";
+	$click['ico'] = "imagens/layout/user.png";
 	$pluginTable = 'plugin_admin';
-	
-	$mensagemVazio = "Nenhum usuário encontrado.";
-	jNavigator($query, $pluginTable, $pastas, $mensagemVazio, $click, $ligs);
+
+	jNavigator($query, $pluginTable, $pastas, $mensagemVazio = null, $click);
 	
 	?>
 	<script type="text/javascript">
 		$(document).ready(function(){	
-			$(".jfbox").jfbox({abreBox: false}, function(){
+			$(".criar").jfbox({abreBox: false}, function(){
 				$(document).jfaviso('Novo usuário criado com sucesso!', 1);
 			}); 
 		});
