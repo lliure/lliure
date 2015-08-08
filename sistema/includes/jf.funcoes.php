@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -55,7 +55,7 @@ function jf_ai_get(){
 function jf_token($caso){
 	switch($caso){
 		default:
-			if(isset($_SESSION['plg_token']) && $_SESSION['plg_token'] == $caso)
+			if(isset($_SESSION['ll_token']) && $_SESSION['ll_token'] == $caso)
 				return true;
 			else
 				return false;
@@ -63,15 +63,15 @@ function jf_token($caso){
 		break;
 		
 		case 'exibe':
-			if(isset($_SESSION['plg_token']))
-				return $_SESSION['plg_token'];
+			if(isset($_SESSION['ll_token']))
+				return $_SESSION['ll_token'];
 			else
 				return false;
 		break;
 		
 		case 'novo':
-			$token = rand();
-			$_SESSION['plg_token'] = $token;
+			$token = uniqid(md5(rand()));
+			$_SESSION['ll_token'] = $token;
 			return $token;
 		break;
 	}
@@ -128,9 +128,9 @@ function jf_insert($tabela, $dados, $print = false){
 	
 	$return = null;
 	
-	$Chaves = array_keys($dados);
-	
-	if (is_array($dados[$Chaves[0]])){
+	$chaves = array_keys($dados);
+		
+	if (is_array($dados[$chaves[0]])){
 	
 		$colunas = null;
 		foreach($dados as $chave => $valor){
@@ -563,7 +563,6 @@ function xml2array ( $xmlObject, $out = array () ){
 
 }
 
-
 // converte um array para Objeto
 function jf_ato($array) {
     if(!is_array($array)) {
@@ -585,7 +584,20 @@ function jf_ato($array) {
     }
 }
 
+/********	Criptografia	********/
 
+function jf_encode($key, $data){
+	$return = mcrypt_encrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_ECB);
+	$return = base64_encode($return);
+	return $return;
+}
+
+function jf_decode($key, $data){
+	$data = base64_decode($data);
+	$return = mcrypt_decrypt(MCRYPT_BLOWFISH, $key, $data, MCRYPT_MODE_ECB);
+	return $return;
+	
+}
 /*******************************	APELIDO DE FUNÇÕES	*/
 
 function mlDUnix($data){

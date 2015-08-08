@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -13,7 +13,7 @@
 ll_historico('reinicia');
 
 $botoes = array(
-	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome)
+	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome)
 	);
 
 echo app_bar('Painel de controle', $botoes);

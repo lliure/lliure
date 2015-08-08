@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -166,6 +166,7 @@ jQuery.fn.extend({
 			}
 		}
 		
+	
 		this.keydown(function(e) {
 			if($.inArray(e.keyCode, keySplit) > -1){ // Verifica se a tecla prcionada é a mesma que foi selecionada
 				if(typeof callback == 'function'){ //checa se o retorno é uma função
@@ -175,8 +176,7 @@ jQuery.fn.extend({
 					if(options === false){ // caso queria que a tecla sejá anulada 
 						e.preventDefault();
 					}
-				}
-				
+				}				
 			}
 		});
 	}

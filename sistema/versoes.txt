@@ -1,15 +1,38 @@
 Neste aquivo estão descritas todas atualizações do lliure (lê-se lhiura) e de API nativas
 
+-- 4.10.4 (São Bernardo) (24/05/2013)
+# [bug] - Erro de compatibilidade dos jquery maskinput
+
+-- 4.10.3 (São Bernardo) (14/03/2013)
+#[bug] - Falta de instanciar $_ll no onserver.php
+#[bug][API] - Botão "del" era anulado pelo navigi
+
+-- 4.10.2 (São Bernardo) (13/03/2013)
+#[bug] - arquivo index.php não foi encontrado na pasta install
+
+-- 4.10.1 (São Bernardo) (07/03/2013)
+#[bug] - faltou a instrução css para alteração da "minha conta"
+#[bug] - instalação de aplicativos não estáva encontrando o arquivo config.ll
+
+-- 4.10.0 (São Bernardo) (04/03/2013)
+# [update] - criação da variavel (array) $_ll //váriavel para armazenar e centralizar dados utilizado pelo lliure
+# [update] - aceitação do arquivo "config.ll" ao invés do "config.plg" para configurações dos aplicativos
+# [update] - Retirado suporte a $_GET['plugin'], só será aceito $_GET['app']
+# [update] - instalado API "navigi" para substituir a jfnav
+# [update] - API jfnav foi removida do pacode de apis padrão
+# [update] - Reformulada a classe de gerenciamento de API
+
 -- 4.9.1 (São Bernardo) (24/05/2013)
 # [bug] - Faltando arquivo "index.php" na pasta install
 # [bug] - Erro de compatibilidade dos jquery maskinput
 
--- 4.9.0 (São Bernardo) (18/11/2012)
+-- 4.9.0 (São Bernardo) (27/02/2013)
 # [update] - Nova função jf_result(), adicionado ao pacote jf.funções
 # [update] - No processo de instalação agora é possivel deixar o campo senha vazio
 # [update] - A função jf_delete() agora aceita um array() na 2ª instrução (para o where) 
 # [bug] - na função ll_securyt() estava configurada para testar o $_GET['plugin'] o correto é $_GET['app']
 # [update] - na na biblioteca jf.funcoes
+# [BUG] - no thema do tyni MCE
 
 -- 4.8.1 (São Bernardo) (17/10/2012)
 # [bug][api][pm_mail] - A constante __DIR__ foi adiciona na versão 5 do php, então não funcionava nas anteriores

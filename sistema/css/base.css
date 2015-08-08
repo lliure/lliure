@@ -2,9 +2,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -238,6 +238,20 @@ span.botao {
 		margin-right: 3px;
 		
 		}
+		
+		span.botao.out button,
+		span.botao.out a{
+			background-color: #9E9E9E;
+			background-image: -moz-linear-gradient(center top , #bEbEbE, #b0b0b0);
+			border-color: #bebebe;
+			}
+		
+		span.botao.out button:hover,
+		span.botao.out a:hover{
+			background-color: #9E9E9E;
+			background-image: -moz-linear-gradient(center top , #b5b5b5, #a0a0a0);
+			border-color: #9e9e9e;
+			}
 		
 	span.botao button:hover,
 	span.botao a:hover{

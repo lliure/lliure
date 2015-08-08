@@ -1,4 +1,3 @@
-session_start();
 $hostname_conexao = ".localhost.";
 $username_conexao = ".root.";
 $password_conexao = ".senha.";
@@ -7,6 +6,8 @@ $banco_conexao = ".banco.";
 define("PREFIXO", ".prefixo.");
 define("SISTEMA", "sistema");
 
+session_name($banco_conexao);
+session_start();
 
 $conexao = mysql_connect($hostname_conexao, $username_conexao, $password_conexao) or die("Site em manutenção");
 	

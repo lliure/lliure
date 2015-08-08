@@ -33,8 +33,8 @@
 			return {
 				longname : 'Icode',
 				author : 'Jeison Frasson',
-				authorurl : 'http://www.grapestudio.com.br',
-				infourl : 'http://www.grapestudio.com.br/pagina/icode.html',
+				authorurl : 'http://www.lliure.com.br',
+				infourl : 'http://www.lliure.com.br/pagina/icode.html',
 				version : tinymce.majorVersion + "." + tinymce.minorVersion
 			};
 		}

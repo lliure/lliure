@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -37,10 +37,6 @@ if(!empty($_POST)){
 	header('location: ../index.php?'.(isset($_GET['minhaconta']) ? 'minhaconta' : 'usuarios' ));
 }
 
-?>
-<link rel="stylesheet" type="text/css" href="css/usuarios.css" />
-<?php
-
 if(empty($_GET['usuarios'])){
 	$botoes[] =	array('href' => $backReal, 'img' => $plgIcones.'br_prev.png', 'title' => $backNome);
 	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
@@ -49,9 +45,6 @@ if(empty($_GET['usuarios'])){
 }
 
 echo app_bar('Painel de usuários', $botoes);
-
-
-
 
 
 if(empty($_GET['usuarios'])){
@@ -66,10 +59,11 @@ if(empty($_GET['usuarios'])){
 	jNavigator($query, $pluginTable, $pastas, $mensagemVazio = null, $click);
 	*/
 	
-	$navegador = new jfnav();	
+	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO."admin";
 	$navegador->query = 'select * from '.PREFIXO.'admin where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
-	$navegador->pasta = '';
+	$navegador->delete = true;
+
 	$navegador->config = array(
 			'link' => '?usuarios=',
 			'ico' => 'imagens/layout/user.png'
@@ -80,6 +74,7 @@ if(empty($_GET['usuarios'])){
 		$(document).ready(function(){	
 			$(".criar").jfbox({abreBox: false}, function(){
 				jfAlert('Novo usuário criado com sucesso!', 1);
+				navigi_start();
 			}); 
 		});
 	</script>

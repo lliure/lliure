@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* API Fileup - Plugin CMS
+* lliure WAP
 *
 * @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
@@ -9,4 +9,9 @@
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+$apigem = new api; 
+$apigem->iniciaApi('navigi');
 ?>
+
+

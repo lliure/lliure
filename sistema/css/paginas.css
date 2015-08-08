@@ -2,9 +2,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -53,7 +53,45 @@
 		margin-bottom: 20px;
 		float: left;
 		}
+		
+		div.listp {
+			padding: 4px;
+			margin-right: 4px;
+			z-index: 10;
+			position: relative;
+			float: left;
+			border-radius: 7px;
+			}
 
+			div.listp:hover{
+				background: #e7e7e7;
+				}
+
+
+			div.listp .inter{
+				width: 93px;
+				height: 67px;
+				float: left;
+				text-align: center;
+				font-size: 12px;
+				}
+
+				div.listp .inter span{
+					display: block;
+					margin: 5px 0 0 0;
+					height: 27px;
+					overflow: hidden;
+					line-height: 13px;
+					}
+
+				div.listp .inter input{
+					width: 92px;
+					padding: 3px 0px;
+					background: #f5f5f5;
+					border: none;
+					font-size: inherit;
+					color: #555;
+					}
 
 	.idiomaBox form{
 		padding-top: 20px;

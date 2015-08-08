@@ -3,12 +3,13 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 
 if(!file_exists("etc/bdconf.php"))
 	header('location: install/index.php');
@@ -25,89 +26,132 @@ if(!isset($_SESSION['logado'])) {
 	header('location: paginas/login.php');
 }
 
-if(($llconf = @simplexml_load_file('etc/llconf.ll')) == false)
-	$llconf = false;
+$_ll['user'] = $_SESSION['logado'];
 
-$ll_ling = ll_ling();
+$_ll['css'] = array();
+$_ll['js'] = array();
 
-$pagina = "paginas/permissao.php";
+if(($_ll['conf'] = @simplexml_load_file('etc/llconf.ll')) == false)
+	$_ll['conf'] = false;
+
+$llconf = $_ll['conf'];
+
+$_ll['ling'] = ll_ling();
+$ll_ling = $_ll['ling'];
+
+require_once("api/gerenciamento_de_api.php"); 
+
+$_ll['app']['header'] = null;
+$_ll['app']['pagina'] = "paginas/permissao.php";
 
 $get = array_keys($_GET);
 switch(isset($get[0]) ? $get[0] : 'desk' ){
-	case 'plugin':
-		if(!empty($_GET['plugin']) && file_exists('plugins/'.$_GET['plugin'])){
-			if(ll_tsecuryt() == false){
-				if(($config = @simplexml_load_file('plugins/'.$_GET['plugin'].'/sys/config.plg')) !== false && isset($config->seguranca) && $config->seguranca != 'public'){
-					if(ll_securyt($_GET['plugin']) == true)
-						$pagina = "plugins/".$_GET['plugin']."/start.php";
-				} elseif(isset($config->seguranca) && $config->seguranca == 'public') {
-					$pagina = "plugins/".$_GET['plugin']."/start.php";
-				} else {
-					$pagina = "plugins/".$_GET['plugin']."/start.php";
-				}
-			} else {
-				$pagina = "plugins/".$_GET['plugin']."/start.php";
-			}	
-		} elseif(ll_tsecuryt('admin')) {
-			$pagina = "painel/plugins.php";
-		}
-	break;
-
 	case 'app':
 		if(!empty($_GET['app']) && file_exists('plugins/'.$_GET['app'])){
 			$llAppHome = 'index.php?app='.$_GET['app'];
 			$llAppOnServer = 'onserver.php?app='.$_GET['app'];
 			$llAppPasta = 'plugins/'.$_GET['app'].'/';
 			
+			$ll_segok = false;
+			
 			if(ll_tsecuryt() == false){
-				if(($config = @simplexml_load_file('plugins/'.$_GET['app'].'/sys/config.plg')) !== false && isset($config->seguranca) && $config->seguranca != 'public'){
-					if(ll_securyt($_GET['app']) == true)
-						$pagina = "plugins/".$_GET['app']."/start.php";
-				} elseif(isset($config->seguranca) && $config->seguranca == 'public') {
-					$pagina = "plugins/".$_GET['app']."/start.php";
+				$arquivo_config = 'plugins/'.$_GET['app'].'/sys/config.ll';
+				
+				/*** para compatibilidade { */
+				if(file_exists('plugins/'.$_GET['app'].'/sys/config.plg'))
+					$arquivo_config = 'plugins/'.$_GET['app'].'/sys/config.plg';
+				/*** } */
+				
+				if(($config = @simplexml_load_file($arquivo_config)) !== false){
+					
+					if($config->seguranca != 'public' && (ll_securyt($_GET['app']) == true))
+						$ll_segok = true;
+					elseif($config->seguranca == 'public')
+						$ll_segok = true;
+
 				} else {
-					$pagina = "plugins/".$_GET['app']."/start.php";
+					$ll_segok = true;
 				}
 			} else {
-				$pagina = "plugins/".$_GET['app']."/start.php";
+				$ll_segok = true;
 			}	
+			
+			if($ll_segok){
+				$_ll['app']['pagina'] = 'plugins/'.$_GET['app'].'/start.php';
+				$_ll['app']['pasta'] = 'plugins/'.$_GET['app'].'/';
+				
+				if(file_exists('plugins/'.$_GET['app'].'/header.php'))
+					$_ll['app']['header'] = 'plugins/'.$_GET['app'].'/header.php';			
+			}
+			
 		} elseif(ll_tsecuryt('admin')) {
-			$pagina = "painel/plugins.php";
+			$_ll['app']['pagina'] = "painel/plugins.php";
 		}
-	break;
+		break;
 
 	case 'minhaconta':
 		$_GET['usuarios'] = $_SESSION['logado']['id'];
-		$pagina = 'paginas/usuarios.php';
-	break;
+		$_ll['css'][] = 'css/usuarios.css';
+		
+		$_ll['app']['header'] = 'paginas/usuarios.header.php';
+		$_ll['app']['pagina'] = 'paginas/usuarios.php';
+		break;
 
 	case 'usuarios':
-		ll_tsecuryt('admin') ? $pagina = 'paginas/usuarios.php' : '';
-	break;
+		if(ll_tsecuryt('admin')){
+			$_ll['app']['pagina'] = 'paginas/usuarios.php';
+			$_ll['app']['header'] = 'paginas/usuarios.header.php';
+			
+			$_ll['css'][] = 'css/usuarios.css';
+		}
+		break;
 
 	case 'painel':
-		ll_tsecuryt('admin') ? $pagina = 'painel/index.php' : '';
-	break;
+		ll_tsecuryt('admin') ? $_ll['app']['pagina'] = 'painel/index.php' : '';
+		break;
 
 	case 'desk':
 		if(isset($llconf->desktop->$_SESSION['logado']['grupo']))
 			header('location: '.$llconf->desktop->$_SESSION['logado']['grupo']);
 			
-		$pagina = "paginas/desktop.php";
-	break;
+		$_ll['app']['pagina'] = "paginas/desktop.php";
+		$_ll['app']['header'] = 'paginas/desktop.header.php';
+		break;
 
 	default:
-	break;
+		break;
 }
 
-require_once("includes/gerenciamento_api.php"); 
+/****/
+
+lliure::loadJs('js/jquery.js');
+lliure::loadJs('api/tiny_mce/tiny_mce.js');
+lliure::loadJs('js/jquery-ui.js');
+lliure::loadJs('js/funcoes.js');
+lliure::loadJs('js/jquery.jfkey.js');
+lliure::loadJs('js/jquery.easing.js');
+lliure::loadJs('js/jquery.jfbox.js');
+
+lliure::loadCss('css/base.css');
+lliure::loadCss('css/principal.css');
+lliure::loadCss('css/paginas.css');
+lliure::loadCss('css/predifinidos.css');
+lliure::loadCss('css/jfbox.css');
+
+$apigem = new api; 
+$apigem->iniciaApi('appbar');
+$apigem->iniciaApi('fileup');
+
+if($_ll['app']['header'] != null)
+	require_once($_ll['app']['header']);
 
 //Inicia o histórico
 ll_historico('inicia');
 
 //Inicia o Tema atual 	
-if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados.ll'))){
-	$ll_icones = $ll_tema->icones;
+if(($ll_tema = @simplexml_load_file('temas/'.$_ll['user']['tema'].'/dados.ll'))){
+	$_ll['tema'] = (array) $ll_tema;
+	$ll_icones = $_ll['tema']['icones'];
 	$plgIcones = $ll_icones;
 }
 // 
@@ -119,40 +163,30 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	<link rel="SHORTCUT ICON" href="imagens/layout/favicon.ico" type="image/x-icon" />
 	<meta name="author" content="Jeison Frasson" />
-	<meta name="DC.creator.address" content="contato@grapestudio.com.br" />
+	<meta name="DC.creator.address" content="jomadee@lliure.com.br" />
 	<meta name="DC.creator " content="Jeison Frasson" />
 
-	<script type="text/javascript" src="api/tiny_mce/tiny_mce.js"></script>
+
 	
-	<script type="text/javascript" src="js/jquery.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script>
-	<script type="text/javascript" src="js/funcoes.js"></script>
-	<script type="text/javascript" src="js/jquery.jfkey.js"></script>
-	<script type="text/javascript" src="js/jquery.easing.js"></script>
-	<script type="text/javascript" src="js/jquery.jfbox.js"></script>
 	<?php
-	echo $apigem->js; 
+	lliure::loadCss();
+	
+	
+	echo (isset($_GET['app']) && !empty($_GET['app'])  && file_exists('plugins/'.$_GET['app'].'/estilo.css') ?
+		'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['app'].'/estilo.css">'
+		: '' )
+
+	.'<link rel="stylesheet" type="text/css" href="temas/'.$ll_tema->id.'/estilo.css">';
+	
+	
+	lliure::loadJs();
 	?>
 	
+
+	<?php
+	
+	?>
 	<title>lliure WAP</title>
-
-	<link rel="stylesheet" type="text/css" href="css/base.css" />
-	<link rel="stylesheet" type="text/css" href="css/principal.css" />
-	<link rel="stylesheet" type="text/css" href="css/paginas.css" />
-	<link rel="stylesheet" type="text/css" href="css/predifinidos.css" />
-	<link rel="stylesheet" type="text/css" href="css/jfbox.css" />
-	<?php
-	echo $apigem->css."\r"
-		.(isset($_GET['plugin']) && !empty($_GET['plugin'])  && file_exists('plugins/'.$_GET['plugin'].'/estilo.css') ?
-			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['plugin'].'/estilo.css">'
-			: '' )
-			
-		.(isset($_GET['app']) && !empty($_GET['app'])  && file_exists('plugins/'.$_GET['app'].'/estilo.css') ?
-			'<link rel="stylesheet" type="text/css" href="plugins/'.$_GET['app'].'/estilo.css">'
-			: '' )
-
-		.'<link rel="stylesheet" type="text/css" href="temas/'.$ll_tema->id.'/estilo.css">';
-	?>
 </head>
 
 <body>
@@ -193,8 +227,7 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 							".PREFIXO."start as a
 							
 							left join ".PREFIXO."plugins as b
-							on a.idPlug = b.id
-						";
+							on a.idPlug = b.id	";
 				$query = mysql_query($consulta);
 				
 				?>
@@ -224,7 +257,7 @@ if(($ll_tema = @simplexml_load_file('temas/'.$_SESSION['logado']['tema'].'/dados
 
 	<div id="conteudo">
 		<?php 	
-		require_once($pagina);
+		require_once($_ll['app']['pagina']);
 		?>
 		<div class="both"></div>
 	</div>

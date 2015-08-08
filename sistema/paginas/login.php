@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -22,7 +22,7 @@ if(isset($_SESSION['logado'])){
 	
 	$falha = true;
 	
-	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){	
+	if( (!empty($_POST['usuario'])) && (!empty($_POST['senha'])) && jf_token($_POST['token'])){
 		
 		$senha = md5($_POST['senha']."0800");
 		$usuario = jf_anti_injection($_POST['usuario']);
@@ -49,8 +49,7 @@ if(isset($_SESSION['logado'])){
 					}							
 				}
 			}
-		}
-		
+		}		
 		
 		if(!isset($dadosLogin)){
 			$dadosUser = mysql_query('select * from '.PREFIXO.'admin where login = "'.$usuario.'" and senha = "'.$senha.'" limit 1');
@@ -74,7 +73,8 @@ if(isset($_SESSION['logado'])){
 				'id' => $dadosLogin['id'],
 				'nome' => $dadosLogin['nome'],
 				'grupo' => $dadosLogin['grupo'],
-				'tema' => $dadosLogin['themer']
+				'tema' => $dadosLogin['themer'],
+				'token' => jf_token('novo')
 			);
 			
 			$falha = false;

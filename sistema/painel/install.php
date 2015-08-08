@@ -3,9 +3,9 @@
 *
 * lliure WAP
 *
-* @Versão 4.9.1
+* @Versão 4.10.4
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <contato@grapestudio.com.br> http://www.grapestudio.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -24,7 +24,14 @@ default:
 			<div class="padding">
 				<?php
 				if(file_exists('../plugins/'.$_GET['app'].'/sys/bd.sql')){
-					$config = '../plugins/'.$_GET['app'].'/sys/config.plg';
+					
+					$config = '../plugins/'.$_GET['app'].'/sys/config.ll';
+				
+					/*** para compatibilidade { */
+					if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg'))
+						$config = '../plugins/'.$_GET['app'].'/sys/config.plg';
+					/*** } */
+					
 					?>
 					<form action="painel/install.php?ac=instalar&amp;app=<?php echo $_GET['app']?>" class="jfbox">
 						<?php
@@ -89,8 +96,14 @@ case 'instalar':
 	}
 	
 	//procura o nome
+	
+	
 	if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg')){
 		$appConfig = simplexml_load_file('../plugins/'.$_GET['app'].'/sys/config.plg');
+		
+		$aplicativo_nome = $appConfig->nome;
+	} elseif(file_exists('../plugins/'.$_GET['app'].'/sys/config.ll')){
+		$appConfig = simplexml_load_file('../plugins/'.$_GET['app'].'/sys/config.ll');
 		
 		$aplicativo_nome = $appConfig->nome;
 	} else {
