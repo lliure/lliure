@@ -10,8 +10,8 @@
 		<div class="listp">
 			
 			<div class="inter">
-				<a href="?plugin=<?=$pasta?>"><img src="plugins/<?=$pasta?>/ico.png" alt="<?=$nome?>" /></a>
-				<a href="?plugin=<?=$pasta?>"><span><?=$nome?></span></a>
+				<a href="?plugin=<?php echo $pasta?>"><img src="plugins/<?php echo $pasta?>/sys/ico.png" alt="<?php echo $nome?>" /></a>
+				<a href="?plugin=<?php echo $pasta?>"><span><?php echo $nome?></span></a>
 			</div>
 			
 		</div>

@@ -18,25 +18,6 @@ function ajax() {
    return xmlhttp;
 }
 
-document.write('<div id="exectAjax"></div>');
-document.write('<img src="imagens/layout/loading.gif" style="display: none;" id="loadImg" />');
-
-execut = new ajax();
-function mLExectAjax(pagina){
-	document.getElementById('loadImg').style.display = "block";
-	
-	execut.open("post",pagina,true);
-	execut.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	
-	execut.onreadystatechange=function() {
-		if(execut.readyState==4) {
-			document.getElementById('loadImg').style.display = "none";
-			document.getElementById('exectAjax').innerHTML = execut.responseText; 
-		}
-	}
-	
-	execut.send(null);
-}
 
 ///////////////////////////////////////////////////////////////////// PHP FUNCTIONS
 function empty( mixed_var ) {
@@ -104,8 +85,11 @@ function substr(f_string, f_start, f_length) {
 /////////////////////////////////////////////////////////////////////
 
 function confirmAlgo(texto){ // TEXTO DE CONFIRMAÇÃO (TEXTO)
-	var agree=confirm("Tem certeza que deseja excluir "+texto+"?");
-	
+	if(texto.indexOf('?') > 0){
+		var agree=confirm(texto);
+	} else {
+		var agree=confirm("Tem certeza que deseja excluir "+texto+"?");
+	}
 	if (agree){
 		return true ;
 	} else {
@@ -161,31 +145,12 @@ function selecionartodos(ret){
 		}
 	}
 }
-function GetXMLHttp() {
-    if(navigator.appName == "Microsoft Internet Explorer") {
-        xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else {
-        xmlHttp = new XMLHttpRequest();
-    }
-    return xmlHttp;
-}
 
-var xmlRequest = GetXMLHttp();
-
-function goPag(valor,divtogo){
-    var url = valor;
-	xmlRequest.open("GET",url,true);    
-    xmlRequest.onreadystatechange = 
-	function()
-	    {    
-	        if (xmlRequest.readyState == 4)
-	        {  
-   				document.getElementById(divtogo).innerHTML = xmlRequest.responseText;
-	         } else {
-	         	document.getElementById(divtogo).innerHTML = 'Carregando..';
-	         }
-	    };
-    xmlRequest.send(null);
-    return url;
+function nomeDaPagina(){
+	var nome;
+	do {
+		nome = prompt ("Qual será a identificação dessa página em seu desktop?");
+	}
+	while (nome == null || nome == "");
+	mLExectAjax('includes/desktop.php?nome='+nome);
 }

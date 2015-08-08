@@ -1,0 +1,20 @@
+#topo{
+	background: url(moonlight.jpg) center top repeat-x;
+}
+
+#topo .left .logoSistema{
+	background: url(logo.png) no-repeat;
+	}
+
+
+#topo .right ul.menu a{
+	color: #fff;
+}
+
+.menuSub a{
+	color: #fff;
+}
+
+h2, span.h2 	{
+	color: #fff;
+}

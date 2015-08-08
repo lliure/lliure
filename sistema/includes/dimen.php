@@ -1,15 +1,21 @@
 <?php
 $imagem = $path;
 
+
 // lê a imagem de origem e obtém suas dimensões
 $img_origem = ImageCreateFromJPEG($imagem);
 $origem_x = ImagesX($img_origem);
 $origem_y = ImagesY($img_origem);
 
-if($origem_x > $pdt || $origem_y > $pdt){	
+$pdy = (!isset($pdy)?$pdt:$pdy);
+
+if($origem_x > $pdt || $origem_y > $pdy){	
 	//VERIFICA VALOR MAIOR
-	if($origem_x > $origem_y) { $percentual = $pdt*100/$origem_x;}
-	else{$percentual = $pdt*100/$origem_y;}
+	if($origem_x > $origem_y) {
+		$percentual = $pdt*100/$origem_x;
+	} else{
+		$percentual = $pdy*100/$origem_y;
+	}
 
 	//AJUSTA O TAMANHO DE AMBOS OS TAMANHOS
 	$x = intval ($origem_x * $percentual/100);
@@ -22,7 +28,7 @@ if($origem_x > $pdt || $origem_y > $pdt){
 	ImageCopyResampled($img_final, $img_origem, 0, 0, 0, 0, $x+1, $y+1, $origem_x , $origem_y);
 
 	// salva o arquivo
-	ImageJPEG($img_final, $path);
+	ImageJPEG($img_final, $imagem);
 
 	// libera a memória alocada para as duas imagens
 	ImageDestroy($img_origem);

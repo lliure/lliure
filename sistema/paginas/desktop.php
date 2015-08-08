@@ -1,13 +1,13 @@
 <?php
-	$pluginTable = SUFIXO."desktop";
-	$consulta = "select * from ".$pluginTable." order by nome asc";
-	$query = mysql_query($consulta);
+$pluginTable = SUFIXO."desktop";
+$consulta = "select * from ".$pluginTable." order by nome asc";
+$query = mysql_query($consulta);
+?>
 	
-		?>
-	<input id="namTable" type="hidden" value="<?=$pluginTable?>"/>
+	<input id="namTable" type="hidden" value="<?php echo $pluginTable?>"/>
 	<input type="hidden" id="idPag" value="" />
 	<div class="allhome" onclick="limpAllEvent()"></div>
-
+	<input type="hidden" id="linked" value="" />
 	<div class="bodyhome">
 
 	<?php
@@ -21,18 +21,20 @@
 		
 		$nomelink = (strlen($nome) > 12? substr($nome, 0, 9)."...":$nome);
 		?>
-		<div class="listp" id="div<?=$pagInp?>">
+		<div class="listp" id="div<?php echo $pagInp?>">
 			<div class="inter">
 
-				<a href="javascript: void(0);" onclick="selectPag('<?=$pagInp?>')" ondblclick="location='?<?=$link?>'"><img src="<?=$imagem?>" alt="<?=$nome?>" /></a>
-				<span id="<?=$pagInp?>"><a href="javascript: void(0);" ondblclick="editName('<?=$pagInp?>', '<?=$nome?>')" title="<?=$nome?>"><?=substr($nomelink, 0 , 12)?></a></span>
+				<a href="javascript: void(0);" onclick="selectPag('<?php echo $pagInp?>', '0')" ondblclick="location='<?php echo $link?>'"><img src="<?php echo $imagem?>" alt="<?php echo $nome?>" /></a>
+				<span id="<?php echo $pagInp?>"><a href="javascript: void(0);" ondblclick="editName('<?php echo $pagInp?>', '<?php echo $nome?>')" title="<?php echo $nome?>"><?php echo substr($nomelink, 0 , 12)?></a></span>
 			</div>
 			
 		</div>
 		<?php
 		}
 	} else { 
-		echo mensagemAviso('Não foi encontrado nenhum item em sua área de trabalho');
+		?>
+		<img src="error.jpg" onerror="mLaviso('Não foi encontrado nenhum item em sua área de trabalho')" class="imge" alt="" /> 
+		<?php
 	}
 	?>
 	</div>

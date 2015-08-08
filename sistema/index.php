@@ -1,15 +1,19 @@
 <?php 
-	require_once("../includes/conection.php"); 
+	if(file_exists('install') == true) {
+		Header("location: install");
+	}
+
+	require_once("includes/conection.php"); 
 	require_once("includes/functions.php"); 
 	require_once("includes/acoes.php"); 
 	
 	if(!empty($_GET)){
 		$keyGet = array_keys($_GET);
-		if($keyGet['0'] == 'plugin' and $_GET['plugin']){
+		if($keyGet['0'] == 'plugin' and isset($_GET['plugin'])){
 			$pageatual = '?'.$_SERVER['QUERY_STRING'];
-			
+						
 			if(isset($_SESSION['historicoNav'])){
-				if(isset($_GET['goback'])){
+				if($pageatual == $_SESSION['historicoNav'][count($_SESSION['historicoNav'])-2]){
 					array_pop($_SESSION['historicoNav']);
 				} elseif(isset($keyGet[1])){
 					if(in_array($pageatual, $_SESSION['historicoNav']) == false){
@@ -25,16 +29,14 @@
 				$_SESSION['historicoNav'][0] = $pageatual;
 				$historico = $_SESSION['historicoNav'];
 			}
-			
-		retornaLink($historico);
+
+			retornaLink($historico);
 		}
 	} else{
 		if(isset($_SESSION['historicoNav'])){
 			unset($_SESSION['historicoNav']);
 		}		
 	}
-	
-
 ?>
 
 
@@ -44,16 +46,18 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 	
 	<script type="text/javascript" src="js/tiny_mce/tiny_mce.js"></script>
+	<script type="text/javascript" src="js/tiny_mce//plugins/tinybrowser/tb_tinymce.js.php"></script>
 	<script type="text/javascript" src="js/funcoes.js"></script>
 	<script type="text/javascript" src="js/javaNavigator.js"></script>
 	
-<title>Plugin site manager</title>
+<title>sistema Plugin</title>
 
 <style type="text/css" media="screen">
 	@import "css/base.css";
 	@import "css/principal.css";
 	@import "css/paginas.css";
 	@import "css/predifinidos.css";
+	/*@import "themer/moonlight/estilo.css";*/
 </style>
 
 
@@ -63,7 +67,7 @@
 <div id="tudo">
 	<div id="topo">
 		<div class="left">
-			<a href="index.php"><img src="imagens/layout/logo.png" /></a>
+			<a href="index.php" class="logoSistema"></a>
 		</div>
 		<?php
 		if(!empty($DadosLogado)){ ?>
@@ -99,8 +103,8 @@
 						$folder= $dados['pasta'];
 						?>
 						<li>
-							<a href="?plugin=<?=$folder?>" title="<?=$dados['nome']?>">
-								<img src="plugins/<?=$folder?>/ico.png" alt="" />
+							<a href="?plugin=<?php echo $folder?>" title="<?php echo $dados['nome']?>">
+								<img src="plugins/<?php echo $folder?>/sys/ico.png" alt="" />
 							</a>
 						</li>
 						<?php
@@ -113,7 +117,7 @@
 					$keyGet = array_keys($_GET);
 					if($keyGet['0'] == 'plugin' and  !empty($_GET['plugin'])){
 					?>
-				<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
+				<a href="javascript: void(0);" onclick="mLExectAjax('includes/desktop.php');" class="desktop" title="Adicionar essa página ao descktop"><img src="imagens/layout/adddesktop.png" alt="" /></a>
 					<?php 
 					}
 				} 
@@ -132,14 +136,14 @@
 		</div>
 	</div>
 	
+
+	
+</div> 
 	<div id="rodape">
 		<span class="desenvolvidopor">
-			<a href="http://www.newsmade.com.br">Desenvolvido por Newsmade</a>
+			<a href="http://www.newsmade.com.br">Desenvolvido por Jeison Frasson</a>
 		</span>
 	</div>
-
-</div> 
-
 </body>
 
 </html>

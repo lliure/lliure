@@ -6,41 +6,24 @@ function carregaPage(){
 		} else {
 		$getAtl = array_keys($_GET);
 		$getAtl0 = $getAtl['0'];
-		switch ($getAtl0) {
-			case "home":
-				$page = "paginas/home";		
-			break;
+		$page = SISTEMA."/plugins/".$getAtl0;		
 			
-			case 'imoveis':
-				$page = "sistema/plugins/catalogo/exibe/categoria";
-			break;
-			case 'pesquisar':
-				$page = "paginas/pesquisar";
-			break;
-			case 'contato':
-				$_GET['formularios'] = '15';
-				$getAtl0 = 'formularios';
-				$page = "sistema/plugins/".$getAtl0;		
-				$page = (file_exists($page)? $page."/exibe/start" : "sistema/includes/erro");
-			break;
-
-
-			default:
-				$page = "sistema/plugins/".$getAtl0;		
-				$page = (file_exists($page)? $page."/exibe/start" : "sistema/includes/erro");
-			break;
-		}
-
+		$page = (file_exists($page)? $page."/exibe/start" : SISTEMA."/includes/erro");
 		}
 	} else {
-		$page = "paginas/home";
+		$page = "paginas/home.php";
+		if(file_exists($page)){
+			$page = "paginas/home";
+		} else {
+			$page = SISTEMA."/plugins/pagina/exibe/start";
+		}
 	}	
 	
 	return $page.".php";
 }
 
-
 function mLsubstrFull($texto, $final){
+	$texto = strip_tags($texto);
 	if(strlen($texto) > $final){
 		$final = strrpos(substr($texto, 0, $final), " ");
 		$texto = substr($texto, 0 , $final)." ...";

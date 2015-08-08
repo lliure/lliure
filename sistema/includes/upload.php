@@ -1,5 +1,5 @@
 <?php
-require_once('../../includes/conection.php');
+require_once('conection.php');
 /*
 	Link completo: upload.php?id=1*idProd&dir=../plugins*paginas_fotos
 

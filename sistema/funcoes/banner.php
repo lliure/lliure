@@ -10,21 +10,21 @@ function mLBanner($tipo = 1, $qnt = 1, $posit = 1){
 		
 		if(!empty($titulo) && $posit == 1){
 			?>
-			<span><?=$titulo?></span>
+			<span><?php echo $titulo?></span>
 			<?php
 		}
 		if($link != 'http://'){
 			?>
-			<a href="<?=$link?>" target="_blank" title="$nome"><img src="uploads/banners/<?=$imagem?>" alt="<?=$nome?>" /></a>
+			<a href="<?php echo $link?>" target="_blank" title="$nome"><img src="uploads/banners/<?php echo $imagem?>" alt="<?php echo $nome?>" /></a>
 			<?php
 		} else {
 			?>
-			<img src="uploads/banners/<?=$imagem?>" alt="<?=$nome?>" />
+			<img src="uploads/banners/<?php echo $imagem?>" alt="<?php echo $nome?>" />
 			<?php
 		}
 		if(!empty($titulo) && $posit == 2){
 			?>
-			<span><?=$titulo?></span>
+			<span><?php echo $titulo?></span>
 			<?php
 		}
 	}

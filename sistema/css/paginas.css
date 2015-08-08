@@ -2,6 +2,9 @@
 form.login{
 	width: 289px;
 	margin: 0 auto;
+	z-index: 13;
+	padding-top: 20px;
+	position: relative;
 	}
 		
 form.login label span{

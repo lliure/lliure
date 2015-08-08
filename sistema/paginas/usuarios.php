@@ -9,7 +9,6 @@
 			'senha' => '',
 			'tipo' => ''
 			);
-	
 if(empty($_GET['usuarios'])){
 	if(isset($_GET['novo'])){
 
@@ -24,6 +23,7 @@ if(empty($_GET['usuarios'])){
 
 	$query = mysql_query($consulta." order by nome ASC");
 	?>
+	<br/>
 	<span class="botao"><a href="?usuarios&amp;novo">Novo usuário</span></span>
 	<div class="both"></div>
 	<?php
@@ -34,8 +34,8 @@ if(empty($_GET['usuarios'])){
 	
 		<div class="listp">
 			<div class="inter">
-				<a href="?usuarios=<?=$id?>"><img src="imagens/layout/user.png" alt="<?=$nome?>" /></a>
-				<a href="?usuarios=<?=$id?>"><span><?=$nome?></span></a>
+				<a href="?usuarios=<?php echo $id?>"><img src="imagens/layout/user.png" alt="<?php echo $nome?>" /></a>
+				<a href="?usuarios=<?php echo $id?>"><span><?php echo $nome?></span></a>
 			</div>
 		</div>
 	<?php
@@ -85,7 +85,7 @@ $idUser = $_GET['usuarios'];
 	?>
 		<script type="text/javascript">
 			function Save(){
-				document.getElementById('form').action="?usuarios=<?=$idUser?>&save";
+				document.getElementById('form').action="?usuarios=<?php echo $idUser?>&save";
 				document.getElementById('form').submit();
 			}
 		</script>
@@ -94,13 +94,13 @@ $idUser = $_GET['usuarios'];
 
 				<div class="label">
 					<span>Nome</span>
-					<div class="input"><input type="text" value="<?=$nome?>" name="nome" /></div>
+					<div class="input"><input type="text" value="<?php echo $nome?>" name="nome" /></div>
 					<span class="ex">Nome do usuario. <strong>Campo obrigatorio</strong></span>
 				</div>
 				
 				<div class="label">
 					<span>Login</span>
-					<div class="input"><input type="text" value="<?=$login?>" name="login" /></div>
+					<div class="input"><input type="text" value="<?php echo $login?>" name="login" /></div>
 					<span class="ex">Login utilizado para acessar o painel. <strong>Campo obrigatorio</strong></span>
 				</div>
 				
@@ -116,7 +116,7 @@ $idUser = $_GET['usuarios'];
 						<span>Tipo</span>
 						<select name="tipo">
 							<option value="0">Usuário</option>
-							<option value="1" <?=($tipo == 1?'selected':'')?>>Desenvolvedor</option>
+							<option value="1" <?php echo ($tipo == 1?'selected':'')?>>Desenvolvedor</option>
 						</select>
 						<span class="ex">Nivel do usuário. <strong>Campo opcional</strong></span>
 					</div>
@@ -125,7 +125,7 @@ $idUser = $_GET['usuarios'];
 				?>
 				<a href="javascript: void(0)" onclick="Save()" title="Salvar alterações" class="a"><img src="imagens/icones/save.png" alt="salvar"	/></a>
 				
-				<a href="?usuarios=<?=$idUser?>&del" onclick="return confirmAlgo('esse usuário')" title="Excluir usuário" class="a"><img src="imagens/icones/no.png" alt="Apagar Usuario"	/></a>
+				<a href="?usuarios=<?php echo $idUser?>&del" onclick="return confirmAlgo('esse usuário')" title="Excluir usuário" class="a"><img src="imagens/icones/no.png" alt="Apagar Usuario"	/></a>
 		</form>
 	</div>
 		<?php	

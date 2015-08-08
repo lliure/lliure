@@ -25,7 +25,7 @@ function insertTable() {
 	cellpadding = formObj.elements['cellpadding'].value != "" ? formObj.elements['cellpadding'].value : "";
 	cellspacing = formObj.elements['cellspacing'].value != "" ? formObj.elements['cellspacing'].value : "";
 	align = formObj.elements['align'].options[formObj.elements['align'].selectedIndex].value;
-	frame = formObj.elements['tframe'].options[formObj.elements['tframe'].selectedIndex].value;
+	frame = formObj.elements['frame'].options[formObj.elements['frame'].selectedIndex].value;
 	rules = formObj.elements['rules'].options[formObj.elements['rules'].selectedIndex].value;
 	width = formObj.elements['width'].value;
 	height = formObj.elements['height'].value;
@@ -155,10 +155,6 @@ function insertTable() {
 	if (width && inst.settings.inline_styles) {
 		if (style)
 			style += '; ';
-
-		// Force px
-		if (/^[0-9\.]+$/.test(width))
-			width += 'px';
 
 		style += 'width: ' + width;
 	} else
@@ -322,7 +318,7 @@ function init() {
 
 	// Update form
 	selectByValue(formObj, 'align', align);
-	selectByValue(formObj, 'tframe', frame);
+	selectByValue(formObj, 'frame', frame);
 	selectByValue(formObj, 'rules', rules);
 	selectByValue(formObj, 'class', className, true, true);
 	formObj.cols.value = cols;

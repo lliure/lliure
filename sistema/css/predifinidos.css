@@ -11,12 +11,14 @@ div.allhome{
 	left: 0;
 	height: 300px;
 	width: 100%;
+	
 	}	 
 	
 div.bodyhome{
 	float: left;
-	z-index: 10;
+	z-index: 13;
 	position: relative;
+	padding-top: 5px;
 	}
 	
 div.boxCenter{
@@ -41,7 +43,7 @@ div.subBar{
 	height: auto;
 	background: none;
 	cursor: pointer;
-	margin-left: 0 0 0 2px;
+	margin-left: 2px;
 	}
 	
 a.link{
@@ -154,16 +156,16 @@ div.ediFoto form input{
 /**********************			MENU SUPERIOR		**********************/
 .menuSub{
 	display: block;
-	background: url(../imagens/plugins/topmenu.jpg) repeat-x;
+	background: url(../imagens/layout/topmenu.png) repeat-x;
 	margin: 0 -10px;
 	padding: 0 30px;
-	height: 50px;
+	height: 45px;
 	}
 	
 .menuSub a{
 	float: left;
-	margin: 7px 5px 5px 5px;
-	
+	margin: 3px 5px 0px 5px;
+	padding: 5px 7px 8px 7px;
 	}
 	
 .menuSub a img{
@@ -172,6 +174,10 @@ div.ediFoto form input{
 .menuSub a span{
 	float: left;
 	margin: 5px 0 0 5px;
+	}
+	
+.menuSub a:hover{
+	background: url(../imagens/layout/topmenu_hover.png) repeat-x;
 	}
 	
 /**********************			TABELA			**********************/

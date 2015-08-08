@@ -6,12 +6,14 @@
 		}
 		
 html, body {
+	overflow:hidden;
+	width:100%;
 	height:100%;
+
 	} 
 	
 body{	
-	text-align:center;
-	background: url(../imagens/layout/wave.jpg) center top no-repeat;
+	text-align:center;	
 	}
 	
 	
@@ -39,8 +41,6 @@ body{
 img{border: 0px;
 	}
 
-		
-	
 img.imge{
 	width: 0;
 	height: 0;
@@ -226,15 +226,87 @@ span.mensagem{
 		color: #00a;
 		}
 	
-img#loadImg{
-	position: fixed; 
-	*position: absolute; 
-	top: 236px;
-	left: 50%;
-	z-index: 60000;
-	}	
 	
-img#exectAjax{
-	width: 0;
-	height: 0;
-	}
+/*********************		Funcoes java	*********************/
+img#loadImg{
+		position: absolute; 
+		top: 236px;
+		left: 50%;
+		z-index: 60000;
+		}	
+	
+div#exectAjax{
+		width: 0;
+		height: 0;
+		}
+
+div#ajaxBoxfundo{
+		position: absolute;
+		top: 0px;
+		left: 0px;
+		width: 100%;
+		height: 100%;
+		background: #fff;
+		z-index: 9000;
+
+		filter:alpha(opacity=70);
+		-moz-opacity:.70;
+		opacity:.70;
+		}
+	
+div#ajaxBoxGeral{
+		width: 100%;
+		position: absolute;
+		top: 35px;
+		left: 0;
+		z-index: 9001; 
+		text-align: left;
+		}
+	
+div#ajaxBoxAling{
+		width: 750px;
+		margin: 0 auto;
+		position: relative;
+		background: #000;
+		padding: 1px 0;
+		}
+	
+div#ajaxBox{
+		background:#fff;
+		display: block;
+		height: 350px;
+		margin: 0 1px;
+		overflow: auto;
+		}
+	
+a.ajaxBoxClose{
+		position: absolute;
+		right: 0;
+		top: -25px;
+		text-align: right;
+		}
+		
+		
+#mLAviso{
+		width: 100%;
+		position: absolute;
+		z-index: 9000;
+		text-align: center;
+		}
+		
+#mLAviso div{
+		padding: 8px 12px 10px 12px;
+		font-size: 12px;
+		border: 1px solid #ddd;
+		border-top: none;
+		background: #FCFDDE;
+		}
+		
+
+	#mLAviso a.close{
+		position: absolute;
+		font-weight: bold;
+		font-size: 12px;
+		top: 2px;
+		right: 4px;
+		}

@@ -11,8 +11,8 @@ function mLUltFotos($qnt = 3, $w = 150, $h = 100){
 		$descricao = $dados['descricao'];
 		?>
 		<span class="foto">
-			<a href="../uploads/fotos/<?=$foto?>" rel="lightbox[0]" title="<?=$descricao?>">
-				<img src="<?=SISTEMA?>/includes/thumbs.php?imagem=<?=$w?>-../../uploads/fotos/<?=$foto?>-<?=$h?>" alt="" />
+			<a href="../uploads/fotos/<?php echo $foto?>" rel="lightbox[0]" title="<?php echo $descricao?>">
+				<img src="<?php echo SISTEMA?>/includes/thumbs.php?imagem=<?php echo $w?>-../../uploads/fotos/<?php echo $foto?>-<?php echo $h?>" alt="" />
 			</a>
 		</span>
 		<?php
@@ -40,8 +40,8 @@ function mLUltGal($qnt = 3, $w = 150, $h = 100){
 		$descricao = $dados['descricao'];
 		?>
 		<span class="foto">
-			<a href="../uploads/fotos/<?=$foto?>" rel="lightbox[0]" title="<?=$descricao?>">
-				<img src="<?=SISTEMA?>/includes/thumbs.php?imagem=<?=$w?>-../../uploads/fotos/<?=$foto?>-<?=$h?>" alt="" />
+			<a href="../uploads/fotos/<?php echo $foto?>" rel="lightbox[0]" title="<?php echo $descricao?>">
+				<img src="<?php echo SISTEMA?>/includes/thumbs.php?imagem=<?php echo $w?>-../../uploads/fotos/<?php echo $foto?>-<?php echo $h?>" alt="" />
 			</a>
 		</span>
 		<?php

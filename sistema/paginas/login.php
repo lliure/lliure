@@ -1,4 +1,3 @@
-
 <form method="post" id="form" class="login">
 	<span class="h1">Área restrita</span>
 	<?php

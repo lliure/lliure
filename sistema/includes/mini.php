@@ -1,9 +1,12 @@
 <?php
+
 header("Content-type: image/jpeg");
 
 $formanome = explode("::", $_GET['imagem']);
 
+$wid = $formanome['0'];
 $im = $formanome['1'];
+$hei = $formanome['2'];
 
 // Cria uma nova imagem a partir de um arquivo ou URL
 if(strstr($im, ".jpg") != false){
@@ -13,9 +16,6 @@ if(strstr($im, ".jpg") != false){
 } elseif(strstr($im, ".gif") != false){
 	$im = imagecreatefromgif($im); 
 }
-
-$wid = $formanome['0'];
-$hei = $formanome['2'];
 
 $origem_x = ImagesX($im);
 $origem_y = ImagesY($im);
@@ -41,8 +41,6 @@ if(($hein > $hei) or ($widn > $wid)){
 
 	$widn = intval ($widn * $percentual/100);
 	$hein = intval ($hein * $percentual/100);
-	
-
 }
 
 $left = ($wid-$widn)/2;
@@ -57,11 +55,11 @@ imagefill($img, 0, 0, $white);
  
 imagecopyresampled($img, $im, $left, $top, 0, 0, $widn, $hein, $origem_x, $origem_y);
 
-if(strstr($im, ".jpg") != false){
+if(strstr($formanome['1'], ".jpg") != false){
 	imagejpeg($img);
-} elseif(strstr($im, ".png") != false){
+} elseif(strstr($formanome['1'], ".png") != false){
 	imagepng($img);
-} elseif(strstr($im, ".gif") != false){
+} elseif(strstr($formanome['1'], ".gif") != false){
 	imagegif($img);
 }
 

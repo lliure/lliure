@@ -22,7 +22,7 @@ function requirePage(){
 				$get = $_GET['plugin'];
 				$pagina = "plugins/$get/start.php";
 			} else {
-				$pagina = "paginas/plugins.php";
+				$pagina = "painel/plugins.php";
 			}
 		} elseif(isset($_GET['usuarios'])) {
 			$pagina = "paginas/usuarios.php";
@@ -48,15 +48,19 @@ function mensagemAviso($mensagem){
 
 function loadPage($url, $tempo = 0){
 	$tempo = ($tempo != 0?", '".$tempo."'":'');
-	?><img src="erro.jpg" onerror="loadPage('<?=$url?>'<?=$tempo?>)" class="imge"><?php
+	?><img src="erro.jpg" onerror="loadPage('<?php echo $url?>'<?php echo $tempo?>)" class="imge"><?php
 }
 	
-function retornaLink($historico, $mods = 0){
+function retornaLink($historico, $mods = 0, $modsQnt = 1){
 	global $backReal;
 	global $backNome ;
 	
 	if($mods === 'save'){
-		array_pop($_SESSION['historicoNav']); // APAGA ESSA PÁGINA DO HISTÓRICO
+		
+		for($i = 0; $i < $modsQnt;$i++){
+			array_pop($_SESSION['historicoNav']); // APAGA ESSA PÁGINA DO HISTÓRICO
+		}
+		
 		$historico = $_SESSION['historicoNav'];
 	}
 	
@@ -64,7 +68,7 @@ function retornaLink($historico, $mods = 0){
 	
 	if($i > 0){
 		$i--;
-		$backReal = $historico[$i]."&goback";
+		$backReal = $historico[$i];
 		$backNome = "Voltar";
 	} else {
 		$backReal = "index.php";
