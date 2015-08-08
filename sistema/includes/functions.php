@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -73,12 +73,11 @@ function navig_historic(){
 function plg_historic($mods = null, $modsQnt = 1){
 	global $backReal;
 	global $backNome ;
-	/*
+	
 	if($mods === 'return')
 		for($i = 0; $i < $modsQnt;$i++)
 			array_pop($_SESSION['historicoNav']); // APAGA ESSA PÁGINA DO HISTÓRICO
-		
-	*/
+	
 	$historico = $_SESSION['historicoNav'];
 	$i = count($historico)-1;
 	
@@ -104,6 +103,93 @@ function in($var,$type = 'VALUE') {
 	}
 	$in = substr($in,0,-1);
 	return $in;
+}
+
+// função que testa a segurança de uma página
+function ll_securyt($arquivo){
+	/*
+	No aquivo config.plg contido na pasta sys do aplicativo você insere a url de onde estára o arquivo de configuração de segurança, que normalmente estára em etc/nome_do_aplicativo/segur.ll
+	
+	Exemplo de um arquivo de segurança:
+	
+	<?xml version="1.0" encoding="iso-8859-1"?>
+	<seguranca>
+		<user> <p>banners</p> <grupo>$</grupo> </user>
+		<user> <p>banners</p> <grupo>$</grupo> <id>$</id> </user>
+	</seguranca>
+
+
+	<sguranca> é o container onde estáram as diretrizes
+	<user> é o nome do grupo que tera permissão para acessar a url
+		para configurar coloque a chave do get depois o valor, caso possa acessar qualquer valor dentro deste get utilize '$' como valor
+		exemplos para as urls:
+		plugin=teste&p=usuarios			=	<user> <p>usuarios</p> </user>
+		plugin=teste&p=modulos			=	<user> <p>modulos</p> </user>
+		plugin=teste&p=usuarios&id=5	=	<user> <p>usuarios</p> <id>$</id> </user>
+		plugin=teste&p=usuarios&id=10	=	<user> <p>usuarios</p> <id>$</id></user>
+		plugin=teste					=	<user></user>
+	como você pode verificar não é necessário setar o primeiro get, no caso o que aponta para o aplicativo em questão
+	*/
+
+
+	$grupo = $_SESSION['logado']['grupo'];
+	$appConfig = simplexml_load_file($arquivo);
+	
+	$i = 0;
+	if($appConfig->$grupo == 'public')
+		return true;
+	
+	foreach($appConfig->$grupo as $urls){
+		$permissao[$i] = array('plugin' => $_GET['plugin']);
+		
+		foreach((array) $urls as $indice => $valor)
+			$permissao[$i][$indice] = ((!isset($valor) || $valor == '$') && isset($_GET[$indice]) ? $_GET[$indice] : $valor );
+		
+		$final = array_merge(array_diff($_GET, $permissao[$i]), array_diff($permissao[$i], $_GET));
+			if(empty($final))
+				return true;
+		
+		$i++;
+	}
+
+	return false;
+}
+
+// função para testar permição do usuário
+function ll_tsecuryt($grupo = null){
+	
+	/*
+	Para usar basta puxar esta função dentro de um if() ela irá retornar true quando o usuário for desenvolverdor ou quando for especificado
+	exemplos de utilização
+	
+	if(ll_tsecuryt()) // se estiver logado como desenvolvedor irá retornar true
+	if(ll_tsecuryt('admin')) // se estiver logado como admin irá retornar true
+	if(ll_tsecuryt('user')) // se estiver logado como user irá retornar true
+	if(ll_tsecuryt(array('user', 'admin'))) // se estiver logado como user ou como admin irá retornar true
+	*/
+	
+	$grupo_user = $_SESSION['logado']['grupo'];
+	switch($grupo_user){
+		case 'dev':
+			return true;
+		break;
+		
+		default:
+			if((is_array($grupo_user) && in_array($grupo, $grupo_user)) || $grupo == $grupo_user)
+				return true;
+			else
+				return false;
+		break;
+	}
+}
+
+
+//Converte parce xml em array
+function xml2array ( $xmlObject, $out = array () ){
+	foreach ( (array) $xmlObject as $index => $node )
+		$out[$index] = ( is_object ( $node ) ) ? xml2array ( $node ) : $node;
+
+	return $out;
 }
 
 ?>

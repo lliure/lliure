@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -215,12 +215,10 @@ function mlLimpaacento($texto){
 
 //	Gerencia o array GET, onde retira o $needle (pode ser um array) caso exista em GET e monta em modo de link
 function jf_monta_link($haystack, $needle = null, $amigavel = false){
-	$needle = $needle == 'URL_AMIGAVEL' ? true : $needle ; 
-	
-	if($needle == true)
+	if($needle == 'URL_AMIGAVEL')
 		$amigavel = true;	
-	
-	if(!is_null($needle) && $needle != true) {
+
+	if(!is_null($needle) && $needle != 'URL_AMIGAVEL') {
 		if(is_array($needle) == false){
 			unset($haystack[$needle]);
 		} else {
@@ -380,5 +378,30 @@ function jf_urlformat($texto){
 	$texto = preg_replace("/[^ a-z 0-9 \t _ \/ -]/", "", $texto);	
 	$texto = str_replace(" ","-",$texto);
 	return($texto);
+}
+
+function jf_stradd($var, $caracter, $lim){
+	$tamanho = strlen($var);
+	$nova = '';
+	if($tamanho > $lim){	
+		$quebra = $tamanho/$lim;
+		$ini = 0;
+		$fim = $lim;
+	
+		for($i=0; $i <= intval($quebra); $i++){
+			if($i == intval($quebra))
+				$nova.= substr($var, $ini, $lim);
+			else
+				$nova.= substr($var, $ini, $lim).$caracter;
+		
+			$ini = $fim;
+			$fim = $fim+$lim;
+		}
+	
+		return $nova;
+		
+	} else {
+		return $var;
+	}
 }
 ?>

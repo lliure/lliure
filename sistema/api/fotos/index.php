@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -22,6 +22,9 @@ $galeriaAPI['capaCampo'] é o campo que está na tabela pai que faz referencia a f
 $galeriaAPI['dir'] é o diretório onde vão ser armazenadas as imagens
 */
 
+
+$galeriaAPI['tabela_app'] = $galeriaAPI['tabela'];
+$galeriaAPI['tabela'] = $galeriaAPI['tabela'].'_fotos';
 ?>
 <style>
 	@import "api/fotos/estilo.css";
@@ -31,32 +34,21 @@ $galeriaAPI['dir'] é o diretório onde vão ser armazenadas as imagens
 <script type="text/javascript" src="api/fotos/jquery.uploadify.js"></script>
 
 <div class="api-fotos">
-
-	<div class="seletor" id="file_upload"></div>
-
+	<div class="seletor" id="foto_file_"></div>
 	<div id="api_fotos_galeria"></div>
 	<div class="both"></div>
 </div>
 
 <script>
 function carregaFotos(){
-	$('#api_fotos_galeria').load('<?php echo 'api/fotos/fotos.php?tabela='.$galeriaAPI['tabela'].'&campo='.$galeriaAPI['ligacaoCampo'].'&id='.$galeriaAPI['ligacaoId'].'&dir='.$galeriaAPI['dir'].(isset($galeriaAPI['capaCampo']) ? '&capa_campo='.$galeriaAPI['capaCampo'].'&capa_foto='.$galeriaAPI['capaFoto'] :''); ?>');
+	$('#api_fotos_galeria').load('<?php echo 'api/fotos/fotos.php?tabela='.$galeriaAPI['tabela'].'&tabela_app='.$galeriaAPI['tabela_app'].'&campo='.$galeriaAPI['ligacaoCampo'].'&id='.$galeriaAPI['ligacaoId'].'&dir='.$galeriaAPI['dir'].(isset($galeriaAPI['capaCampo']) ? '&capa_campo='.$galeriaAPI['capaCampo'].'&capa_foto='.$galeriaAPI['capaFoto'] :''); ?>');
 }
 
-$(document).ready(function(){
+$(function(){
 	carregaFotos();		
 	
-	$('#file_upload').uploadify({
-		'uploader'  : 'api/fotos/uploadify.swf',
-		'script'    : 'api/fotos/uploadify.php?array=<?php echo $galeriaAPI['tabela']; ?>*<?php echo $galeriaAPI['ligacaoCampo']; ?>*<?php echo $galeriaAPI['ligacaoId']; ?>',
-		'cancelImg' : 'api/fotos/cancel.png',
-		'folder'    : '<?php echo $galeriaAPI['dir']; ?>',
-		'auto'      : true,
-		'fileExt'     : '*.jpg;*.png',
-		'fileDesc'    : 'Arquivos de imagem (.jpg e .png)',
-		'buttonText'  : 'Selecionar fotos',
-		'multi'     : true,
-		'onAllComplete'  : function(event,data) {
+	$('#foto_file_').uploadify({
+		'uploader'  : 'api/fotos/uploadify.swf',	}, 'script'    : 'api/fotos/uploadify.php?array=<?php echo $galeriaAPI['tabela'].'*'.$galeriaAPI['ligacaoCampo'].'*'.$galeriaAPI['ligacaoId']; ?>',	}, 'cancelImg' : 'api/fotos/cancel.png',	}, 'folder'    : '<?php echo $galeriaAPI['dir']; ?>',	}, 'auto'      : true,	}, 'fileExt'     : '*.jpg;*.png',	}, 'fileDesc'    : 'Arquivos de imagem (.jpg e .png)',	}, 'buttonText'  : 'Selecionar fotos',	}, 'multi'     : true,	}, 'onAllComplete'  : function(event,data) {
 			carregaFotos();
 		}
 	});

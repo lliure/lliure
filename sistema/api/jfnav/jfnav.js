@@ -2,7 +2,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -32,7 +32,6 @@ jQuery.fn.extend({
 				event.stopPropagation();
 			}
 		});
-		
 		
 		return this;
 	}	
@@ -83,7 +82,7 @@ $(document).jfkey('enter', function(){
 
 function limpAllEvent(){
 	if(nav_selecionado != null){
-		$('.listp').css({'background': 'transparent'});
+		$('.listp').removeClass('jfn_selected');
 		nav_selecionado = null
 	}
 }
@@ -91,16 +90,15 @@ function limpAllEvent(){
 function editName(){
 	var texto = $('#'+nav_selecionado).attr('title');
 	
-	$('.listp').css({'background': 'transparent'});
 	$('#'+nav_selecionado).html('<form id="in'+nav_selecionado+'"><input type="text" class="edna" name="nome" value="'+texto+'"/></form>');
 	$('#in'+nav_selecionado+' input').focus();
 }
 
 function selectPag(divId, linked){
-	$('.listp').css({'background': 'transparent'});
+	$('.listp').removeClass('jfn_selected');
 	nav_selecionado = divId;
 
-	$('#div'+divId).css({'background': '#e7e7e7'});
+	$('#div'+divId).addClass('jfn_selected');
 }
 
 function alteraNome(){

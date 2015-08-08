@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -24,12 +24,28 @@ default:
 			<div class="padding">
 				<?php
 				if(file_exists('../plugins/'.$_GET['app'].'/sys/bd.sql')){
+					$config = '../plugins/'.$_GET['app'].'/sys/config.plg';
 					?>
 					<form action="painel/install.php?ac=instalar&amp;app=<?php echo $_GET['app']?>" class="jfbox">
 						<?php
-						echo '<div class="fase"><div class="msm">Arquivo de configuração do Banco de dados: OK</div></div>';
-						if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg')){
+						echo '<div class="fase"><div class="msm">Arquivo de configuração do Banco de dados: OK</div></div>';						
+						if(file_exists($config)){
 							echo '<div class="fase"><div class="msm">Arquivo de configuração interna: OK</div></div>';
+							$appConfig = simplexml_load_file($config);
+							
+							if(!isset($appConfig->seguranca) || $appConfig->seguranca == 'public'){
+								echo '<div class="fase"><div class="msm">As definições de segurança do aplicativo estão setadas como <strong>public</strong></div></div>';
+							} else {
+								$arqseg = array_pop(explode('/', $appConfig->seguranca));
+								if(file_exists('../plugins/'.$_GET['app'].'/sys/'.$arqseg))
+									echo '<div class="fase"><div class="msm">O aplicativo possui um arquivo de configuração de permições</div></div>
+										<input name="segur" type="hidden" value="../plugins/'.$_GET['app'].'/sys/'.$arqseg.'" />';
+								else
+									echo '<div class="fase"><div class="msm msmE">Não foi possivel encontrar o arquivo de com as configuraçõs de permições ('.$arqseg.')</div></div>';
+							}
+								
+							
+							
 						} else {
 							echo '<div class="fase"><div class="msm msmE">Arquivo de configuração interna: ERRO</div><span class="msmex">Por favor adicione manualmente o nome do aplicativo</span>';
 							?>
@@ -55,7 +71,7 @@ default:
 break;
 
 case 'instalar':
-	require_once("../includes/conection.php"); 
+	require_once("../etc/bdconf.php"); 
 	require_once("../includes/jf.funcoes.php"); 
 	require_once("../includes/class.leitor_sql.php"); 
 	
@@ -64,6 +80,7 @@ case 'instalar':
 	$bd = '../plugins/'.$_GET['app'].'/sys/bd.sql';
 	$tp = new leitor_sql($bd);
 	
+	// cria pastas necessarias
 	if(file_exists('../plugins/'.$_GET['app'].'/sys/.folder')){
 		$dirbase = '../../uploads/';
 		$folders = file('../plugins/'.$_GET['app'].'/sys/.folder');
@@ -72,6 +89,7 @@ case 'instalar':
 			@mkdir($dirbase.trim($folder), 0777);
 	}
 	
+	//procura o nome
 	if(file_exists('../plugins/'.$_GET['app'].'/sys/config.plg')){
 		$appConfig = simplexml_load_file('../plugins/'.$_GET['app'].'/sys/config.plg');
 		
@@ -79,8 +97,12 @@ case 'instalar':
 	} else {
 		$aplicativo_nome = $_POST['nome'];
 	}
-		
 	
+	if(isset($_POST['segur'])){
+		@mkdir('../etc/'.$_GET['app'], 0777);
+		@copy($_POST['segur'] ,'../etc/'.$_GET['app'].'/'.array_pop(explode('/', $appConfig->seguranca)) );
+	}
+
 	jf_insert(PREFIXO.'plugins', array('nome' => $aplicativo_nome, 'pasta' => $_GET['app']));
 	?><br><br>
 	<span><strong>Instalação realizada com sucesso!</strong></span><br><br>

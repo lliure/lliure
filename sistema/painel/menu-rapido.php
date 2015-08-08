@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,13 +11,13 @@
 */
 
 header("Content-Type: text/html; charset=ISO-8859-1",true);
-require_once("../includes/conection.php"); 
-require_once("../includes/mLfunctions.php");
+require_once("../etc/bdconf.php"); 
+require_once("../includes/jf.funcoes.php");
 
 $caminho = 'painel/menu-rapido.php';
 
 if(isset($_GET['d'])){
-	mLdelete(PREFIXO.'start', array('idPlug' => $_GET['d']));
+	jf_delete(PREFIXO.'start', array('idPlug' => $_GET['d']));
 	?>
 	<script>
 	$().ready(function(){
@@ -27,7 +27,7 @@ if(isset($_GET['d'])){
 	<?php
 }
 if(isset($_GET['a'])){
-	mLinsert(PREFIXO.'start', array('idPlug' => $_GET['a']));
+	jf_insert(PREFIXO.'start', array('idPlug' => $_GET['a']));
 	
 	$dados = mysql_fetch_array(mysql_query('select * 
 						from plugin_plugins 
@@ -59,7 +59,7 @@ if(isset($_GET['a'])){
 			?>
 			<span class="app">
 				<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
-				<a href="<?php echo $caminho.'?d='.$dados['id']?>" class="jfbox"><img src="imagens/icones/preto/round_delete.png"></a>
+				<a href="<?php echo $caminho.'?d='.$dados['id']?>" class="jfbox"><img src="imagens/layout/delete.png"></a>
 			</span>
 			<?php
 		}
@@ -84,7 +84,7 @@ if(isset($_GET['a'])){
 			?>
 			<span class="app">
 				<img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" />
-				<a href="<?php echo $caminho.'?a='.$dados['id']?>" class="jfbox"><img src="imagens/icones/preto/round_checkmark.png"></a>
+				<a href="<?php echo $caminho.'?a='.$dados['id']?>" class="jfbox"><img src="imagens/layout/checkmark.png"></a>
 			</span>
 			<?php
 		}
@@ -102,7 +102,4 @@ $('.app').mouseover(function(){
 	$(this).children('a').hide();
 });
 
-$().ready(function(){
-	$('.ARbox').corner('5px');
-});
 </script>

@@ -1,5 +1,5 @@
 <?php
-require_once('../../includes/conection.php');
+require_once('../../etc/bdconf.php');
 require_once('../../includes/jf.funcoes.php');
 
 if (!empty($_FILES)) {
@@ -20,7 +20,7 @@ if (!empty($_FILES)) {
 	$targetFile =  str_replace('//','/',$targetPath) . $nome ;
 		
 	if(move_uploaded_file($tempFile,$targetFile) != false){
-		jf_insert(PREFIXO.$dados[0].'_fotos', array('foto' => $nome, $dados[1] => $dados[2]));
+		jf_insert(PREFIXO.$dados[0], array('foto' => $nome, $dados[1] => $dados[2]));
 		echo $nome;
 	}
 }

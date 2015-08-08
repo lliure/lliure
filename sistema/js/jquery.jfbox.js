@@ -3,14 +3,16 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-$().ready( function(){
+
+
+$(function(){
 	$('body').append('<div id="jfboxMargin"><div id="jfboxLoad"></div></div>'
 				+'<div id="jfboxFundo"></div><img src="imagens/jfbox/loading.gif" id="gifJfbox" alt="" style="display: none;">'
 				+'<div id="jfAviso"></div>');
@@ -151,31 +153,34 @@ function gifJfbox(fechar){
 }
 
 function jfAlert(texto, tempo){
-	if(typeof tempo == "undefined" && !tempo)
-			tempo = 2;
+	$(function(){
+		if(typeof tempo == "undefined" && !tempo)
+				tempo = 2;
+				
+		tempo = tempo*1000;
+		
+		$("#jfAviso").html('<div class="msm">'+texto+'</div>');
+		
+		var scrollX = $(window).scrollTop();
+		var winW = $(window).width();
+		var winH = $(window).height();
+		
+		winW = winW/2-($('#jfAviso').width()+20)/2;
+		winH = (winH/2-(($('#jfAviso').height()+40)/2))+scrollX;
+		
+		$('#jfAviso').css({top: winH, left: winW});
+		
+		$('#jfAviso').stop(true, true).fadeIn(300, function(){
 			
-	tempo = tempo*1000;
+			setTimeout(function(){
+				$("#jfAviso").stop(true, true).fadeOut(300, function(){
+					$('#jfAviso').html('');
+				});
+			}, tempo);
+			
+		});
+	});
 	
-	$("#jfAviso").html('<div class="msm">'+texto+'</div>');
-
-	var scrollX = $(window).scrollTop();
-	var winW = $(window).width();
-	var winH = $(window).height();
-	
-	winW = winW/2-($('#jfAviso').width()+20)/2;
-	winH = (winH/2-(($('#jfAviso').height()+40)/2))+scrollX;
-	
-	$('#jfAviso').css({top: winH, left: winW});
-	
-	$('#jfAviso').stop(true, true).fadeIn(300, function(){
-		
-		setTimeout(function(){
-			$("#jfAviso").stop(true, true).fadeOut(300, function(){
-				$('#jfAviso').html('');
-			});
-		}, tempo);
-		
-	});	
 }
 
 function jfboxVars(){ 

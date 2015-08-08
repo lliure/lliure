@@ -3,18 +3,21 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+require_once("../includes/jf.funcoes.php"); 
 switch(isset($ac) ? $ac : 'index'){
 case 'index':
+	session_start();
 	?>
 	<html>
 	<head>
-		<title>Intalador Plugin</title>
+		<title>Intalador Lliure</title>
 		
 		<style  type="text/css">
 			@import "../css/base.css";
@@ -24,7 +27,7 @@ case 'index':
 	</head>
 	<body>
 		<div class="container">
-			<h1>Instalação do plugin</h1>
+			<h1>Instalação do Lliure</h1>
 			<div class="instalador">
 				<?php
 				$ac = (isset($_GET['p']) ? $_GET['p'] : 'home');
@@ -40,6 +43,40 @@ break;
 case 'home':
 	?>
 	<form method="post" action="index.php?p=instalar">
+		<input type="hidden" name="token" value="<?php echo jf_token('novo'); ?>"/>
+		<div class="testes">
+			<h2>Revisão de configurações</h2>
+			<?php		
+			if(!is_writeable('../etc')){
+				echo '	<span class="mens"><span class="erro ret">Erro</span> - A pasta <strong>/site/sistema/etc</strong> não tem permissão para escrita
+							<span class="reso">Altere a permissão da pasta <strong>/.../sistema/etc</strong> para escrita e leitura (777) </span>
+						</span>';
+			} else {
+				echo '<span class="mens"><span class="ok ret">Ok</span> - A pasta <strong>/.../sistema/etc</strong> está configurada corretamente</span>
+						<input type="hidden" name="etc" value="ok"/>
+						';
+			}
+			
+			if(!file_exists('../../uploads')){
+				echo '	<span class="mens"><span class="erro ret">Erro</span> - A pasta <strong>/.../uploads</strong> não encontrada
+							<span class="reso">Crie manualmente a pasta /.../uploads com permissão de escrita e leitura (777)</span>
+						</span>';
+			} else {
+				if(!is_writeable('../../uploads')){
+					echo '	<span class="mens"><span class="erro ret">Erro</span> - A pasta <strong>/.../uploads</strong> não tem permissão para escrita
+								<span class="reso">Altere a permissão da pasta <strong>/site/uploads</strong>  para escrita e leitura (777)</span>
+							</span>';
+				} else {
+					echo '<span class="mens"><span class="ok ret">Ok</span> - A pasta <strong>/.../uploads</strong> está configurada corretamente</span>
+						<input type="hidden" name="uploads" value="ok"/>
+						';
+				}
+			}
+			?>
+		</div>
+	
+	
+		<h2>Configurações do banco de dados</h2>
 		<fieldset>
 			<div>
 				<label>Host</label>
@@ -60,23 +97,23 @@ case 'home':
 		</fieldset>	
 		<button type="submit">Instalar</button>
 	</form>
+	
 	<?php
 break;	
 
 
 case 'instalar':
-	if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['senha']) || empty($_POST['tabela'])){
-		echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
-		break;
-	}
+	if(!file_exists('../etc/bdconf.php')){	
+		if(empty($_POST['host']) || empty($_POST['login']) || empty($_POST['senha']) || empty($_POST['tabela']) || !isset($_POST['uploads']) || !isset($_POST['etc']) || jf_token($_POST['token']) != true){
+			echo 'Por favor preencha todos os campos, <a href="index.php">voltar</a>';
+			break;
+		}
 			
-	echo '<h2>Progresso de instalação</h2>';
+		echo '<h2>Progresso de instalação</h2>';
 	
-	if(!file_exists('../includes/conection.php')){
 		/*********************	INSTALA AS BASES	**/
 		require_once("../includes/class.leitor_sql.php"); 
-		require_once("../includes/jf.funcoes.php"); 
-
+		
 		$conexao = mysql_connect($_POST['host'], $_POST['login'], $_POST['senha']);
 		
 		if(mysql_query('CREATE DATABASE '.$_POST['tabela']))
@@ -88,36 +125,18 @@ case 'instalar':
 
 		$tp = new leitor_sql('bd.sql');	
 		
-		/*********************	CRIA A PASTA UPLOADS	**/
-		if(!file_exists('../../uploads')){
-			if(mkdir('../../uploads', 0777))
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #080;">OK!</span> <br/></span>';
-			else
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		} else {
-			echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		}
-		
+		/*********************	CRIA A PASTA UPLOADS	**/		
 		if(!file_exists('../../uploads/usuarios')){
-			if(mkdir('../../uploads/usuarios', 0777))
+			if(@mkdir('../../uploads/usuarios', 0777))
 				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 			else
 				echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		} else {
 			echo '<span style="font-size: 13px;">- Criar pasta <strong>../../uploads/usuarios</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		}		
-		
-		if(!file_exists('../apt_files')){
-			if(mkdir('../apt_files', 0777))
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #080;">OK!</span> <br/></span>';
-			else
-				echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
-		} else {
-			echo '<span style="font-size: 13px;">- Criar pasta <strong>apt_files</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
 		}
 		
 		if(!file_exists('../../uploads/thumb.php')){
-			if(copy('../includes/thumb.php', '../../uploads/thumb.php'))
+			if(@copy('../includes/thumb.php', '../../uploads/thumb.php'))
 				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
 			else
 				echo '<span style="font-size: 13px;">- Copiar aquivo <strong>thumb.php</strong>: <span style="color: #f00;">ERRO!</span> <br/></span>';
@@ -139,12 +158,20 @@ case 'instalar':
 		
 		fclose($fd);	
 		
-		$fp = fopen('../includes/conection.php', "a");		// inicia um arquivo novo
-		fwrite($fp, $in);				// copia o arquivo
-		fclose($fp);										// fecha o arquivo
+		if(($fp = @fopen('../etc/bdconf.php', "w")) != false){
+			fwrite($fp, $in);
+			fclose($fp);
+			echo '<span style="font-size: 13px;">- Criar arquivo <strong>bdconfig.php</strong>: <span style="color: #080;">OK!</span> <br/></span>';
+		} else {
+			echo '<span style="font-size: 13px;">- Criar arquivo <strong>conection.php</strong>: <span style="color: #f00;">ERRO! </span> <br/></span>
+					<span>O sistema por algum motivo não consegiu criar o arquivo de configuração, crie manualmente um arquivo com o nome <strong>bdconf.php</strong> na pasta <strong>/.../sistema/etc</strong> com o seguinte conteúdo:</span>
+					<textarea class="conteud" onclick="this.select()">'.$in.'</textarea>
+					<span>Depois de criar o arquivo atualize está tela</span>
+					';
+		}
 		
 	} else {
-		echo '<span style="font-size: 13px; color: #f00;">O Plugin já foi instalado!</span>';
+		echo '<span style="font-size: 13px; color: #f00;">O Lliure já foi instalado!</span>';
 	}
 	?>
 	<div style="padding-top: 10px;">

@@ -3,22 +3,23 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-require_once('../../includes/conection.php');
+require_once('../../etc/bdconf.php');
 require_once('../../includes/jf.funcoes.php');
 
 extract($_GET);
 
-$sql = "SELECT * FROM ".PREFIXO.$tabela."_fotos WHERE ".$campo."='".$id."'";
+$sql = "SELECT * FROM ".PREFIXO.$tabela." WHERE ".$campo."='".$id."'";
+$query = mysql_query($sql);
 
-$query = mysql_query($sql) or print mysql_error();
-if(mysql_num_rows($query) < 1){
+
+if(mysql_num_rows($query) == 0){
 	?>
 	<div class="mensagem"><span>Nenhuma foto encontrada</span></div>
 	<?php
@@ -26,9 +27,9 @@ if(mysql_num_rows($query) < 1){
 
 	if(isset($capa_campo)){
 		$slt = mysql_fetch_assoc(mysql_query('select a.'.$capa_campo.', b.id
-							from '.PREFIXO.$tabela.' a
+							from '.PREFIXO.$tabela_app.' a
 							
-							left join '.PREFIXO.$tabela.'_fotos b
+							left join '.PREFIXO.$tabela.' b
 							on b.id = a.'.$capa_campo.'
 							
 							where a.id = '.$id));
@@ -44,9 +45,10 @@ if(mysql_num_rows($query) < 1){
 			$capa_foto = $slt['id'];
 		}
 	}
-		
+	
 
 	while($dados = mysql_fetch_array($query)){
+		
 		$idFoto = $dados['id'];
 		$file = "../../".$dir."/".$dados['foto'];
 		
@@ -70,6 +72,7 @@ if(mysql_num_rows($query) < 1){
 			
 		</div>
 		<?php
+		
 	}
 	
 	?>
@@ -83,14 +86,14 @@ if(mysql_num_rows($query) < 1){
 			
 			$('.favorite').click(function(){
 				var id = $(this).attr('idfoto');
-				
-				$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela?>&campo=<?php echo $capa_campo?>&fk=<?php echo $id?>&foto='+id, abreBox: false}, function(){
+
+					$().jfbox({carrega: 'api/fotos/firstimg.php?tabela=<?php echo $tabela.'&campo='.$capa_campo.'&fk='.$id.'&foto=';?>'+id, abreBox: false}, function(){
 					$('#div'+capa).css('background', '#fff');			
 					$('#div'+id).css('background', '#fa0');					
 					capa = id;
 				});
 			});	
-			<?
+			<?php
 		}
 		?>
 	
@@ -116,6 +119,6 @@ if(mysql_num_rows($query) < 1){
 	});
 	</script>
 	<?php
+	
 }
-
-?>	
+?>

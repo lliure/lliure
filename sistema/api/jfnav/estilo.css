@@ -2,7 +2,7 @@
 *
 * API jfnav - Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -16,9 +16,13 @@ div.listp {
 	position: relative;
 	float: left;
 	border: 1px solid #fff;
-	border-radius: 4px;
+	border-radius: 7px;
 	}
 
+	div.listp.jfn_selected{
+			background: #e7e7e7;
+			}
+			
 div.listpSelct {	
 	padding: 3px;
 	float: left;
@@ -31,37 +35,85 @@ div.listp .inter{
 	height: 67px;
 	float: left;
 	text-align: center;
+	font-size: 12px;
 	}
 
 	div.listp .inter span{
 		display: block;
 		margin: 3px 0 0 0;
-		height: 32px;
+		height: 25px;
 		overflow: hidden;
 		}
-	
+
+	div.listp .inter input{
+		width: 92px;
+		padding: 3px 0px;
+		background: #f5f5f5;
+		border: none;
+		font-size: inherit;
+		color: #555;
+		}
 	
 /**********************			Listagem em lista		**********************/
 #jfnList{
 	width: 100%;
+	border-collapse: separate;
+	border-spacing: 5px;
+	font-size: 13px;
 	}
 
 
+	#jfnList th{
+		font-weight: bold;
+		padding-left: 6px;
+		}
+
+		
 	#jfnList td{
 		border: 1px solid #e1e1e1;
 		padding: 5px;
 		text-align: left;
+		vertical-align: middle;
 		}
 
 		#jfnList td input{
 			text-align: left;
+			border: none;
+			background: none;
+			font-size: inherit;
+			padding: 0;
+			margin: 0;
 			}
 
 		#jfnList tr:hover td{
-			background: #F6F2D4;
+			background: #FFFDE5;
+			}
+
+			#jfnList tr:hover td img{
+				padding: 4px;
+				margin: -4px; 
+				}
+
+		#jfnList tr.jfn_selected td, #jfnList tr.jfn_selected:hover td{
+			background: #e7e7e7;
 			}
 			
-		#jfnList .jfnav_del{
-			cursor: pointer;
+
+		#jfnList tr:nth-child(2) td:first-child{
+			border-radius: 5px 0 0 0;
 			}
-			
+
+		#jfnList tr:nth-child(2) td:last-child{
+			border-radius: 0 5px 0 0;
+			}
+
+		#jfnList tr:last-child td:first-child{
+			border-radius: 0 0 0 5px;
+			}
+
+		#jfnList tr:last-child td:last-child{
+			border-radius: 0 0 5px 0;
+			}
+	
+	
+	

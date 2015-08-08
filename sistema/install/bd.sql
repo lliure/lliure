@@ -34,7 +34,7 @@ CREATE TABLE `plugin_admin` (
   `email` varchar(256) DEFAULT NULL,
   `twitter` varchar(50) DEFAULT NULL,
   `foto` varchar(256) DEFAULT NULL,
-  `tipo` enum('0','1') NOT NULL,
+  `grupo` varchar(10) NOT NULL DEFAULT 'user',
   `themer` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
@@ -43,8 +43,8 @@ CREATE TABLE `plugin_admin` (
 -- Extraindo dados da tabela `plugin_admin`
 --
 
-INSERT INTO `plugin_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `tipo`, `themer`) VALUES
-(1, 'admin', '1a84dec0b04a7631fada69b7e8f60bbe', 'Admin', NULL, NULL, NULL, '1', 'default');
+INSERT INTO `plugin_admin` (`id`, `login`, `senha`, `nome`, `email`, `twitter`, `foto`, `grupo`, `themer`) VALUES
+(1, 'admin', '1a84dec0b04a7631fada69b7e8f60bbe', 'Admin', NULL, NULL, NULL, 'dev', 'default');
 
 -- --------------------------------------------------------
 

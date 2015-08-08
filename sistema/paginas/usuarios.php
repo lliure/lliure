@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -11,8 +11,9 @@
 */
 
 if(!empty($_POST)){
-	require_once("../includes/conection.php"); 
+	require_once("../etc/bdconf.php"); 
 	require_once("../includes/jf.funcoes.php"); 
+	require_once("../api/fileup/inicio.php"); 
 
 	if(empty($_POST['senha'])){
 		unset($_POST['senha']);
@@ -20,22 +21,9 @@ if(!empty($_POST)){
 		$_POST['senha'] = md5($_POST['senha']."0800");
 	}
 	
-	if(!empty($_FILES['foto']['name'])){
-		$dir = '../../uploads/usuarios/';
-		$arquivo = $_FILES['foto'];
-			
-		if(isset($_POST['imagem']))
-			@unlink($dir.$_POST['imagem']);
-		
-		
-		$imagemNome = substr($arquivo['name'], -3); // pega a extenção
-		$imagemNome = md5(uniqid(time())).'.'.$imagemNome;	
-		
-
-		$path =  $dir.$imagemNome;
-		move_uploaded_file($arquivo["tmp_name"], $path);
-		$_POST['foto'] = $imagemNome;
-	} 
+	$file = new fileup; 								// incia a classe
+	$file->diretorio = '../../uploads/usuarios/';		// pasta para o upload (lembre-se que o caminho é apartir do arquivo onde estiver sedo execultado)
+	$file->up(); 										// executa a classe
 	
 	if(isset($_POST['imagem']))
 		unset($_POST['imagem']);
@@ -46,7 +34,7 @@ if(!empty($_POST)){
 	($_SESSION['Logado']['id'] == $_GET['id'] ? $_SESSION['Logado']['themer'] = $_POST['themer'] : '');
 
 	$_SESSION['aviso'][0] = "Alteração realizada com sucesso!";
-	header('location: ../index.php?usuarios');
+	header('location: ../index.php?'.(isset($_GET['minhaconta']) ? 'minhaconta' : 'usuarios' ));
 }
 
 ?>
@@ -59,17 +47,17 @@ if(empty($_GET['usuarios'])){
 	$botoes[] =	array('href' => 'index.php', 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
 	$botoes[] =	array('href' => 'paginas/ajax.novo_usuario.php', 'img' => $plgIcones.'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
-	$botoes[] =	array('href' => '?usuarios', 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $plgIcones.'br_prev.png', 'title' => 'Voltar');
 }
 
 echo app_bar('Painel de usuários', $botoes);
 
 $tabela = PREFIXO."admin";
-$consulta = "select * from ".$tabela.($DadosLogado['tipo'] == 1?'':" where tipo = '0'");
+$consulta = 'select * from '.$tabela;
 
 
 if(empty($_GET['usuarios'])){
-	$query = $consulta." order by nome ASC";
+	$query = $consulta.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
 
 	$pastas = '';
 	$click['link'] = '?usuarios=';
@@ -88,14 +76,15 @@ if(empty($_GET['usuarios'])){
 	</script>
 	<?php
 } else {
-	$consulta = $consulta.($DadosLogado['tipo'] == 1?' where':" and").' id="'.$_GET['usuarios'].'"';
+	$consulta = $consulta.' where id = "'.$_GET['usuarios'].'"';
+	
 	$dados = mysql_fetch_assoc(mysql_query($consulta));
 	
 	extract($dados);
 	?>
 
 	<div class="boxCenter editUsuario">
-		<form method="post" action="paginas/usuarios.php?id=<?php echo $_GET['usuarios']?>"  enctype="multipart/form-data">
+		<form method="post" action="paginas/usuarios.php?id=<?php echo $_GET['usuarios'].(isset($_GET['minhaconta']) ? '&minhaconta' : '');?>"  enctype="multipart/form-data">
 			<fieldset>
 				<legend>Dados pessoais</legend>
 				
@@ -115,10 +104,15 @@ if(empty($_GET['usuarios'])){
 				</div>		
 			
 				<div>
-					<label>Foto</label>
-					<?php echo (!empty($foto) ? '<input type="hidden" name="imagem" value="'.$foto.'"/>' : '')?>
-					<input type="file" name="foto" />
-					<span class="ex">Basta selecionar uma nova foto para substituir a atual, <strong>Campo opcional</strong></span>
+					<?php
+					$file = new fileup; 					//inicia a classe
+					$file->titulo = 'Foto'; 				//titulo da Label
+					$file->rotulo = 'Selecionar imagem'; 	// texto do botão
+					$file->registro = $foto;
+					$file->campo = 'foto'; 				//campo do banco de dados (no retorno no formulario ele irá retornar um $_POST com essa chave, no caso do exemplo $_POST['imagem'])
+					$file->extencao = 'png jpg'; 			//extenções permitidas para o upload, se deixar em branco será aceita todas
+					$file->form(); 				 			// executa a classe
+					?>
 				</div>				
 			</fieldset>
 			
@@ -126,13 +120,14 @@ if(empty($_GET['usuarios'])){
 				<legend>Dados de acesso</legend>
 				<div>
 					<label>Login <span>(obrigatorio)</span></label>
-					<input type="text" value="<?php echo $login?>" name="login" />
+					<input type="text" <?php echo !empty($login) ? 'value="'.$login.'" readonly class="inatv"' : ''; ?> name="login" />
+					<span class="ex">Não poderá ser alterado posteriormente.</span>
 				</div>
 				
 				<div>
 					<label>Senha</label>
 					<input type="password" value="" name="senha" />
-					<span class="ex">Deixe em branco para manter a senha atual. <strong>Campo opcional</strong></span>
+					<span class="ex">Deixe em branco para manter a senha atual.</span>
 				</div>	
 				
 				<div>
@@ -158,7 +153,7 @@ if(empty($_GET['usuarios'])){
 								?>
 								<div class="tema" style="background-image: url('<?php echo $caminho.'/bg.jpg'?>')">
 									<div>
-										<input  name="themer" <?php echo ((isset($themer) && $filename == $themer) || !isset($themer) &&  $filename == 'default'? 'checked' :'')?> value="<?php echo $filename?>" type="radio" >
+										<input  name="themer" <?php echo ((!empty($themer) && $filename == $themer) || (empty($themer) &&  $filename == 'default')? 'checked' :'')?> value="<?php echo $filename?>" type="radio" >
 										<span class="<?php echo $plg_themer['cores']?>"><?php echo $plg_themer['nome']?></span>							
 									</div>
 								</div>
@@ -168,14 +163,20 @@ if(empty($_GET['usuarios'])){
 						?>
 					</div>
 				</div>
-				<?php				
-				if($DadosLogado['tipo'] == 1){
+				
+				<?php	
+				if(ll_tsecuryt('admin') && $_GET['usuarios'] != $_SESSION['logado']['id']){
 					?>
 					<div>
-						<label>Tipo</label>
-						<select name="tipo">
-							<option value="0">Usuário</option>
-							<option value="1" <?php echo ($tipo == 1?'selected':'')?>>Desenvolvedor</option>
+						<label>Grupo de usuário</label>
+						<select name="grupo">
+							<?php
+							$grupos = array('admin' => 'Administrador', 'user' => 'Usuário');
+							ll_tsecuryt() ? $grupos['dev'] ='Desenvolvedor' : '';
+							foreach($grupos as $indice => $valor){
+								echo '<option value="'.$indice.'" '.($grupo == $indice?'selected':'').'>'.$valor.'</option>';
+							}
+							?>
 						</select>
 					</div>
 					<?php
@@ -183,17 +184,11 @@ if(empty($_GET['usuarios'])){
 				?>
 			</fieldset>
 			
-			<span class="botao"><a href="?usuarios">Voltar</a></span>
+			<span class="botao"><a href="?<?php echo isset($_GET['minhaconta']) ? 'desk' : 'usuarios';?>">Voltar</a></span>
 			
 			<span class="botao"><button type="submit">Salvar</button></span>
 		</form>
 	</div>
-	
-	<script type="text/javascript">
-		$(document).ready(function(){	
-			$('.tema').corner('4px')
-		});
-	</script>
 	<?php	
 }
 ?>

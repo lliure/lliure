@@ -1,5 +1,4 @@
 session_start();
-
 $hostname_conexao = ".localhost.";
 $username_conexao = ".root.";
 $password_conexao = ".senha.";

@@ -3,14 +3,14 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-require_once('../includes/conection.php');
+require_once('../etc/bdconf.php');
 
 if(isset($_SESSION['logado'])){
 	header('location: ../index.php');
@@ -43,17 +43,17 @@ if(isset($_SESSION['logado'])){
 		$senha = md5($_POST['senha']."0800");
 		$usuario = jf_anti_injection($_POST['usuario']);		
 		
-		$DadosUser = mysql_query("SELECT * FROM ".PREFIXO."admin WHERE Login = '".$usuario."' AND Senha = '".$senha."' limit 1") 
-		or die(mysql_error());
+		$dadosUser = mysql_query("SELECT * FROM ".PREFIXO."admin WHERE Login = '".$usuario."' AND Senha = '".$senha."' limit 1");
 		
-		if(mysql_num_rows($DadosUser) > 0){
-		$DadosUser = mysql_fetch_array($DadosUser);
-		
-		$_SESSION['logado'] = array(
-				'id' => $DadosUser['id'],
-				'nome' => $DadosUser['nome'],
-				'tipo' => $DadosUser['tipo'],
-				'themer' => $DadosUser['themer']
+		if(mysql_num_rows($dadosUser) > 0){
+			$dadosUser = mysql_fetch_assoc($dadosUser);
+			
+			$_SESSION['logado'] = array(
+				'id' => $dadosUser['id'],
+				'nome' => $dadosUser['nome'],
+				'tipo' => $dadosUser['grupo'],
+				'grupo' => $dadosUser['grupo'],
+				'themer' => $dadosUser['themer']
 				);
 		} else {
 			$falha = true;

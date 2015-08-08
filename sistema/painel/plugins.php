@@ -3,7 +3,7 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -33,8 +33,8 @@ echo app_bar('Painel de aplicativos', $botoes);
 
    if ($handle=opendir("plugins")) { 
 	  while (false !== ($file = readdir($handle))) {
-		 if ($file!="." && $file!="..") {
-			if(file_exists('plugins/'.$file.'/sys/ico.png'))
+		 if (strstr($file, '.') == false) {
+			
 				if(isset($aplicativos[$file])){
 					?>
 					<div class="listp">

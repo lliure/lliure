@@ -2,24 +2,69 @@
 *
 * Plugin CMS
 *
-* @versão 4.2.7
+* @versão 4.3.3
 * @Desenvolvedor Jeison Frasson <contato@newsmade.com.br>
 * @entre em contato com o desenvolvedor <contato@newsmade.com.br> http://www.newsmade.com.br/
 * @licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
-* {		margin: 0px; 
-		padding: 0px; 
-		font-family: Verdana, tahoma, "Ubuntu","Ubuntu Beta","Bitstream Vera Sans","DejaVu Sans";
-		text-decoration : none;
-		}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+	text-decoration: none;
+	}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+	}
+		
+body {
+	line-height: 1;
+	}
+	
+ol, ul {
+	list-style: none;
+	}
+
+blockquote, q {
+	quotes: none;
+	}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+	}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	}
 		
 		
 /**********	Reset by Jeison **********/
 
 button::-moz-focus-inner {
-    border:0;
-    padding:0;
+    border:0 !important;
+    padding:0 !important;
 	}
 
 strong{
@@ -30,11 +75,11 @@ strong{
 	}
 		
 	
-/***/
-		
+/***/		
 html, body {
 	width:100%;
 	height:100%;
+	font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
 	} 
 	
 body{	
@@ -86,6 +131,7 @@ h1	{
 	font-size: 16px;
 	margin-bottom: 3px;
 	color: #004B98;
+	font-weight: bold;
 	}
 	
 	div.linhaFina{
@@ -97,6 +143,7 @@ h2{
 	font-size: 15px;
 	color: #3673A6;
 	margin-bottom: 15px;
+	font-weight: bold;
 	}
 			
 h3 {
@@ -125,89 +172,77 @@ p{	margin: 0 0 8px 0;
 	text-align: justify;
 	}
 
-	
-fieldset{
-	border: none;
-	margin-bottom: 15px;
-	}
 
-label {	
-	display: block; 
-	}
+/* Formularios */
+	fieldset{
+		border: none;
+		margin-bottom: 15px;
+		}
 
-label span {
-	display: block;
-	float: left;
-	} 
+	label {	
+		display: block; 
+		}
 
-input, textarea, select {
-	color: #336699;
-	padding: 2px;
-	}
+	label span {
+		display: block;
+		float: left;
+		} 
 
-select {	
-	width: auto;
-	}
+	input, textarea, select {
+		color: #336699;
+		padding: 3px;
+		outline: none;
+		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+		font-size: 12px;
+		}
 
-textarea {	
-	height: 100px;
-	overflow: auto; 
-	font-size: 11px;
-	}
+	select {	
+		width: auto;
+		}
 
-button {
-	width: 0;
-	height: 0;
-	border: 0px;
-	cursor: pointer;
-	} 
+	textarea {	
+		height: 100px;
+		overflow: auto; 
+		font-size: 11px;
+		}
 
-	
+	button {
+		background: #999;
+		cursor: pointer;
+		border: none;
+		font-size: 11px;
+		margin: 0px;
+		padding: 0px;
+		font-family: "DejaVu Sans", Verdana, Tahoma,  "Ubuntu","Ubuntu Beta","Bitstream Vera Sans";
+		} 
 /***********************************************/
 .both {	clear:both;
 		}
 
 		
 span.botao {
-		background: url(../imagens/layout/btnbox_r.gif) right top no-repeat;
-		padding: 0;
-		margin: 2px 4px;
-		float: left;
-		}	
-		
-span.botao button{
-	background: url(../imagens/layout/btnbox_l.gif) no-repeat;
-	margin: 0px 4px 0 0;
-	padding: 0 4px 0 8px;
-	font-size: 11px;
-	text-decoration: none;
-	width: auto;
-	height: 18px;
-	color: #02679c;
-	font-weight: bold;
-	}
-		
-span.botao button:hover{
-	color: #00344F;
-	}
-		
-span.botao a{
-	background: url(../imagens/layout/btnbox_l.gif) left top no-repeat;
-	margin-right: 4px;
-	padding: 3px 5px 2px 10px;
+	margin: 0px 6px 2px 0;
 	float: left;
+	}	
+		
+span.botao button, span.botao a{
+	background: #444;
+	padding: 10px 15px;
+	float: left;
+	color: #ddd;
+	border-radius: 3px;
 	font-size: 11px;
 	text-decoration: none;
-	color: #02679c;
-	font-weight: bold;
+	margin: 0px;
+	line-height: 11px;
 	}
 		
-span.botao a:hover{
-	color: #00344F;
+span.botao button:hover, span.botao a:hover{
+	color: #ddd;
+	background: #606060;
 	text-decoration: none;
 	}
-	
-		
+			
 div.mensagem{
 		margin: 0 -2px 5px -2px;
 		padding: 8px;
@@ -242,7 +277,7 @@ div.mensagem{
 		}
 	
 	
-/*********************		Funcoes java	*********************/
+/*********************		Funcoes java (depreciadas)	*********************/
 img#loadImg{
 		position: absolute; 
 		top: 236px;
