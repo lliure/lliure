@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -34,13 +34,13 @@ if(isset($_GET['a'])){
 	jf_insert(PREFIXO.'lliure_start', array('idPlug' => $_GET['a']));
 	
 	$dados = mysql_fetch_array(mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
+						from '.PREFIXO.'lliure_apps 
 						where id = "'.$_GET['a'].'"
 						limit 1'));
 	?>
 	<script type="text/javascript">
 		$(function(){
-			$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="plugins/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
+			$('#appRapido').append('<li id="appR-<?php echo $_GET['a']?>"><a href="?app=<?php echo $dados['pasta']?>" title="<?php echo $dados['nome']?>"><img src="app/<?php echo $dados['pasta']?>/sys/ico.png" alt="" /></a></li>');
 			
 			$('#menu_rapido').css({'display': 'block'});			
 		});
@@ -57,7 +57,7 @@ if(isset($_GET['a'])){
 	$query = mysql_query('select b.*
 						from '.PREFIXO.'lliure_start a
 						
-						left join '.PREFIXO.'lliure_plugins b
+						left join '.PREFIXO.'lliure_apps b
 						on b.id = a.idPlug
 						order by b.nome');
 	if(mysql_num_rows($query) > 0){
@@ -89,7 +89,7 @@ if(isset($_GET['a'])){
 <div class="ARTem ARbox">
 	<?php
 	$query = mysql_query('select * 
-						from '.PREFIXO.'lliure_plugins 
+						from '.PREFIXO.'lliure_apps 
 						where id not in((select idPlug from '.PREFIXO.'lliure_start))
 						order by nome');
 	if(mysql_num_rows($query) > 0){

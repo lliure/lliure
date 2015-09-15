@@ -32,8 +32,8 @@ function jf_file_get_contents($url, $timeout = 10) {
 function jf_anti_injection($sql) {
 	if(is_array($sql)){
 		foreach($sql as $chave => $valor)
-			$sql[$chave] = jf_anti_injection($valor);
-	} else {
+			$sql[jf_anti_injection($chave)] = jf_anti_injection($valor);
+	} elseif(is_string($sql)) {
 		$sql = get_magic_quotes_gpc() ? stripslashes($sql) : $sql;
         $sql = function_exists('mysql_real_escape_string') ? mysql_real_escape_string($sql) : mysql_escape_string($sql);
 		$sql = trim($sql); # Remove espaços vazios.
@@ -151,7 +151,7 @@ function jf_insert($tabela, $dados = null, $print = false){
 			$valores = '';
 			$colunas = '';
 			foreach($dados as $chave => $valor){
-				$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+				$valor = ($valor !== 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
 				$valores .= (empty($valores)? '' : ', ').$valor;
 				$colunas .= (empty($colunas)? '' : ', ').$chave;
 			}
@@ -203,7 +203,7 @@ function jf_update($tabela, $dados, $alter, $mod = null, $print = false){
 	$return = null;
  	$valores = '';
 	foreach($dados as $chaves => $valor){		
-		$valor = ($valor != 'NULL' ? '"'.addslashes($valor).'"' : 'NULL');
+		$valor = ($valor == 'NULL' || $valor == NULL? 'NULL': '"'.addslashes($valor).'"');
 		$valores .= (empty($valores)?' ':', ').'`'.$chaves.'` = '.$valor;
 	}
 	
@@ -310,22 +310,23 @@ function jf_substr($texto, $final = 100, $complemento = ''){
 }
 
 //	Gerencia multiplos botoes submit em um form
+/*
+Para usar
+switch (jf_form_actions('arg1', 'arg2', ..., 'argN')){
+	case 'arg1':
+	break;
+	
+	case 'arg2':
+	break;
+	
+	...
+	
+	case 'argN':
+	break
+}	
+*/
 function jf_form_actions(){
-	/*
-	Para usar
-	switch (jf_form_actions('arg1', 'arg2', ..., 'argN')){
-		case 'arg1':
-		break;
-		
-		case 'arg2':
-		break;
-		
-		...
-		
-		case 'argN':
-		break
-	}	
-	*/
+
 
     $params = func_get_args();
     
@@ -404,11 +405,11 @@ function jf_dunix($dataEnt){
 }
 
 //	Função iconv formulada para array
-function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = "ISO-8859-1"){ 
+function jf_iconv2($arr, $in_charset = "UTF-8", $out_charset = 'ISO-8859-1//TRANSLIT'){ 
 		return jf_iconv($in_charset, $out_charset, $arr); 
 }
 
-function jf_iconv($in_charset = "UTF-8", $out_charset = "ISO-8859-1", $arr){
+function jf_iconv($in_charset = "UTF-8", $out_charset = 'ISO-8859-1//TRANSLIT', $arr){
 	if (!is_array($arr)){
 		return iconv($in_charset, $out_charset, $arr);
 	}
@@ -572,7 +573,7 @@ function jf_ato($array) {
       foreach ($array as $name=>$value) {
          $name = strtolower(trim($name));
          if (!empty($name)) {
-            $object->$name = arrayToObject($value);
+            $object->$name = jf_ato($value);
          }
       }
       return $object;
@@ -580,6 +581,21 @@ function jf_ato($array) {
     else {
       return FALSE;
     }
+}
+
+function jf_ota($obj)
+{
+	if (is_object($obj)) $obj = (array)$obj;
+	if (is_array($obj)) {
+		$new = array();
+		foreach ($obj as $key => $val) {
+			$new[$key] = jf_ota($val);
+		}
+	} else {
+		$new = $obj;
+	}
+
+	return $new;
 }
 
 /********	Criptografia	********/
@@ -596,6 +612,32 @@ function jf_decode($key, $data){
 	return $return;
 	
 }
+
+/******	FUNCOES PARA MANIPULAÇÃO DE FORMULARIOS SIMPLES	*/
+function jf_input($name, $data = array(), $class = null){
+	return '<input class="'.$class.'" name="'.$name.'" value="'.$data[$name].'"/>';
+}
+
+function jf_textarea($name, $data, $class = null){
+	return '<textarea name="'.$name.'"  class="'.$class.'">'.$data[$name].'</textarea>';
+}
+
+function jf_select($name, $data = array(), $options = array(), $class = null){
+	$selected = $data[$name];
+
+	$select = '<select name="'.$name.'" class="'.$class.'">';
+	foreach($options as $value => $data)
+		$select .= '<option value="'.$value.'" '.($value == $selected ? 'selected' : '').'>'.$data.'</option>';
+		
+	$select .= '</select>';
+	return $select;
+}
+/*************/
+
+
+
+
+
 /*******************************	APELIDO DE FUNÇÕES	*/
 
 function mlDUnix($data){

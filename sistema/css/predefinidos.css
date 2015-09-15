@@ -2,12 +2,51 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
+
+
+div.mensagem{
+	margin: 0 -2px 5px -2px;
+	padding: 8px;
+	padding-bottom: 3px;
+	display: block;
+	clear: both;
+	background: #FCFDDE;
+	border: 1px solid #ddd;
+	position: relative;
+	font-size: 12px;
+	color: #7D7D7D;
+	}
+			
+	div.mensagem span{
+		display: block;
+		margin-bottom: 5px;
+		}
+		
+	div.mensagem span.red{
+		display: inline;
+		color: #a00;
+		font-weight: 600;
+		}
+		
+	div.mensagem span.blue{
+		color: #00a;
+		}
+		
+	div.mensagem a{
+		font-weight: 600;
+		color: #3573A6;
+		}
+	
+/***/
+
+
 input.edna{
 	padding: 1px 0;
 	font-size: 9px;
@@ -68,7 +107,7 @@ form.form fieldset{
 	form.form fieldset legend{
 		font-size: 14px;
 		margin-bottom: 10px;
-		font-weight: bold;
+		font-weight: 600;
 		color: #444;
 		}
 
@@ -77,6 +116,35 @@ form.form fieldset{
 		display: block;
 		clear: both;
 		}
+		
+		form.form fieldset div.column,
+		form.form fieldset div.colunas{
+			display: -webkit-flex;
+			display: flex;
+			align-items: flex-start;
+			}
+			
+		form.form fieldset div.column > div,
+		form.form fieldset div.colunas > div{
+			-webkit-flex: 1 1 auto;
+			flex: 1 1 auto;
+			margin: 0 3px;
+			}
+			
+		form.form fieldset div.column > div.width,
+		form.form fieldset div.colunas > div.width{
+			-webkit-flex: 0 0 auto;
+			flex: 0 0 auto;
+			}
+			
+			form.form fieldset div.column > div:first-child,
+			form.form fieldset div.colunas > div:first-child{
+				margin-left: 0;
+				}
+			form.form fieldset div.column > div:last-child,
+			form.form fieldset div.colunas > div:last-child{
+				margin-right: 0;
+				}
 
 		form.form fieldset div > table{
 			border-collapse: separate;
@@ -102,12 +170,12 @@ form.form fieldset{
 			float: none;
 			margin-bottom: 4px;
 			color: #555;
-			font-size: 1em;
+			font-size: 1.2em;
 			display: block;
 			}
 			
 		form.form fieldset div label.required{
-			font-weight: bold;
+			font-weight: 600;
 			}
 			
 		form.form fieldset div label.error{
@@ -117,9 +185,11 @@ form.form fieldset{
 			}
 				
 		
-		form.form fieldset div input, 
-		form.form fieldset div textarea, 
+		form.form fieldset div div.input,
+		form.form fieldset div input,
+		form.form fieldset div textarea,
 		form.form fieldset div select{
+			outline: none;
 			display: block;
 			float: none;
 			border: 1px solid #CCC;
@@ -130,11 +200,24 @@ form.form fieldset{
 			color: #666;
 			border-radius: 3px;
 			background: #fff;
-			font-size: 1em;
-			
+			margin: 0;
+			font-family: inherit;
 			box-sizing: border-box;
 			-webkit-box-sizing: border-box;
 			-moz-box-sizing: border-box;
+			}
+			
+		form.form fieldset div div.input{
+			line-height: 30px;
+			white-space: nowrap;
+			overflow: hidden;
+}
+			
+		form.form fieldset div input[type="radio"],
+		form.form fieldset div input[type="checkbox"]{
+			width: auto;
+			height: auto;
+			vertical-align: middle;
 			}
 			
 		form.form fieldset div textarea{
@@ -156,6 +239,13 @@ form.form fieldset{
 		form.form fieldset div textarea.error,
 		form.form div fieldset select.error{
 			border-color: #777;
+			}
+			
+		
+		form.form fieldset div input:disabled,
+		form.form fieldset div textarea:disabled, 
+		form.form fieldset div select:disabled{
+			background:  #f1f1f1;
 			}
 		
 		 form.form fieldset div select{
@@ -229,22 +319,32 @@ form.form a.a{
 	margin: 10px;
 	margin-top: 0;
 	}
+	
+/**************************** BOTOES */
+span.botao {
+	height: 32px;
+	}	
+	
 
 form.form div.botoes {
 	margin-top: -15px;
 	height: 31px;
+	clear: both;
 	}
 
 	form.form div.botoes button,
-	form.form div.botoes a{
-		font-size: 0.916em;		
+	form.form div.botoes a,
+	span.botao button,
+	span.botao a{
+		outline: none;
+		font-size: 1.1em;
 		border-radius: 3px;
 		line-height: 30px;
 		height: 30px;
 		padding: 0 1.2em;
 		margin: 0;
 		margin-right: 3px;
-		font-weight: bold;
+		font-weight: 400;
 		
 		box-sizing: border-box;
 		-webkit-box-sizing: border-box;
@@ -253,43 +353,96 @@ form.form div.botoes {
 		}
 		
 	form.form div.botoes button:hover,
-	form.form div.botoes a:hover{
+	form.form div.botoes a:hover,
+	span.botao button:hover,
+	span.botao a:hover{
 		text-decoration: none;
 		}
 		
+	form.form div.botoes button.right,
+	form.form div.botoes a.right,
+	span.botao button.right,
+	span.botao a.right{
+		float: right;
+		margin-right: 0;
+		margin-left: 3px;
+	}
+		
 		
 	/******		COMUM	******/
+	
+	/******		NORMAL	******/
 	form.form div.botoes button,
-	form.form div.botoes a{
-		background-image: -moz-linear-gradient(center top , #F5F5F5, #F1F1F1);
+	form.form div.botoes a,
+	span.botao button,
+	span.botao a{
 		background-color: #F5F5F5;
+		-moz-box-shadow:inset 0px -9px 15px -20px #000000;
+		-webkit-box-shadow:inset 0px -9px 15px -20px #000000;
+		box-shadow:inset 0px -9px 15px -20px #000000;
+		border:1px solid #cccccc;
+		color:#444444;
+
+	}
+		
+	form.form div.botoes button:hover,
+	form.form div.botoes a:hover,
+	span.botao button:hover,
+	span.botao a:hover{
+		border-color: #888;
+		}
+		
+	form.form div.botoes button:active,
+	form.form div.botoes a:active,
+	span.botao button:active,
+	span.botao a:active{		
+		border-color: #888;		
+		}
+		
+	/******		DISABILITADO	******/	
+	form.form div.botoes button:disabled,
+	form.form div.botoes a[disabled],
+	span.botao button:disabled,
+	span.botao a[disabled]{
+		background: #ffffff;
 		border: 1px solid #ccc;
 		color: #444444;
 		}
 		
-	form.form div.botoes button:hover,
-	form.form div.botoes a:hover{
-		border-color: #888;
-		box-shadow: 0 0 2px #ddd;
+	form.form div.botoes button:disabled:hover,
+	form.form div.botoes a[disabled]:hover{
 		}
 		
+		
+		
 	/******		COMFIRM	******/
+	
+	/******		NORMAL	******/
 	form.form div.botoes button.confirm,
-	form.form div.botoes a.confirm{
-		background-image: -moz-linear-gradient(center top, #4D90FE, #4787ED);
-		background-color: #4D90FE;
-		border: 1px solid #3079ED;
+	form.form div.botoes a.confirm,
+	span.botao button.confirm,
+	span.botao a.confirm{
+		background: #4d90fe;
+		border: 1px solid #3f75ce;
 		color: #fff;
 		}
 		
 	form.form div.botoes button.confirm:hover,
-	form.form div.botoes a.confirm:hover{
-	background-image: -moz-linear-gradient(center top, #4D90FE, #357e8);
-		border-color: #2f5bb7;
+	form.form div.botoes a.confirm:hover,
+	span.botao button.confirm:hover,
+	span.botao a.confirm:hover{
 		box-shadow: 0 0 2px #ddd;
+		border-color: #264f93;
 		}
+		
+		
+/**************************** BOTOES FIM */
 
 /*************		HORIZONTAL		*************/
+form.form.hrt{
+	margin-right: -1px;
+	}
+	
 form.form.hrt fieldset{	
 	width: auto;
 	float: left;
@@ -307,7 +460,7 @@ form.form.hrt div.botoes{
 	width: auto;
 	float: left;
 	clear: none;
-	margin-top: 2px;
+	margin-top: 0px;
 	}
 
 /**********************			MENU SUPERIOR		**********************/
@@ -360,8 +513,8 @@ table.table{
 		}	
 
 		table.table tr th{
-			font-weight: bold;
-			font-size: 13px;
+			font-weight: 600;
+			font-size: 1.3em;
 			color: #555;
 			padding: 0.7em 8px;
 			background: #ddd;
@@ -376,7 +529,7 @@ table.table{
 			
 		table.table tr td{
 			padding: 10px 8px;
-			font-size: 12px;
+			font-size: 1.2em;
 			border: none;
 			vertical-align: middle;
 

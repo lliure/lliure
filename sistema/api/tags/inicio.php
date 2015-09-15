@@ -157,57 +157,46 @@ interface tag_interface{
     /**
      * metodo chamado na contrucao e atualisacao da lista de tags
      */
-    public static function get();
+    public function get();
     
     /**
      * metodo usado para traser as opcoes te tag segundo oq o cara digitou
      */
-    public static function query();
+    public function query();
     
     /**
      * metodo chamodo quando é deletado alguma tag
      */
-    public static function del();
+    public function del();
     
     /**
      * metodo camado quando se cria uma tag
      */
-    public static function set();
+    public function set();
     
 }
 
 
-abstract class tag_abstract{
+class tag_server{
     
-    abstract public function get();
-    
-    abstract public function query();
-    
-    abstract public function del();
-    
-    abstract public function set();
-    
-    public function rum($obj){
-        
-        /* @var $tag tag_abstract */
-        $tag = new $obj;
+    final public static function rum(tag_interface $obj){
         
         switch ($_GET['tag']){
 
             case 'get':
-                echo self::lista($tag->get());
+                echo self::lista($obj->get());
             break;
 
             case 'query':
-                echo self::opcoes($tag->query());
+                echo self::opcoes($obj->query());
             break;
 
             case 'del':
-                echo json_encode(self::preparaParaJson($tag->del()));
+                echo json_encode(self::preparaParaJson($obj->del()));
             break;
 
             case 'set':
-                echo json_encode(self::preparaParaJson($tag->set()));
+                echo json_encode(self::preparaParaJson($obj->set()));
             break;
 
         }
@@ -219,16 +208,16 @@ abstract class tag_abstract{
                 $array[self::preparaParaJson($key)] = self::preparaParaJson($value);
             }
         }else{
-            return rawurlencode($value);
+            return rawurlencode($array);
         }
         return $array;
     }
     
-    final private static function opcoes($array){
+    final private static function opcoes(array $array){
         $r = '';
         foreach($array as $key => $value){
             $r .= '
-                <a class="topico" href="" data-id="'. $key. '" data-tag="'. $value. '">'. $value. '</a>'
+                <a class="topico" href="" data-id="'. $value['id']. '" data-tag="'. $value['tag']. '">'. $value['tag']. '</a>'
             ;
         }
         return $r;
@@ -238,10 +227,11 @@ abstract class tag_abstract{
         $r = '';
         foreach($array as $key => $value){
             $r .= '
-                <div class="ajax-topicos">
-                    <span><a data-del="'.$value['id'].'"><img src="imagens/icones/delete.png" alt="excluir"></a>'.$value['tag'].'</span>
-                </div>'
-            ;
+				<span class="tag-adedida" data-id="'.$value['id'].'" data-tag="'.$value['tag'].'">
+					<a class="tag-bot-del"><img src="imagens/icones/delete.png" alt="excluir"></a>
+					<div class="tag-content">'.$value['tag'].'</div>
+				</span>		
+			';
         }
         return $r;
     }

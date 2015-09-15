@@ -22,100 +22,13 @@ $dados = rawurldecode($_GET['d']);
 $dados = jf_decode($_SESSION['logado']['token'], $dados);
 $dados = unserialize($dados);
 
-//function processo($r){
-//    $d = array();
-//    $p = 0;
-//    while($l = mysql_fetch_assoc($r)){
-//        foreach ($l as $key => $value)
-//            $d[$p][$key] = rawurlencode($value);
-//        $p++;
-//    }
-//    return $d;
-//}
-//
-//while (true){
-//    
-//    switch ($_GET['tag']){
-//
-//        case 'get':
-//
-//            if(!isset($dados['buscaTable']))
-//                $r = 'SELECT id, '. $dados['campoDeTag']. ' as tag FROM '. $dados['tabela']. ' WHERE '. $dados['campoDeLigacao']. '="'. $dados['idDeLigacao']. '"';
-//            
-//            else
-//                $r = 'SELECT a.id, b.'. $dados['buscaTableTag']. ' as tag FROM '. $dados['tabela']. ' a LEFT JOIN '. $dados['buscaTable']. ' b ON a.'. $dados['campoDeTag']. ' = b.'. $dados['buscaTableId']. ' WHERE a.'. $dados['campoDeLigacao']. '="'. $dados['idDeLigacao']. '"';
-//            
-//            //echo '<pre>'. $r. '</pre>';
-//            
-//            $r = mysql_query($r);
-//                
-//            $d = processo($r);
-//
-//            echo json_encode($d);
-//
-//        break;
-//
-//        case 'query':
-//            
-//            //echo '<pre>'. print_r($dados, true). '</pre>';
-//            
-//            if(!isset($dados['buscaTable']))
-//                $r = ('SELECT id, '. $dados['campoDeTag']. ' as tag FROM '. $dados['tabela']. ' WHERE '. $dados['campoDeLigacao']. ' not in(SELECT id FROM '. $dados['tabela']. ' WHERE '. $dados['campoDeLigacao']. '="'. $dados['idDeLigacao']. '") and '. $dados['campoDeTag']. ' LIKE "%'. jf_anti_injection($_GET['query']).'%"');
-//            
-//            else
-//                $r = ('SELECT '. $dados['buscaTableId']. ' as id, '. $dados['buscaTableTag']. ' as tag FROM '. $dados['buscaTable']. ' WHERE '. $dados['buscaTableId']. ' not in(SELECT '. $dados['campoDeTag']. ' FROM '. $dados['tabela']. ' WHERE '. $dados['campoDeLigacao']. '="'. $dados['idDeLigacao']. '" GROUP BY '. $dados['campoDeTag']. ') and '. $dados['buscaTableTag']. ' LIKE "%'. jf_anti_injection($_GET['query']).'%"');
-//
-//            //echo '<pre>'. $r. '</pre>';
-//            
-//            $r = mysql_query($r);
-//                
-//            $d = processo($r);
-//
-//            echo json_encode($d);
-//
-//        break;
-//
-//        case 'del':
-//
-//            jf_delete($dados['tabela'], array('id' => jf_anti_injection($_GET['del'])));
-//
-//            $_GET['tag'] = 'get';
-//            
-//        continue 2;
-//
-//        case 'set':
-//
-//            if(!isset($dados['buscaTable'])){
-//                jf_insert($dados['tabela'], array($dados['campoDeLigacao'] => $dados['idDeLigacao'], $dados['campoDeTag'] => $_GET['set']));
-//            
-//            }else{
-//                
-//                if (isset($_GET['id']) && $_GET['id'] != NULL){
-//                    jf_insert($dados['tabela'], array($dados['campoDeLigacao'] => $dados['idDeLigacao'], $dados['campoDeTag'] => $_GET['id']));
-//                    
-//                }else{
-//                    jf_insert($dados['buscaTable'], array($dados['buscaTableTag'] => $_GET['set']));
-//                    jf_insert($dados['tabela'], array($dados['campoDeLigacao'] => $dados['idDeLigacao'], $dados['campoDeTag'] => mysql_insert_id()));
-//                    
-//                }
-//                
-//            }
-//
-//            $_GET['tag'] = 'get';
-//            
-//        continue 2;
-//
-//    }
-//    
-//    break;
-//}
 
-
-class tag_server extends tag_abstract{
+class tag_gets implements tag_interface{
 
     public function get() {
         
         global $dados;
+        //echo '<pre>'. print_r($dados, true). '</pre>';
 
         if(!isset($dados['buscaTable']))
             $r = 'SELECT id, '. $dados['campoDeTag']. ' as tag FROM '. $dados['tabela']. ' WHERE '. $dados['campoDeLigacao']. '="'. $dados['idDeLigacao']. '"';
@@ -125,12 +38,12 @@ class tag_server extends tag_abstract{
 
         $r = mysql_query($r);
         $row = array();
-        while($row[] = mysql_fetch_assoc($r) || array_pop($row));
+        while($row[] = mysql_fetch_assoc($r) or array_pop($row));
         return $row;
         
     }
 
-    public function query() {
+    public function query(){
         
         global $dados;
         
@@ -142,7 +55,7 @@ class tag_server extends tag_abstract{
 
         $r = mysql_query($r);
         $row = array();
-        while($row[] = mysql_fetch_assoc($r) || array_pop($row));
+        while($row[] = mysql_fetch_assoc($r) or array_pop($row));
         return $row;
         
     }
@@ -154,7 +67,7 @@ class tag_server extends tag_abstract{
         if(($erro = jf_delete($dados['tabela'], array('id' => jf_anti_injection($_GET['del'])))))
             return array('erro' => $erro);
         
-        return 'ok';
+        return array('status' => 'ok');
         
     }
 
@@ -181,15 +94,11 @@ class tag_server extends tag_abstract{
             }
 
         }
+		
+        return array('id' => mysql_insert_id(), 'tag' => $_GET['set']);
         
-        return 'ok';
-        
-    }
-    
-    public function rum($obj){
-        parent::rum(__CLASS__);
     }
 
 }
 
-//tag_server::rum();
+tag_server::rum(new tag_gets);

@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.4
+* @Versão 7.0
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -21,20 +21,51 @@ function navig_historic(){
 	return ll_historico('inicia');
 	}
 
+define('URL_NORMAL', 'URL_NORMAL');
+define('URL_AMIGAVEL', 'URL_AMIGAVEL');
+function ll_gourl($url, $execucao = URL_NORMAL){
+	if($execucao == 'URL_AMIGAVEL'){	
+		if(strpos($url, '?') !== false){
+			$url = str_replace(array('index.php', '?','&'), array('' ,'', '/'), $url);
+			if($url[0] == '/')
+				$url = substr($url, 1);
+		} else 
+			$url = false;
+
+	} else {
+		if(strpos($url, '/') !== false)
+			$url = '?'.str_replace(array('/', '?'), array('&', ''), $url);
+		else
+			$url = false;
+	}
+	
+	return $url;
+}
 
 ///***///
 function lltoObject($file){
-	$file = @get_include_contents($file);
-	$file = @simplexml_load_string($file, 'SimpleXMLElement', LIBXML_NOCDATA);
-
+	if(($file = @simplexml_load_file($file, 'SimpleXMLElement', LIBXML_NOCDATA)) != false){		
+		$file = jf_ota($file);
+		array_walk_recursive($file, function(&$item, $key){
+			$item = utf8_decode($item);
+		});			
+	}
+	
+	$file = jf_ato($file);
+	
+	//var_dump($file); die();
+	
 	return $file;
 }
 
 function get_include_contents($filename) {
     if (is_file($filename)) {
-        ob_start();
-        include $filename;
-        return ob_get_clean();
+		ob_start();
+        include 'etc/llconf.ll';
+        $var = ob_get_contents();
+		ob_end_clean();
+		
+		return $var;
     }
     return false;
 }
@@ -245,12 +276,12 @@ function ll_alert($texto = null, $tempo = 1){
 
 //função que retorna a linguagem nativa, caso não tenha nenhuma retorna false
 function ll_ling(){
-	global $llconf;	
+	global $_ll;		
 	
-	$retorno = false;
+	$retorno = false;	
 	
-	if(isset($llconf->idiomas) && !empty($llconf->idiomas))
-		$retorno = (string) $llconf->idiomas->nativo;
+	if(isset($_ll['conf']->idiomas) && !empty($_ll['conf']->idiomas))
+		$retorno = (string) $_ll['conf']->idiomas->nativo;
 		
 	return $retorno;
 }

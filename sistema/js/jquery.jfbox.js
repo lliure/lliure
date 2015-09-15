@@ -88,14 +88,16 @@ $(function(){
 				
 				$('body').css('overflow','hidden');
 				gifJfbox();
-				$('#jfboxScroll').animate({ 'background-color': 'rgba(0, 0, 0, 0.25)' }, 500);
+				//$('#jfboxScroll').animate({ 'background-color': 'rgba(0, 0, 0, 0.25)' }, 500);
+				$('#jfboxScroll').css({ 'background-color': 'rgba(0, 0, 0, 0.25)' });
+				
 			});		
 			
 			
 			$('#jfboxLoad').load(carrega, campos, function(response, status, xhr) {
 				
 				if (status == "error")
-					$("#jfboxLoad").html('Houve um erro ao carregar essa pï¿½gina:' + xhr.status + " " + xhr.statusText);
+					$("#jfboxLoad").html('Houve um erro ao carregar essa página:' + xhr.status + " " + xhr.statusText);
 				
 				jfboxVars.abreBox = false
 				$("#jfboxLoad  .jfbox").jfbox(jfboxVars);
@@ -133,7 +135,7 @@ $(function(){
 				
 			} else {	
 				if(options.position == 'maximized'){
-					$('#jfboxMargin').css({'top':  '15px', 'bottom':  '15px', 'right':'15px', 'left': '15px'});
+					$('#jfboxMargin').css({'top':  '15px', 'bottom':  '15px', 'right':'15px', 'left': '15px', padding: '0'});
 					$('#jfboxBar').css({'width':'100%', 'height':'100%'});
 				} else {					
 					(options.position[2] == 'button' 
@@ -239,12 +241,12 @@ function jfConfirm(texto){
 
 
 
-function fechaJfbox(force){
+function fechaJfbox(force, args){
 	var temtexto = false;
 
 	if(jfboxVars.manaFermi == false || force == true){
 		if(typeof jfboxVars.fermi == 'function')
-			jfboxVars.fermi.call(undefined);
+			jfboxVars.fermi.call(undefined, args);
 			
 		if(jfboxVars.inputTest == true){
 			$('#jfboxLoad textarea, #jfboxLoad input[type=text]').each(function(){
@@ -253,7 +255,7 @@ function fechaJfbox(force){
 			});
 		
 			if(temtexto == true){
-				if(confirm("VocÃª preencheu alguns campos nesta pï¿½gina, tem certeza que deseja fechï¿½-la?")) {
+				if(confirm("Você preencheu alguns campos nesta página, tem certeza que deseja fechar?")) {
 					jfboxVars.inputTest = false;
 					fechaJfbox();
 				} else {

@@ -63,7 +63,7 @@ class aplimo{
 	var $smalt = null;
 	var $js = null;
 	private static $basePath = null;
-	
+		
 	function __construct() {
 		global $_ll;		
 		self::basePath($_ll['app']['pasta']);
@@ -129,7 +129,7 @@ class aplimo{
 		$data['adjunct'] = $compl;
 		$data['class'] = $class;
 		
-		$data = json_encode($data, true);
+		//$data = json_encode($data, true);
 		
 		$this->hc_menu_item($tipo, $data);
 	}
@@ -139,6 +139,8 @@ class aplimo{
 	 * 
 	 * Exemplo de utlização
 	 * $this->hc_menu_item('a', '{"texto": "teste", "url": "http://google.com"}');
+	 * 
+	 * $this->hc_menu_item('a', array("texto" => "teste", "url" => "http://google.com"));
 	 * 
 	 * $type: passe o tipo do menu pode ser 
 	 * 			   a: link comum
@@ -167,12 +169,11 @@ class aplimo{
 			return array_shift($tmp_menu);
 		}
 		
-	function monta_hc_menu(){	
+	function monta_hc_menu(){
 		echo '<div class="aplm_subheader">';
-			
 		
 		foreach($this->hc_menu as $key => $valor){			
-			$valor = jf_iconv2($valor);
+			//$valor = jf_iconv2($valor);
 			if(isset($valor['js']))
 				$valor['js'] = trim(jf_decode('aplimo', $valor['js']));
 
@@ -189,11 +190,9 @@ class aplimo{
 					break;
 					
 				case 'input':
-					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" rel="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
+					echo '<form action="'.$valor['url'].'" autocomplete="off" method="post" class="alg_'.$valor['align'].'  '.$valor['class'].' aplm_input"><input class=" aplm_input_'.$key.'" placeholder="'.$valor['texto'].'" name="'.$valor['name'].'" value="'.(isset($_GET[$valor['name']]) ? $_GET[$valor['name']] : '').'"/></form>';
 					
-					$this->js .= $valor['js'];	
-					
-					$this->js .= '$(".aplm_input_'.$key.'").jf_inputext();';				
+					$this->js .= $valor['js'];				
 					break;
 			}
 		}
@@ -202,7 +201,6 @@ class aplimo{
 	
 	function header(){
 		global $_ll;
-		
 		$aktivigi_class = ' aktivigi ll_border-color ll_color';
 		
 		$this->class_sub = null;
@@ -227,9 +225,11 @@ class aplimo{
 				foreach($valor['link'] as $lok => $defin){
 					
 					$this->class_li[$key.'-'.$lok] = null;
-						
-					if(	 	(isset($_GET['apm']) && $defin['link'] == $_GET['apm'])
-						|| (isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
+					
+					/* if(	(isset($_GET['apm']) && $defin['link'] == $_GET['apm']) */
+					
+					if((isset($_GET['sapm']) && $key == $_GET['apm'] && in_array($_GET['sapm'], $defin['mark'])) ) {
+							
 						self::$basePath = $defin['basePath'];
 						$this->class_li[$key.'-'.$lok] = $aktivigi_class;
 						$this->class_sub[$key] = 'open_sub';
@@ -243,11 +243,21 @@ class aplimo{
 			}
 		}
 		
-		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php'))
-				require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');
+		if(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
+			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
+			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
+			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
 				
-		elseif(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php'))
-				require_once(self::$basePath . $_GET['apm'] . '/header.php');
+			require_once(self::$basePath . $_GET['apm'] . '/header.php');
+		}
+		
+		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php')){
+			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			
+			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
+		} 
 	}
 	
 	function onserver(){
@@ -260,9 +270,21 @@ class aplimo{
 		
 		require_once($apm_load);
 	}
+	function onclient(){
+		global $_ll;
+		
+		if(isset($_GET['sapm']) && file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onclient.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/'. $_GET['sapm'] .'/onclient.php';
+		elseif(file_exists($_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php'))
+			$apm_load = $_ll['app']['pasta'] . $_GET['apm'] . '/onclient.php';
+		
+		require_once($apm_load);
+	}
 	
 	function require_page(){
 		global $_ll;
+		
+		
 		$apm_load  = 'api/aplimo/ne_trovi.php';
 		                    
         if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/' . $_GET['sapm'] . '.php'))
@@ -278,6 +300,11 @@ class aplimo{
 	
 	function monta(){
 		global $_ll;
+		
+		if(!isset($this->class_li)){
+			echo 'Método header() não foi instanciado!';
+			die();
+		}
 		
 		$total_reg = 30;
 		$tr = 10;
@@ -334,18 +361,16 @@ class aplimo{
 				</ul>
 			</div>
 			
-			<div class="centro">
-				<div class="align">			
-					<?php
-					if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
-						$this->monta_hc_menu();					
-							
-					$this->require_page();
-					?>
-
-				</div>
+			<div class="centro">		
+				<?php
+				if(!empty($this->hc_menu))		/**************************		Monta menu superior	**/		
+					$this->monta_hc_menu();					
+						
+				$this->require_page();
+				?>
+				<div class="both"></div>
 			</div>
-			<div class="both"></div>
+			
 		</div>
 		
 		
@@ -361,10 +386,7 @@ class aplimo{
 					$(this).removeClass('open_sub');
 				
 				$(box).slideToggle();
-			});
-			
-			$('#tudo').css('background', '#fff');
-			
+			});			
 			<?php echo $this->js; ?>
 		</script>
 		<?php
