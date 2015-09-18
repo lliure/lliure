@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @VersÁ„o 6.5
+* @Vers√ß√£o 6.5
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -15,6 +15,7 @@ if(!file_exists("etc/bdconf.php"))
 	header('location: index.php;');
 
 require_once("etc/bdconf.php"); 
+require_once("includes/functions.php"); 
 require_once("includes/jf.funcoes.php"); 
 
 
