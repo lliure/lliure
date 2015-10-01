@@ -3,10 +3,10 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
+* @VersÃ£o 7.1
 * @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @LicenÃ§a http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -16,7 +16,7 @@ if(!file_exists("etc/bdconf.php"))
 require_once("etc/bdconf.php"); 
 require_once("includes/functions.php");
 
-/* Identifica o diretório atual do sistema */
+/* Identifica o diretÃ³rio atual do sistema */
 ll_dir();
 
 if(!isset($_SESSION['logado'])) {
@@ -35,7 +35,8 @@ if(!isset($_ll['mode_operacion']))
 	
 	
 if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
-	$_ll['conf']->grupo->{$_ll['user']['grupo']} = new stdClass();
+	$_ll['conf']->grupo = new stdClass;
+	$_ll['conf']->grupo->$_ll['user']['grupo'] = new stdClass;	
 	$_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao = URL_NORMAL;
 }
 
@@ -130,7 +131,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			$llAppSenHtml = $_ll['app']['onclient'];			
 			$llAppPasta = $_ll['app']['pasta'];
 			
-			/**		Controle de abertura de páginas		**/			
+			/**		Controle de abertura de pÃ¡ginas		**/			
 			switch($_ll['mode_operacion']){
 				
 			case 'onserver':
@@ -191,7 +192,7 @@ switch(isset($get[0]) ? $get[0] : 'desk' ){
 			$_ll['opt']['onclient'] = 'onclient.php?opt='.$_GET['opt'];			
 			$_ll['opt']['pasta'] = 'opt/'.$_GET['opt'].'/';
 			
-			/**		Controle de abertura de páginas		**/			
+			/**		Controle de abertura de pÃ¡ginas		**/			
 			switch($_ll['mode_operacion']){
 				
 			case 'onserver':
@@ -288,7 +289,7 @@ if($_ll['mode_operacion'] == 'onclient'){
 	die();
 }
 	
-//Inicia o histórico
+//Inicia o histÃ³rico
 ll_historico('inicia');
 	
 ?>
