@@ -1,6 +1,6 @@
 lliure
 =========
-> 7.x (Perdiguei Português) 
+> 7.x (Perdigueiro Português) 
 
 
 <br>
