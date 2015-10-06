@@ -4,6 +4,9 @@ lliure
 
 
 <br>
+#### 7.1 (06/10/2015)
+- [bug] - Correções na API midias
+
 
 #### 7.0 (09/09/2015)
 - [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário

@@ -1,6 +1,9 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
-#### 7.0 Perdigueiro Português (09/09/2015)
+#### 7.1 (06/10/2015)
+- [bug] - Correções na API midias
+
+#### 7.0 (09/09/2015)
 - [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário
 - [bug] - reconhecimento url amiaveis
 - [bug] - tratamento de onclient
@@ -40,6 +43,7 @@ Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  
 - [update] - Arquivo thumbs.php alterado com função "Manual" e "Ajustado"
 - [update] - updates de funcionamento no jfbox
 - [update] - criação da api "mídias"
+
 
 #### 6.3 Shiba inu (03/10/2014)
 - [bug] - corrigido acesso direto por nli
