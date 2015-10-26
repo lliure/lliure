@@ -4,6 +4,9 @@ lliure
 
 
 <br>
+#### 7.2 (26/10/2015)
+- [bug] - Correções na configuração nos modos de execucao
+
 #### 7.1 (06/10/2015)
 - [bug] - Correções na API midias
 
