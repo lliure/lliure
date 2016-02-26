@@ -1,35 +1,56 @@
 #Começando a trabalhar com lliure
 
 ##Download
+A versão atual estável do lliure é a **7**, faça o download utilizando o botão abaixo
+
 [![Download][imgdownload]][download]
 [imgdownload]: http://lliure.com.br/tools/git_suport/big-download-button.png
-[download]: https://github.com/lliure/lliure/zipball/master "Faça o download da versão estável"
+[download]: https://github.com/lliure/lliure/archive/7.zip "Faça o download da versão estável"
+
+[clicando aqui]:https://github.com/lliure/lliure-wolf/archive/master.zip
+A versão beta do lliure é chamada de wolf você pode fazer o download [clicando aqui], mas lembre essa não é um versão estável e não é garantida a funcionabilidade dos aplicativos
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
+O lliure está classificado com um WAP, isso quer dizer, uma plataforma de aplicações o que pode ser comparado a um sistama operacional on-line.
+
+O lliure também é altamente dependente de seus aplicativos bem como qualquer SO depende de seus programas, e ele fornece api's afim de facilitar o desenvomento de aplicações e também para ajudar na padronização da mesma.
+
 ###Estrutura Básica
+No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
+
+>**Usr** é toda a parte do lliure não interativa diretamente, como o próprio core, fontes, bibliotecas de funções complementares..
+
+>**Opt** nesse local encontra-se as aplicações internas do lliure como: login, painel de controle, desktop...
+
+>**Api** são as partes complementares do lliure, usadas por apps e opts, e támbem podem ser usadas em ambientes externos
+
+>**App** nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples
+
 ###Requisitos
+####Modo de trabalho
+####Variaveis do sistema
+
 
 ##Aplicativos (App)
 ###Instalação
 ###Desenvolvendo
 
-##Interface de Programação de Aplicações (Api)
+##Api
 ###O que são
 ###Utilização
 
-## ChangeLog
-> 7.x (Perdigueiro Português) 
+## ChangeLog 
+*7.x (Perdigueiro Português)*
 
-<br>
-#### 7.2 (26/10/2015)
+```php
+# 7.2 (26/10/2015)
 - [bug] - Correções na configuração nos modos de execucao
 
-#### 7.1 (06/10/2015)
+# 7.1 (06/10/2015)
 - [bug] - Correções na API midias
 
-
-#### 7.0 (09/09/2015)
+# 7.0 (09/09/2015)
 - [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário
 - [bug] - reconhecimento url amiaveis
 - [bug] - tratamento de onclient
@@ -69,3 +90,4 @@
 - [update] - Arquivo thumbs.php alterado com função "Manual" e "Ajustado"
 - [update] - updates de funcionamento no jfbox
 - [update] - criação da api "mídias"
+```
