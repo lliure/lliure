@@ -1,6 +1,13 @@
 #Começando a trabalhar com lliure
 
-##Download
+
+##Instalação
+###Dependências
+Para você ter o lliure operante, é necessário ter um *web server*, esse por sua vez pode ser local ou remoto (online). Seu web precisa estar com o php 5.3 ou mais recente e o banco mysql.
+Quanto as configurações precisamos que em seu server esteja o [mod_rewrite] ativo
+
+[mod_rewrite]: http://httpd.apache.org/docs/current/mod/mod_rewrite.html
+###Download
 A versão atual estável do lliure é a **7**, faça o download utilizando o botão abaixo
 
 [![Download][imgdownload]][download]
@@ -9,6 +16,7 @@ A versão atual estável do lliure é a **7**, faça o download utilizando o bot
 
 [clicando aqui]:https://github.com/lliure/lliure-wolf/archive/master.zip
 A versão beta do lliure é chamada de wolf você pode fazer o download [clicando aqui], mas lembre essa não é um versão estável e não é garantida a funcionabilidade dos aplicativos
+
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
