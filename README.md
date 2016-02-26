@@ -40,12 +40,12 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ###Utilização
 
 ## ChangeLog 
-*7.0 (Perdigueiro Português)*
+*7.x (Perdigueiro Português)*
 ```php
 7.2 (26/10/2015)
-[bug] - Correções na configuração nos modos de execucao
+bug - Correções na configuração nos modos de execucao
 ```
-
+teste
 
 ```php
  7.1 (06/10/2015)
