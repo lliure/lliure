@@ -35,7 +35,7 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ###Desenvolvendo
 
 
-##Interface de Programação de Aplicações (Api)
+##Api
 ###O que são
 ###Utilização
 
