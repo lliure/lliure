@@ -26,6 +26,8 @@ Duas coisas necessárias para ocorrer tudo bem na instalação é que você crie
 
 Se tudo ocorrer bem você receberá uma mensagem de sucesso, só reforçando o login e senha padrão são **dev**.
 
+###Dúvidas ou problemas
+Nos temos nossas comunidades para tratar de cada assunto para tratar de [assuntos realacionados ao core](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000091), [assuntos realacionados a aplicativos](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000090) e [assuntos realacionados a apis](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000092) faça um login em nosso hub e traga sua dúvida que tentaremos solucionar o mais breve possível.
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
