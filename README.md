@@ -1,9 +1,14 @@
 #Começando a trabalhar com lliure
 
 ##Download
+A versão atual estável do lliure é a 7, faça o download utilizando o botão abaixo
+
 [![Download][imgdownload]][download]
 [imgdownload]: http://lliure.com.br/tools/git_suport/big-download-button.png
 [download]: https://github.com/lliure/lliure/archive/7.zip "Faça o download da versão estável"
+
+[clicando aqui]:https://github.com/lliure/lliure-wolf/archive/master.zip
+A versão beta do lliure é chamada de wolf você pode fazer o download dela [clicando aqui], mas lembre essa não é um versão estável e não é garantida a funcionabilidade dos aplicativos
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
