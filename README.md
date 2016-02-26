@@ -39,12 +39,13 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ###O que são
 ###Utilização
 
-```php
-teste teste teste
-```
-
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
+```php
+ 7.2 (26/10/2015)
+- [bug] - Correções na configuração nos modos de execucao
+```
+
 
 ```php
  7.2 (26/10/2015)
