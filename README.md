@@ -39,8 +39,10 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ###O que são
 ###Utilização
 
-## ChangeLog
+## ChangeLog 
 *7.x (Perdigueiro Português)*
+```text
+
 
 #### 7.2 (26/10/2015)
 - [bug] - Correções na configuração nos modos de execucao
@@ -88,3 +90,4 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 - [update] - Arquivo thumbs.php alterado com função "Manual" e "Ajustado"
 - [update] - updates de funcionamento no jfbox
 - [update] - criação da api "mídias"
+```
