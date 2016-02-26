@@ -44,7 +44,7 @@ teste teste teste
 
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
-```
+```txt
 #### 7.2 (26/10/2015)
 - [bug] - Correções na configuração nos modos de execucao
 
