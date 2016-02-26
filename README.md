@@ -27,8 +27,8 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 
 >**App** nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples
 
-
 ###Requisitos
+
 
 ##Aplicativos (App)
 ###Instalação
@@ -42,15 +42,12 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
 ```php
- 7.2 (26/10/2015)
-- [bug] - Correções na configuração nos modos de execucao
+7.2 (26/10/2015)
+[bug] - Correções na configuração nos modos de execucao
 ```
 
 
 ```php
- 7.2 (26/10/2015)
-- [bug] - Correções na configuração nos modos de execucao
-
  7.1 (06/10/2015)
 - [bug] - Correções na API midias
 
