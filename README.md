@@ -22,12 +22,15 @@ A versão beta do lliure é chamada de wolf você pode fazer o download [clicand
 * Crie um banco de dados com o nome de sejado
 * Acesse http://seuservidor.com/sistema, automaticamente você será redirecionado para o opt de instalação, preencha as informações necessárias (Host, Nome do banco, Usuario e senha).
 
-Duas coisas necessárias para ocorrer tudo bem na instalação é que você crie uma pasta chamada **uploads** paralelamente a pasta sistema, e de permição *chmod* **777** a pasta uploads e a pasta **etc** localizada dentro da pasta sistema.
+Duas coisas necessárias para ocorrer tudo bem na instalação é que você crie uma pasta chamada **uploads** paralelamente a pasta sistema, e de permição *chmod* **755** a pasta uploads e para pasta **etc** localizada dentro da pasta sistema.
 
 Se tudo ocorrer bem você receberá uma mensagem de sucesso, só reforçando o login e senha padrão são **dev**.
 
 ###Dúvidas ou problemas
-Nos temos nossas comunidades para tratar de cada assunto para tratar de [assuntos realacionados ao core](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000091), [assuntos realacionados a aplicativos](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000090) e [assuntos realacionados a apis](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000092) faça um login em nosso hub e traga sua dúvida que tentaremos solucionar o mais breve possível.
+Nós temos nossas comunidades para tratar de cada assunto para tratar de [assuntos realacionados ao core](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000091), [assuntos realacionados a aplicativos](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000090) e [assuntos realacionados a apis](http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000092) faça um login em nosso hub e traga sua dúvida que tentaremos solucionar o mais breve possível.
+
+###Versão de aplicativos vs lliure
+No site próprio site do lliure você pode encontrar o mapeamento de compatibilidade dos aplicavos conhecido no menu [compatibilidade](http://lliure.com.br/compatibilidade)
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
