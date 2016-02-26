@@ -7,7 +7,23 @@
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
+O lliure está classificado com um WAP, isso quer dizer, uma plataforma de aplicações o que pode ser comparado a um sistama operacional on-line.
+
+O lliure também é altamente dependente de seus aplicativos bem como qualquer SO depende de seus programas, e ele fornece api's afim de facilitar o desenvomento de aplicações e também para ajudar na padronização da mesma.
+
 ###Estrutura Básica
+No lliure você encontra algumas partes são elas
+* usr
+* opt
+* api
+* app
+
+**Usr** é toda a parte do lliure não interativa diretamente, como o próprio core, fontes, bibliotecas de funções complementares..
+**Opt** nesse local encontra-se as aplicações internas do lliure como: login, painel de controle, desktop...
+**Api** são as partes complementares do lliure, usadas por apps e opts, e támbem podem ser usadas em ambientes externos
+**App** nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples
+
+
 ###Requisitos
 
 ##Aplicativos (App)
