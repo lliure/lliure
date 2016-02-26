@@ -1,7 +1,21 @@
-lliure
-=========
-> 7.x (Perdigueiro Português) 
+#Começando a trabalhar com lliure
 
+##Download
+##Afinal de contas o que é o lliure?
+###Bem o lliure...
+###Estrutura Básica
+###Requisitos
+
+##Aplicativos (App)
+###Instalação
+###Desenvolvendo
+
+##Interface de Programação de Aplicações (Api)
+###O que são
+###Utilização
+
+## ChangeLog
+> 7.x (Perdigueiro Português) 
 
 <br>
 #### 7.2 (26/10/2015)
@@ -51,4 +65,3 @@ lliure
 - [update] - Arquivo thumbs.php alterado com função "Manual" e "Ajustado"
 - [update] - updates de funcionamento no jfbox
 - [update] - criação da api "mídias"
-
