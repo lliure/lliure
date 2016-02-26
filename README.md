@@ -38,6 +38,9 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ##Interface de Programação de Aplicações (Api)
 ###O que são
 ###Utilização
+```php
+teste teste teste
+```
 
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
