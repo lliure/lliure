@@ -41,17 +41,15 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
-```php
-test 7.2 (26/10/2015)
-bug - Correções na configuração nos modos de execucao
-```
-test 2
 
 ```php
- 7.1 (06/10/2015)
+# 7.2 (26/10/2015)
+- [bug] - Correções na configuração nos modos de execucao
+
+# 7.1 (06/10/2015)
 - [bug] - Correções na API midias
 
-7.0 (09/09/2015)
+# 7.0 (09/09/2015)
 - [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário
 - [bug] - reconhecimento url amiaveis
 - [bug] - tratamento de onclient
