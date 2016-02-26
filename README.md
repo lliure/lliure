@@ -10,13 +10,10 @@
 ###Estrutura Básica
 ###Requisitos
 
-<div id="apps">
-
-##Aplicativos (App)
+##Aplicativos (App)(#apps)
 ###Instalação
 ###Desenvolvendo
 
-</div>
 
 ##Interface de Programação de Aplicações (Api)
 ###O que são
