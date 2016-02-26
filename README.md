@@ -42,7 +42,7 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ## ChangeLog 
 *7.x (Perdigueiro Português)*
 ```php
-7.2 (26/10/2015)
+tteste 7.2 (26/10/2015)
 bug - Correções na configuração nos modos de execucao
 ```
 teste
