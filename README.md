@@ -1,7 +1,7 @@
 #Começando a trabalhar com lliure
 
 ##Download
-A versão atual estável do lliure é a 7, faça o download utilizando o botão abaixo
+A versão atual estável do lliure é a **7**, faça o download utilizando o botão abaixo
 
 [![Download][imgdownload]][download]
 [imgdownload]: http://lliure.com.br/tools/git_suport/big-download-button.png
@@ -20,11 +20,11 @@ O lliure também é altamente dependente de seus aplicativos bem como qualquer S
 No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 
 >**Usr** é toda a parte do lliure não interativa diretamente, como o próprio core, fontes, bibliotecas de funções complementares..
->
+
 >**Opt** nesse local encontra-se as aplicações internas do lliure como: login, painel de controle, desktop...
->
+
 >**Api** são as partes complementares do lliure, usadas por apps e opts, e támbem podem ser usadas em ambientes externos
->
+
 >**App** nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples
 
 
@@ -47,7 +47,6 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 
 #### 7.1 (06/10/2015)
 - [bug] - Correções na API midias
-
 
 #### 7.0 (09/09/2015)
 - [update] - Alterado funcionamento da definição de desktop, tema, e execução agora por grupo de usuário
