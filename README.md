@@ -19,8 +19,11 @@ No lliure você encontra algumas partes são elas
 * app
 
 **Usr** é toda a parte do lliure não interativa diretamente, como o próprio core, fontes, bibliotecas de funções complementares..
+
 **Opt** nesse local encontra-se as aplicações internas do lliure como: login, painel de controle, desktop...
+
 **Api** são as partes complementares do lliure, usadas por apps e opts, e támbem podem ser usadas em ambientes externos
+
 **App** nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples
 
 
