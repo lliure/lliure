@@ -3,16 +3,18 @@
 ##Download
 [![Download][imgdownload]][download]
 [imgdownload]: http://lliure.com.br/tools/git_suport/big-download-button.png
-[download]: https://github.com/lliure/lliure/zipball/master "Faça o download da versão estável"
+[download]: https://github.com/lliure/lliure/archive/7.zip "Faça o download da versão estável"
 
 ##Afinal de contas o que é o lliure?
 ###Bem o lliure...
 ###Estrutura Básica
 ###Requisitos
 
+<div id="apps">
 ##Aplicativos (App)
 ###Instalação
 ###Desenvolvendo
+</div>
 
 ##Interface de Programação de Aplicações (Api)
 ###O que são
