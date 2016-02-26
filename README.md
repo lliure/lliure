@@ -4,7 +4,7 @@
 ##Instalação
 ###Dependências
 Para você ter o lliure operante, é necessário ter um *web server*, esse por sua vez pode ser local ou remoto (online). Seu web precisa estar com o php 5.3 ou mais recente e o banco mysql.
-Quanto as configurações precisamos que em seu server esteja o [mod_rewrite] ativo
+Quanto as configurações precisamos que em seu server esteja o [mod_rewrite] ativo.
 
 [mod_rewrite]: http://httpd.apache.org/docs/current/mod/mod_rewrite.html
 ###Download
@@ -16,6 +16,15 @@ A versão atual estável do lliure é a **7**, faça o download utilizando o bot
 
 [clicando aqui]:https://github.com/lliure/lliure-wolf/archive/master.zip
 A versão beta do lliure é chamada de wolf você pode fazer o download [clicando aqui], mas lembre essa não é um versão estável e não é garantida a funcionabilidade dos aplicativos
+
+###Instalando
+* Extraia o zip, nele você tera um pasta chamada **sistema** cole essa pasta de preferencia na raiz do seu servidor (não há problemas em utilizar em sub pastas).
+* Crie um banco de dados com o nome de sejado
+* Acesse http://seuservidor.com/sistema, automaticamente você será redirecionado para o opt de instalação, preencha as informações necessárias (Host, Nome do banco, Usuario e senha).
+
+Duas coisas necessárias para ocorrer tudo bem na instalação é que você crie uma pasta chamada **uploads** paralelamente a pasta sistema, e de permição *chmod* **777** a pasta uploads e a pasta **etc** localizada dentro da pasta sistema.
+
+Se tudo ocorrer bem você receberá uma mensagem de sucesso, só reforçando o login e senha padrão são **dev**.
 
 
 ##Afinal de contas o que é o lliure?
