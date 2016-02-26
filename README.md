@@ -10,7 +10,7 @@
 ###Estrutura Básica
 ###Requisitos
 
-##Aplicativos (App)(#apps)
+##Aplicativos (App){#apps}
 ###Instalação
 ###Desenvolvendo
 
