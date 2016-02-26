@@ -40,7 +40,7 @@ No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 ###Utilização
 
 ## ChangeLog
-7.x (Perdigueiro Português) 
+*7.x (Perdigueiro Português)*
 
 #### 7.2 (26/10/2015)
 - [bug] - Correções na configuração nos modos de execucao
