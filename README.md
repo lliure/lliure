@@ -43,6 +43,9 @@ O lliure está classificado com um WAP, isso quer dizer, uma plataforma de aplic
 
 O lliure também é altamente dependente de seus aplicativos bem como qualquer SO depende de seus programas, e ele fornece api's afim de facilitar o desenvomento de aplicações e também para ajudar na padronização da mesma.
 
+###O que fazer com ele então?
+Como dito acima, comparado a um SO é possivel fazer tudo... Podemos administrar uma loja virtual, ou blog, ter o ERP de uma empresa, controlar fluxo de caixa, gerenciar pedidos... Em fim desde que o *Garoto de programa* estejá com vontade de trabalhar nas madrugadas, é possível desenvolver muitos apps além dos que já temos em nosso repositório.
+
 ###Estrutura Básica
 No lliure você encontra algumas partes são elas *usr*, *opt*, *api* e *app*
 
