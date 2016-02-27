@@ -33,6 +33,11 @@ Nós temos nossas comunidades para tratar de cada assunto para tratar de [assunt
 No site próprio site do lliure você pode encontrar o mapeamento de compatibilidade dos aplicavos conhecido no menu [compatibilidade](http://lliure.com.br/compatibilidade)
 
 ##Afinal de contas o que é o lliure?
+###O que o lliure não é!
+O lliure diferente do que muito pensam não é um CMS, e também não é uma loja virtual, em outras palavras o lliure não serve exclusivamente para "fazer" sites, sim em seu inicio era especificamente para isso mas ao passar do tempo, notou-se que é muito mais que isso.
+
+Muito nos perguntam por que usar lliure e não worpress, isso é como uma comparação entre "[ela era de leão e ele tinha 16](http://www.vagalume.com.br/legiao-urbana/eduardo-e-monica.html)"
+
 ###Bem o lliure...
 O lliure está classificado com um WAP, isso quer dizer, uma plataforma de aplicações o que pode ser comparado a um sistama operacional on-line.
 
