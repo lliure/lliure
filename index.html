@@ -1,53 +1,134 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!doctype html>
+<html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <title>Lliure by lliure</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
   </head>
   <body>
-    <section class="page-header">
-      <h1 class="project-name">Lliure</h1>
-      <h2 class="project-tagline">Começando a trabalhar com lliure</h2>
-      <a href="https://github.com/lliure/lliure" class="btn">View on GitHub</a>
-      <a href="https://github.com/lliure/lliure/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/lliure/lliure/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+    <div class="wrapper">
+      <header>
+        <h1>Lliure</h1>
+        <p>Começando a trabalhar com lliure</p>
 
-    <section class="main-content">
-      <h1>
+        <p class="view"><a href="https://github.com/lliure/lliure">View the Project on GitHub <small>lliure/lliure</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/lliure/lliure/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/lliure/lliure/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/lliure/lliure">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
 <a id="começando-a-trabalhar-com-lliure" class="anchor" href="#come%C3%A7ando-a-trabalhar-com-lliure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Começando a trabalhar com lliure</h1>
 
 <h2>
-<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h2>
+<a id="instalação" class="anchor" href="#instala%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalação</h2>
+
+<h3>
+<a id="dependências" class="anchor" href="#depend%C3%AAncias" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dependências</h3>
+
+<p>Para você ter o lliure operante, é necessário ter um <em>web server</em>, esse por sua vez pode ser local ou remoto (online). Seu web precisa estar com o php 5.3 ou mais recente e o banco mysql.
+Quanto as configurações precisamos que em seu server esteja o <a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">mod_rewrite</a> ativo.</p>
+
+<h3>
+<a id="download" class="anchor" href="#download" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Download</h3>
+
+<p>A versão atual estável do lliure é a <strong>7</strong>, faça o download utilizando o botão abaixo</p>
+
+<p><a href="https://github.com/lliure/lliure/archive/7.zip" title="Faça o download da versão estável"><img src="http://lliure.com.br/tools/git_suport/big-download-button.png" alt="Download"></a></p>
+
+<p>A versão beta do lliure é chamada de wolf você pode fazer o download <a href="https://github.com/lliure/lliure-wolf/archive/master.zip">clicando aqui</a>, mas lembre essa não é um versão estável e não é garantida a funcionabilidade dos aplicativos</p>
+
+<h3>
+<a id="instalando" class="anchor" href="#instalando" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalando</h3>
+
+<ul>
+<li>Extraia o zip, nele você tera um pasta chamada <strong>sistema</strong> cole essa pasta de preferencia na raiz do seu servidor (não há problemas em utilizar em sub pastas).</li>
+<li>Crie um banco de dados com o nome de sejado</li>
+<li>Acesse <a href="http://seuservidor.com/sistema">http://seuservidor.com/sistema</a>, automaticamente você será redirecionado para o opt de instalação, preencha as informações necessárias (Host, Nome do banco, Usuario e senha).</li>
+</ul>
+
+<p>Duas coisas necessárias para ocorrer tudo bem na instalação é que você crie uma pasta chamada <strong>uploads</strong> paralelamente a pasta sistema, e de permição <em>chmod</em> <strong>755</strong> a pasta uploads e para pasta <strong>etc</strong> localizada dentro da pasta sistema.</p>
+
+<p>Se tudo ocorrer bem você receberá uma mensagem de sucesso, só reforçando o login e senha padrão são <strong>dev</strong>.</p>
+
+<h3>
+<a id="dúvidas-ou-problemas" class="anchor" href="#d%C3%BAvidas-ou-problemas" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Dúvidas ou problemas</h3>
+
+<p>Nós temos nossas comunidades para tratar de cada assunto para tratar de <a href="http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000091">assuntos realacionados ao core</a>, <a href="http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000090">assuntos realacionados a aplicativos</a> e <a href="http://lliure.com.br/hub/apm=comunidade/sapm=comunidade/cmd=1000000092">assuntos realacionados a apis</a> faça um login em nosso hub e traga sua dúvida que tentaremos solucionar o mais breve possível.</p>
+
+<h3>
+<a id="versão-de-aplicativos-vs-lliure" class="anchor" href="#vers%C3%A3o-de-aplicativos-vs-lliure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Versão de aplicativos vs lliure</h3>
+
+<p>No site próprio site do lliure você pode encontrar o mapeamento de compatibilidade dos aplicavos conhecido no menu <a href="http://lliure.com.br/compatibilidade">compatibilidade</a></p>
 
 <h2>
 <a id="afinal-de-contas-o-que-é-o-lliure" class="anchor" href="#afinal-de-contas-o-que-%C3%A9-o-lliure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Afinal de contas o que é o lliure?</h2>
 
 <h3>
+<a id="o-que-o-lliure-não-é" class="anchor" href="#o-que-o-lliure-n%C3%A3o-%C3%A9" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>O que o lliure não é!</h3>
+
+<p>O lliure diferente do que muito pensam não é um CMS, e também não é uma loja virtual, em outras palavras o lliure não serve exclusivamente para "fazer" sites, sim em seu inicio era especificamente para isso mas ao passar do tempo, notou-se que é muito mais que isso.</p>
+
+<p>Muito nos perguntam por que usar lliure e não worpress, isso é como uma comparação entre "<a href="http://www.vagalume.com.br/legiao-urbana/eduardo-e-monica.html">ela era de leão e ele tinha 16</a>"</p>
+
+<h3>
 <a id="bem-o-lliure" class="anchor" href="#bem-o-lliure" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Bem o lliure...</h3>
+
+<p>O lliure está classificado com um WAP, isso quer dizer, uma plataforma de aplicações o que pode ser comparado a um sistama operacional on-line.</p>
+
+<p>O lliure também é altamente dependente de seus aplicativos bem como qualquer SO depende de seus programas, e ele fornece api's afim de facilitar o desenvomento de aplicações e também para ajudar na padronização da mesma.</p>
+
+<h3>
+<a id="o-que-fazer-com-ele-então" class="anchor" href="#o-que-fazer-com-ele-ent%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>O que fazer com ele então?</h3>
+
+<p>Como dito acima, comparado a um SO é possivel fazer tudo... Podemos administrar uma loja virtual, ou blog, ter o ERP de uma empresa, controlar fluxo de caixa, gerenciar pedidos... Em fim desde que o <em>Garoto de programa</em> estejá com vontade de trabalhar nas madrugadas, é possível desenvolver muitos apps além dos que já temos em nosso repositório.</p>
 
 <h3>
 <a id="estrutura-básica" class="anchor" href="#estrutura-b%C3%A1sica" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Estrutura Básica</h3>
 
+<p>No lliure você encontra algumas partes são elas <em>usr</em>, <em>opt</em>, <em>api</em> e <em>app</em></p>
+
+<blockquote>
+<p><strong>Usr</strong> é toda a parte do lliure não interativa diretamente, como o próprio core, fontes, bibliotecas de funções complementares..</p>
+
+<p><strong>Opt</strong> nesse local encontra-se as aplicações internas do lliure como: login, painel de controle, desktop...</p>
+
+<p><strong>Api</strong> são as partes complementares do lliure, usadas por apps e opts, e támbem podem ser usadas em ambientes externos</p>
+
+<p><strong>App</strong> nada mais que as aplicações do lliure, e fazer suas aplicações é bem simples</p>
+</blockquote>
+
 <h3>
 <a id="requisitos" class="anchor" href="#requisitos" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Requisitos</h3>
+
+<h4>
+<a id="modo-de-trabalho" class="anchor" href="#modo-de-trabalho" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Modo de trabalho</h4>
+
+<h4>
+<a id="variaveis-do-sistema" class="anchor" href="#variaveis-do-sistema" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Variaveis do sistema</h4>
 
 <h2>
 <a id="aplicativos-app" class="anchor" href="#aplicativos-app" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Aplicativos (App)</h2>
 
 <h3>
-<a id="instalação" class="anchor" href="#instala%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalação</h3>
+<a id="instalação-1" class="anchor" href="#instala%C3%A7%C3%A3o-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Instalação</h3>
 
 <h3>
 <a id="desenvolvendo" class="anchor" href="#desenvolvendo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Desenvolvendo</h3>
 
 <h2>
-<a id="interface-de-programação-de-aplicações-api" class="anchor" href="#interface-de-programa%C3%A7%C3%A3o-de-aplica%C3%A7%C3%B5es-api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Interface de Programação de Aplicações (Api)</h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Api</h2>
 
 <h3>
 <a id="o-que-são" class="anchor" href="#o-que-s%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>O que são</h3>
@@ -55,14 +136,64 @@
 <h3>
 <a id="utilização" class="anchor" href="#utiliza%C3%A7%C3%A3o" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Utilização</h3>
 
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/lliure/lliure">Lliure</a> is maintained by <a href="https://github.com/lliure">lliure</a>.</span>
+<h2>
+<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ChangeLog</h2>
 
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+<p><em>7.x (Perdigueiro Português)</em></p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-c"># 7.2 (26/10/2015)</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">Correções</span> <span class="pl-c1">na</span> <span class="pl-c1">configuração</span> <span class="pl-c1">nos</span> <span class="pl-c1">modos</span> <span class="pl-c1">de</span> <span class="pl-c1">execucao</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c"># 7.1 (06/10/2015)</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">Correções</span> <span class="pl-c1">na</span> <span class="pl-c1">API</span> <span class="pl-c1">midias</span></span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c"># 7.0 (09/09/2015)</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Alterado</span> <span class="pl-c1">funcionamento</span> <span class="pl-c1">da</span> <span class="pl-c1">definição</span> <span class="pl-c1">de</span> <span class="pl-c1">desktop</span>, <span class="pl-c1">tema</span>, <span class="pl-c1">e</span> <span class="pl-c1">execução</span> <span class="pl-c1">agora</span> <span class="pl-c1">por</span> <span class="pl-c1">grupo</span> <span class="pl-c1">de</span> <span class="pl-c1">usuário</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">reconhecimento</span> <span class="pl-c1">url</span> <span class="pl-c1">amiaveis</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">tratamento</span> <span class="pl-c1">de</span> <span class="pl-c1">onclient</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">alterações</span> <span class="pl-c1">no</span> <span class="pl-c1">processamento</span> <span class="pl-c1">de</span> <span class="pl-c1">urls</span> <span class="pl-c1">em</span> <span class="pl-c1">thumbs</span><span class="pl-k">.</span><span class="pl-c1">php</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">adição</span> <span class="pl-c1">de</span> <span class="pl-c1">definição</span> <span class="pl-c1">de</span> <span class="pl-c1">valor</span> <span class="pl-c1">padrão</span> <span class="pl-c1">em</span> <span class="pl-smi">$llconf</span><span class="pl-k">-&gt;</span><span class="pl-smi">execucao</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">suporte</span> <span class="pl-c1">para</span> <span class="pl-c1">conversão</span> <span class="pl-c1">automática</span> <span class="pl-c1">de</span> <span class="pl-c1">url</span> <span class="pl-c1">para</span> <span class="pl-c1">comum</span> <span class="pl-c1">ou</span> <span class="pl-c1">amigavel</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">alterada</span> <span class="pl-c1">forma</span> <span class="pl-c1">de</span> <span class="pl-c1">entrada</span> <span class="pl-c1">para</span> <span class="pl-c1">apps</span> <span class="pl-c1">de</span> <span class="pl-c1">desktop</span>, <span class="pl-c1">não</span> <span class="pl-c1">é</span> <span class="pl-c1">apresentado</span> <span class="pl-c1">o</span> ?<span class="pl-c1">app</span> <span class="pl-c1">na</span> <span class="pl-c1">url</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">adicionado</span> <span class="pl-c1">strtolower</span> <span class="pl-c1">ao</span> <span class="pl-c1">método</span> <span class="pl-c1">ll_app</span><span class="pl-k">::</span><span class="pl-c1">setNome</span> <span class="pl-c1">para</span> <span class="pl-c1">poder</span> <span class="pl-c1">entrar</span> <span class="pl-c1">valores</span> <span class="pl-c1">em</span> <span class="pl-c1">maiúsculo</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Api</span> <span class="pl-c1">aplimo</span> <span class="pl-c1">reformulado</span> <span class="pl-c1">com</span> <span class="pl-c1">flexbox</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">instalada</span> <span class="pl-c1">como</span> <span class="pl-c1">opt</span> <span class="pl-c1">o</span> <span class="pl-c1">recurso</span> <span class="pl-c1">font</span><span class="pl-k">-</span><span class="pl-c1">awesome</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">instalada</span> <span class="pl-c1">fonte</span> <span class="pl-c1">como</span> <span class="pl-c1">fonte</span> <span class="pl-c1">padrão</span> <span class="pl-c1">Open</span> <span class="pl-c1">Sans</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">na</span> <span class="pl-c1">configuração</span> <span class="pl-k">do</span> <span class="pl-c1">aplicado</span> <span class="pl-c1">no</span> <span class="pl-c1">arquivo</span> <span class="pl-k">.</span><span class="pl-c1">ll</span> <span class="pl-c1">aceita</span> <span class="pl-c1">o</span> <span class="pl-c1">grupo</span> <span class="pl-c1">que</span> <span class="pl-c1">pode</span> <span class="pl-c1">acessar</span> <span class="pl-c1">o</span> <span class="pl-c1">app</span> <span class="pl-c1">ex</span>: <span class="pl-k">&lt;</span><span class="pl-c1">seguranca</span><span class="pl-k">&gt;</span><span class="pl-c1">admin</span><span class="pl-k">&lt;</span><span class="pl-k">/</span><span class="pl-c1">seguranca</span><span class="pl-k">&gt;</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">função</span> <span class="pl-c1">de</span> <span class="pl-c1">conversão</span> <span class="pl-c1">de</span> <span class="pl-k">array</span> <span class="pl-c1">para</span> <span class="pl-c1">objeto</span> <span class="pl-c1">adicionado</span> <span class="pl-c1">a</span> <span class="pl-c1">biblioteca</span> <span class="pl-c1">jf</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Adição</span> <span class="pl-c1">das</span> <span class="pl-c1">extenções</span> <span class="pl-c1">de</span> <span class="pl-c1">fontes</span> <span class="pl-c1">no</span> <span class="pl-k">.</span><span class="pl-c1">htaccess</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Alteração</span> <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">midias</span> <span class="pl-c1">para</span> <span class="pl-c1">usar</span> <span class="pl-c1">passando</span> <span class="pl-c1">menos</span> <span class="pl-c1">parametros</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">opt</span> <span class="pl-c1">user</span> <span class="pl-c1">reformulada</span> <span class="pl-c1">aos</span> <span class="pl-c1">novos</span> <span class="pl-c1">padrões</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">entrada</span> <span class="pl-c1">de</span> <span class="pl-c1">GET</span> <span class="pl-c1">opt</span> <span class="pl-c1">adicionada</span> <span class="pl-c1">ao</span> <span class="pl-c1">sistema</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Alterado</span> <span class="pl-c1">nomenclatura</span> <span class="pl-k">do</span> <span class="pl-c1">modo</span> <span class="pl-c1">sen_html</span> <span class="pl-c1">para</span> <span class="pl-c1">onclient</span>, <span class="pl-smi">$_ll</span>[<span class="pl-s"><span class="pl-pds">'</span>sen_html<span class="pl-pds">'</span></span>] <span class="pl-c1">foi</span> <span class="pl-c1">mantida</span> <span class="pl-c1">por</span> <span class="pl-c1">compatibilidade</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Removido</span> <span class="pl-c1">arquivo</span> <span class="pl-c1">kun_html</span><span class="pl-k">.</span><span class="pl-c1">php</span> <span class="pl-c1">e</span> <span class="pl-c1">acoes</span><span class="pl-k">.</span><span class="pl-c1">php</span> <span class="pl-c1">da</span> <span class="pl-c1">raiz</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Atualização</span> <span class="pl-c1">em</span> <span class="pl-c1">rotinas</span> <span class="pl-c1">para</span> <span class="pl-c1">inicio</span> <span class="pl-c1">de</span> <span class="pl-c1">arquivo</span> <span class="pl-c1">llconf</span><span class="pl-k">.</span><span class="pl-c1">ll</span> <span class="pl-c1">em</span> <span class="pl-c1">utf</span><span class="pl-k">-</span><span class="pl-c1">8</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Atualização</span> <span class="pl-c1">na</span> <span class="pl-c1">função</span> lltoObject() <span class="pl-c1">para</span> <span class="pl-c1">suporte</span> <span class="pl-c1">a</span> <span class="pl-c1">utf</span><span class="pl-k">-</span><span class="pl-c1">8</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">atualização</span> <span class="pl-c1">nos</span> <span class="pl-c1">padrões</span> <span class="pl-c1">de</span> <span class="pl-c1">css</span> <span class="pl-k">class</span> <span class="pl-k">.</span><span class="pl-c1">column</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">aterando</span> <span class="pl-c1">entrada</span> <span class="pl-c1">na</span> <span class="pl-c1">função</span> jf_insert() <span class="pl-c1">de</span> <span class="pl-k">!</span><span class="pl-k">=</span> <span class="pl-c1">para</span> <span class="pl-k">!</span><span class="pl-k">==</span> <span class="pl-c1">de</span> <span class="pl-s"><span class="pl-pds">'</span>NULL<span class="pl-pds">'</span></span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">correção</span> <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">aplimo</span> <span class="pl-c1">referente</span> <span class="pl-c1">a</span> <span class="pl-c1">montagem</span> <span class="pl-k">do</span> <span class="pl-c1">menu</span> <span class="pl-c1">superior</span> <span class="pl-c1">na</span> <span class="pl-c1">função</span> hc_menu()</span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">correção</span> <span class="pl-c1">de</span> <span class="pl-c1">htmlspecialchars</span> <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">Navigi</span> </span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">ajustada</span> <span class="pl-c1">codifição</span> <span class="pl-c1">de</span> <span class="pl-c1">caracteres</span> <span class="pl-c1">nos</span> <span class="pl-c1">arquivos</span> <span class="pl-c1">kun_html</span><span class="pl-k">.</span><span class="pl-c1">php</span> <span class="pl-c1">e</span> <span class="pl-c1">funcoes</span><span class="pl-k">.</span><span class="pl-c1">js</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">acrescentado</span> <span class="pl-c1">os</span> <span class="pl-c1">métodos</span> onserver() <span class="pl-c1">e</span> onclient() <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">aplimo</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">mensagem</span> <span class="pl-c1">de</span> <span class="pl-c1">erro</span> <span class="pl-c1">em</span> <span class="pl-c1">não</span> <span class="pl-c1">puxar</span> <span class="pl-c1">o</span> <span class="pl-c1">método</span> <span class="pl-c1">header</span>() <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">aplimo</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">correções</span>, <span class="pl-c1">erro</span> <span class="pl-c1">ao</span> <span class="pl-c1">acessar</span> <span class="pl-c1">um</span> <span class="pl-c1">banco</span> <span class="pl-c1">não</span> <span class="pl-c1">existente</span> <span class="pl-c1">na</span> <span class="pl-c1">api</span> <span class="pl-c1">navigi</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">bug</span>] <span class="pl-k">-</span> <span class="pl-c1">correções</span> <span class="pl-c1">de</span> <span class="pl-c1">acessos</span> <span class="pl-c1">para</span> <span class="pl-c1">arquivos</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">adequação</span> <span class="pl-c1">no</span> <span class="pl-c1">navigi</span> <span class="pl-c1">para</span> <span class="pl-c1">receber</span> <span class="pl-k">as</span> <span class="pl-c1">classe</span> <span class="pl-c1">conforme</span> <span class="pl-c1">a</span> <span class="pl-c1">denominação</span> <span class="pl-c1">das</span> <span class="pl-c1">etiquetas</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">criada</span> <span class="pl-c1">a</span> <span class="pl-c1">função</span> lltoobject() <span class="pl-c1">para</span> <span class="pl-c1">fazer</span> <span class="pl-c1">o</span> <span class="pl-c1">carregamento</span> <span class="pl-c1">de</span> <span class="pl-c1">arquivos</span> <span class="pl-c1">ll</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">acrescentada</span> <span class="pl-c1">api</span> <span class="pl-c1">tags</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">header</span> <span class="pl-c1">é</span> <span class="pl-c1">requerido</span> <span class="pl-c1">nos</span> <span class="pl-c1">modos</span> <span class="pl-c1">onserver</span> <span class="pl-c1">e</span> <span class="pl-c1">em</span> <span class="pl-c1">sen_html</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">desta</span> <span class="pl-c1">versão</span> <span class="pl-c1">em</span> <span class="pl-c1">diante</span> <span class="pl-c1">o</span> <span class="pl-c1">lliure</span> <span class="pl-c1">tera</span> <span class="pl-c1">seu</span> <span class="pl-c1">tema</span> <span class="pl-c1">alterado</span> <span class="pl-c1">conforme</span> <span class="pl-c1">a</span> <span class="pl-c1">versão</span> <span class="pl-c1">corrente</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">api</span> <span class="pl-c1">appbar</span>, <span class="pl-c1">titulo</span> <span class="pl-k">do</span> <span class="pl-c1">app</span> <span class="pl-c1">direciona</span> <span class="pl-c1">para</span> <span class="pl-c1">home</span> <span class="pl-k">do</span> <span class="pl-c1">app</span> <span class="pl-c1">quando</span> <span class="pl-c1">logado</span> <span class="pl-c1">como</span> <span class="pl-c1">dev</span> <span class="pl-c1">ou</span> <span class="pl-c1">adm</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">Arquivo</span> <span class="pl-c1">thumbs</span><span class="pl-k">.</span><span class="pl-c1">php</span> <span class="pl-c1">alterado</span> <span class="pl-c1">com</span> <span class="pl-c1">função</span> <span class="pl-s"><span class="pl-pds">"</span>Manual<span class="pl-pds">"</span></span> <span class="pl-c1">e</span> <span class="pl-s"><span class="pl-pds">"</span>Ajustado<span class="pl-pds">"</span></span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">updates</span> <span class="pl-c1">de</span> <span class="pl-c1">funcionamento</span> <span class="pl-c1">no</span> <span class="pl-c1">jfbox</span></span>
+<span class="pl-s1"><span class="pl-k">-</span> [<span class="pl-c1">update</span>] <span class="pl-k">-</span> <span class="pl-c1">criação</span> <span class="pl-c1">da</span> <span class="pl-c1">api</span> <span class="pl-s"><span class="pl-pds">"</span>mídias<span class="pl-pds">"</span></span></span></pre></div>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/lliure">lliure</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
-
-    </section>
-
-  
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
   </body>
 </html>
