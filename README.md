@@ -3,7 +3,7 @@
 
 ##Instalação
 ###Dependências
-Para você ter o lliure operante, é necessário ter um *web server*, esse por sua vez pode ser local ou remoto (online). Seu web precisa estar com o php 5.3 ou mais recente e o banco mysql.
+Para você ter o lliure operante, é necessário ter um *web server*, esse por sua vez pode ser local ou remoto (online). Seu web precisa estar com o php 5.4 ou mais recente e o banco mysql.
 Quanto as configurações precisamos que em seu server esteja o [mod_rewrite] ativo.
 
 [mod_rewrite]: http://httpd.apache.org/docs/current/mod/mod_rewrite.html
