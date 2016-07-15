@@ -3,8 +3,8 @@
 * lliure WAP
 *
 * @Versão 7.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -104,21 +104,21 @@ form.form fieldset{
 	}
 
 	
-	form.form fieldset legend{
+	form.form fieldset > legend{
 		font-size: 14px;
 		margin-bottom: 10px;
 		font-weight: 600;
 		color: #444;
 		}
 
-	form.form fieldset div {
+	form.form fieldset > div {
 		margin-bottom: 20px;
 		display: block;
 		clear: both;
 		}
 		
-		form.form fieldset div.column,
-		form.form fieldset div.colunas{
+		form.form fieldset > div.column,
+		form.form fieldset > div.colunas{
 			display: -webkit-flex;
 			display: flex;
 			align-items: flex-start;
@@ -251,7 +251,6 @@ form.form fieldset{
 		 form.form fieldset div select{
 			width: 100%;
 			padding: 0;
-			padding: 6px 0; 
 			}	
 		
 			form.form fieldset div select option{

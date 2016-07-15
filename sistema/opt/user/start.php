@@ -3,18 +3,18 @@
 *
 * lliure WAP
 *
-* @Versão 7.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Versão 8.0
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
 if(empty($_GET['user'])){
-	$botoes[] =	array('href' => $backReal, 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => $backNome);
-	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new', 'img' => $_ll['tema']['icones'].'user.png', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
+	$botoes[] =	array('href' => $backReal, 'fa' => 'fa-chevron-left', 'title' => $backNome);
+	$botoes[] =	array('href' => $_ll['opt']['onclient'].'&ac=new',  'fa' => 'fa-user-plus ', 'title' => 'Criar usuário', 'attr' => 'class="criar"');
 } else {
-	$botoes[] =	array('href' => '?'.(isset($_GET['minhaconta']) ? 'desk' : 'usuarios') , 'img' => $_ll['tema']['icones'].'br_prev.png', 'title' => 'Voltar');
+	$botoes[] =	array('href' => (isset($_GET['minhaconta']) ? $_ll['url']['endereco'] : '?opt=user') ,  'fa' => 'fa-chevron-left', 'title' => 'Voltar');
 }
 
 echo app_bar('Painel de usuários', $botoes);
@@ -23,12 +23,14 @@ echo app_bar('Painel de usuários', $botoes);
 if(empty($_GET['user'])){
 	$navegador = new navigi();	
 	$navegador->tabela = PREFIXO.'lliure_admin';
-	$navegador->query = 'select * from '.$navegador->tabela.' where id != "'.$_SESSION['logado']['id'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	
+	$navegador->query = 'select * from '.$navegador->tabela.' where login is null || login != "'.$_ll['user']['login'].'"'.(ll_tsecuryt() ? '' : ' and grupo != "dev"').' order by nome ASC';
+	
 	$navegador->delete = true;
 
 	$navegador->config = array(
 			'link' => $_ll['opt']['home'].'&user=',
-			'ico' => 'imagens/layout/user.png'
+			'fa' => 'fa-user'
 			);
 	$navegador->monta();
 	?>
@@ -102,7 +104,7 @@ if(empty($_GET['user'])){
 				</div>	
 			
 				<?php	
-				if(ll_tsecuryt('admin') && $_GET['user'] != $_SESSION['logado']['id']){
+				if(ll_tsecuryt('admin') && $login != $_ll['user']['login']){
 					?>
 					<div>
 						<label>Grupo de usuário</label>
@@ -116,11 +118,13 @@ if(empty($_GET['user'])){
 								//$grupos_add = jf_iconv("UTF-8", "ISO-8859-1", (array) $llconf->usua_grup);
 								
 								if(!empty($_ll['conf']->grupo)){
-									echo '<optgroup label="Sub-grupos">';
+									$sub = null;									
 									foreach($_ll['conf']->grupo as $ogrupo => $valor)
-										echo '<option value="'.$ogrupo.'" '.($grupo == $ogrupo?'selected':'').'>'.$valor->nome.'</option>';
-									
-									echo '</optgroup>';
+										if(isset($valor->nome))
+											$sub .= '<option value="'.$ogrupo.'" '.($grupo == $ogrupo?'selected':'').'>'.$valor->nome.'</option>';
+										
+									if($sub != null)
+										echo '<optgroup label="Sub-grupos">'.$sub.'</optgroup>';
 								}
 							}
 							

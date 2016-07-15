@@ -1,11 +1,12 @@
 /**
 *
-* lliure WAP
+* Configurações de páginas
 *
-* @Versão 7.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Versão do lliure 8.0
+* @Pacote lliure
+*
+* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 #jfboxLoad h1{
@@ -127,10 +128,10 @@ div.bodyhome{
 		.idiomaBox form.form div.botoes{
 			margin-top: -30px;
 			}
+			
 /***************************		Install modal		*****/
 .install-box{
 	margin-top: 15px;
-	font-size: 12px;
 	}
 	
 	.install-box h2{
@@ -147,19 +148,27 @@ div.bodyhome{
 			width:100%;
 			height: 300px;
 			overflow: auto;
+			font-size: 1.2em;
 			}
 	
 	.install-box form .fase{
-		border-bottom: 1px dotted #888;
-		padding-bottom: 10px;
+		border-top: 1px dotted #888;
+		padding-top: 10px;
 		margin-bottom: 10px;
 		float: left;
 		width: 100%;
+		
 		}
+		
+		.install-box form .fase:first-child{
+			border-top: none;
+			}
 			
 	.install-box form .msm{
 		margin-bottom: 10px;
 		color: #0a0;
+		font-size: 1.2em;
+		line-height: 130%;
 		}
 			
 	.install-box form .msm.msmE{
@@ -211,6 +220,15 @@ div.bodyhome{
 			right: 0;
 			bottom: 0;
 			}
+	
+/*******************************************		Idioma					*****/	
+.idiomaBox{
+		
+	}
+	
+	.idiomaBox table tr td .fa{
+		font-size: 1.4em;
+		}
 			
 			
 /*******************************************		Sobre					*****/
@@ -253,14 +271,14 @@ div.bodyhome{
 		}	
 		
 		.llSobre_box .rodape .container{
-			padding: 12px 25px 25px;
+			padding: 13px 25px;
+			display: flex;
+			justify-content: space-between;
 			}
-	
 			
-			.llSobre_box .rodape .container span.terco{
-				float: left;
-				width: 33.3%;
+			.llSobre_box .rodape .container span{
 				text-align: center;
+				font-size: 1.1em;
 				}
 	
 /*********************		depreciadas		*********************/

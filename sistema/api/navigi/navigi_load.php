@@ -3,8 +3,8 @@
 *
 * API navigi - lliure
 *
-* @Versão 6.4
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
+* @Versão 8.0
+* @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -14,7 +14,7 @@ header("Content-Type: text/html; charset=ISO-8859-1", true);
 require_once('../../etc/bdconf.php');
 require_once('../../includes/functions.php');
 
-$navigi = unserialize(jf_decode($_SESSION['logado']['token'], $_POST['token']));
+$navigi = unserialize(jf_decode($_SESSION['ll']['user']['token'], $_POST['token']));
 
 function navigi_tratamento($dados){
 	global $navigi;
@@ -42,13 +42,17 @@ function navigi_tratamento($dados){
 	/**/
 	
 	/**********		DEFINIÇÃO DO ICONE							**/
-	$dados['ico'] = 'api/navigi/img/ico.png';
+	if(!isset($navigi['config'][$configSel]['fa'])){
+		$dados['ico'] = 'api/navigi/img/ico.png';
 	
-	if(isset($navigi['config'][$configSel]['ico']))
-		$dados['ico'] = $navigi['config'][$configSel]['ico'];
-	
-	if(isset($navigi['config'][$configSel]['ico_col']) && !empty($navigi['config'][$configSel]['ico_col']))
-		$dados['ico'] = $dados[$navigi['config'][$configSel]['ico_col']];
+		if(isset($navigi['config'][$configSel]['ico']))
+			$dados['ico'] = $navigi['config'][$configSel]['ico'];
+		
+		if(isset($navigi['config'][$configSel]['ico_col']) && !empty($navigi['config'][$configSel]['ico_col']))
+			$dados['ico'] = $dados[$navigi['config'][$configSel]['ico_col']];
+	} else {
+		$dados['fa'] = $navigi['config'][$configSel]['fa'];
+	}
 	/**/
 	
 	$dados['as_id'] = $dados[$navigi['config'][$configSel]['as_id']]; // alias para o id
@@ -104,18 +108,18 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'permicao="'.$dados['permicao'].'" '
 					.'nome="'.$dados['coluna'].'"> '
 					 
-				.'<span class="navigi_ico"><span><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></span></span>'
+				.'<span class="navigi_ico"><span>'.(isset($dados['fa']) ? '<i class="fa '.$dados['fa'].'"></i>' : '<img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" />').'</span></span>'
 				.'<span id="nome_'.$dados['id'].'" class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</span>'
 			.'</div>';
 
 	}
 } else {	/*/// exibindo como lista ********************************************************/
 	$ico = false;
-	
+		
 	if($navigi['configSel'] != false){
 		$ico = $navigi['config'];
 		$ico = array_pop($ico);
-		$ico = (isset($ico['ico']) ? true : false);
+		$ico = (isset($ico['ico']) || isset($ico['fa']) ? true : false);
 	}
 	
 	// colspan		
@@ -131,14 +135,14 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		
 		$dados = navigi_tratamento($dados);		
 		$colspan = 0;
-				
+			
 		if($navigi['rename'] || $dados['rename']){
 			$dados['rename'] = '<td class="navigi_ren"><img src="api/navigi/img/rename.png"></td>';
 			$colspan++;
 		}
 		
 		if($navigi['delete'] || $dados['delete']){
-			$dados['delete'] = '<td class="navigi_del"><img src="api/navigi/img/trash.png"></td>';
+			$dados['delete'] = '<td class="navigi_del"><i class="fa fa-trash"></i></td>';
 			$colspan++;
 		}
 		
@@ -146,7 +150,11 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 			$dados['botoes'] = '';
 			foreach($dados['botao'] as $key => $valor){
 				$valor['link'] = str_replace('#ID', $dados['id'], $valor['link']);
-				$dados['botoes'] .= '<td><a href="'.$valor['link'].'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'><img src="'.$valor['ico'].'"></a></td>'."\n";
+				$dados['botoes'] .= '<td>'
+						.'<a href="'.$valor['link'].'" '.(isset($valor['modal']) ? 'class="navigi_bmod" rel="'.$valor['modal'].'"' : '').'>'
+							.(isset($valor['fa']) ? '<i class="fa '.$valor['fa'].'"></i>' : '<img src="'.$valor['ico'].'">')
+						.'</a>'
+					.'</td>'."\n";
 				$colspan++;
 			}
 		}
@@ -155,9 +163,7 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		if(!empty($navigi['cell']))
 			foreach($navigi['cell'] as $key => $valor)
 				$cell[$dados['id']] .= '<td>'.$dados[$key].'</td>'."\n";
-			
-		
-		
+
 		/* Para calcular o colspan dinâmico */
 		$dados['colspan'] = $colspan;		
 		$tableColspan = ($tableColspan > $colspan ? $tableColspan : $colspan);
@@ -165,7 +171,6 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 		$linhas[] = $dados;
 	}
 	
-		
 	echo '<table class="table navigi_list">'
 			.'<tr>'
 				.($ico == true ? '<th class="ico"></th>' : '' )
@@ -194,16 +199,24 @@ if($navigi['exibicao'] == 'icone'){ 	//// exibindo como icones
 					.'permicao="'.$dados['permicao'].'" '
 					.'nome="'.$dados['coluna'].'">'
 			
-					.($ico == true ? '<td><img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" /></td>' : '' )
+					.($ico == true 
+							? '<td>'
+								.(isset($dados['fa']) 
+									? '<i class="fa '.$dados['fa'].'"></i>'
+									: '<img src="'.$dados['ico'].'" alt="'.$dados['coluna'].'" />' )
+							 .'</td>'
+							
+							: '' )
 					
 					.'<td>'.str_pad($dados['as_id'], 7, 0, STR_PAD_LEFT).'</td>'
-					.'<td colspan="'.($tableColspan-$dados['colspan']).'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'
+					.'<td colspan="'.($tableColspan-$dados['colspan']+1) .'"><div class="navigi_nome">'.htmlspecialchars($dados['coluna'], ENT_COMPAT, 'ISO-8859-1', true).'</div></td>'
 					
 					.$cell[$dados['id']]
 					
 					.$dados['botoes']
 					
 					.$dados['rename']
+					
 					.$dados['delete']
 				.'</tr>';
 	}

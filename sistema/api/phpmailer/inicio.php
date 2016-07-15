@@ -4,18 +4,17 @@
 * API PHP Mailer - Plugin WAP
 *
 * @Versão 6.0
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
+* @Pacote lliure
+* @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 * @revisao 16/07/2014 Rodrigo Dechen: colocaçao de Type Casting nas configurações de host de disparo
 */
 
-require_once("class.phpmailer.php");
+require_once("PHPMailerAutoload.php");
 
-if(!defined('ll_dir')){
+if(!defined('ll_dir'))
 	define("ll_dir", (realpath(dirname(__FILE__). DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR. '..'. DIRECTORY_SEPARATOR). DIRECTORY_SEPARATOR));
-}
 
 function limpaMail($in){
 	if(strstr($in, '<')){
@@ -35,16 +34,8 @@ function limpaMail($in){
 
 function pm_mail($destinatario = null, $assunto = null, $menssagem = null, $header = null, $conf = null){	
 	$to = limpaMail($destinatario);
-	
-	if(!empty($conf)){		
-		$smtp = (object) $conf;
-        
-	} else {
-		if(($llconf = simplexml_load_file(ll_dir . 'etc/llconf.ll')) == false)
-			return 'Nao foi possível encontrar as configurações de smtp';
-		else
-			$smtp = $llconf->smtp;
-	}
+
+	$smtp = (object) $conf;
 	
 	$mail = new PHPMailer();
 

@@ -1,12 +1,14 @@
 <?php
+header('Content-Type: text/html; charset=iso-8859-1');
 /**
 *
-* lliure WAP
+* InicializaÁ„o do lliure sem autenticaÁ„o
 *
-* @Vers„o 6.4
-* @Desenvolvedor Jeison Frasson <jomadee@lliure.com.br>
-* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
-* @Licen√ßa http://opensource.org/licenses/gpl-license.php GNU Public License
+* @Vers„o do lliure 8.0
+* @Pacote lliure
+*
+* Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
+* LicenÁa http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
@@ -15,7 +17,9 @@ if(!file_exists("etc/bdconf.php"))
 	header('location: index.php;');
 
 require_once("etc/bdconf.php"); 
-require_once("includes/functions.php"); 
+require_once("usr/lliure.php"); 
+require_once("includes/functions.php");
+
 
 $uArray = $_SERVER['REQUEST_URI'];
 $_ll['url']['endereco'] = (isset($_SERVER['HTTPS']) ? 'https' : 'http').'://'.$_SERVER['HTTP_HOST'];
@@ -36,8 +40,8 @@ $_ll['url']['endereco'] = implode('/', $_ll['url']['endereco']).'/';
 
 if(isset($_GET['r'])){
 	$direkti = array(
-			'logout' => 'opt/loguser.php',
-			'login' => 'opt/loguser.php',
+			'logout' => 'opt/singin/loguser.php',
+			'login' => 'opt/singin/loguser.php',
 			'rotinas' => 'opt/rotinas.php'
 	);
 
@@ -53,13 +57,12 @@ if(!isset($require) || isset($_GET['r'])){
 	require_once('includes/carrega_conf.php');
 		
 	$temo = 'lliure';
-		
 	if(isset($_ll['conf']->tema_default))
 		if(file_exists('temas/'.$_ll['conf']->tema_default.'/dados.ll'))
 			$temo = (string) $_ll['conf']->tema_default;
 		
 	if(!isset($require)){
-		$require = 'temas/'.$temo.'/login.php';
+		$require = 'opt/singin/singin.php';
 	}
 }
 
