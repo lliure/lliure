@@ -3,9 +3,9 @@
 *
 * API Aplimo - lliure
 *
-* @Versão 6.2
+* @Versão 8.1
 * @Pacote lliure
-* @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
+* @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -263,18 +263,32 @@ class aplimo{
 		}
 		
 		if(isset($_GET['apm']) && file_exists(self::$basePath . $_GET['apm'] . '/header.php')) {
+			$this->apm = new stdClass();
+			$this->apm->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
+			$this->apm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
+			$this->apm->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];			
+			
+			//script para retro compatibilidade. retirar no 9{
 			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'];
 			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'];
 			$this->onclient = $_ll['app']['onclient'].'&apm='.$_GET['apm'];
+			//}
 				
 			require_once(self::$basePath . $_GET['apm'] . '/header.php');
 		}
 		
 		if(isset($_GET['sapm']) && file_exists(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php')){
+			$this->sapm = new stdClass();
+			$this->sapm->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->sapm->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			$this->sapm->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
+			
+			
+			//script para retro compatibilidade. retirar no 9{
 			$this->home = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			$this->onserver = $_ll['app']['onserver'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
 			$this->onclient = $_ll['app']['home'].'&apm='.$_GET['apm'].'&sapm='.$_GET['sapm'];
-			
+			//}
 			
 			require_once(self::$basePath . $_GET['apm'] . '/'. $_GET['sapm'] .'/header.php');	
 		} 
