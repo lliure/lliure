@@ -3,7 +3,7 @@
 *
 * API navigi - lliure
 *
-* @Versão 8.0
+* @Versão 8.2
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@glliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -211,9 +211,7 @@ class navigi{
 			}
 			$query .= ')';
 			
-			
-			if(strpos($this->query, 'where') !== false)
-				$this->query = 'select * from ('.$this->query.') as qry where '.$query;
+			$this->query = 'select * from ('.$this->query.') as qry where '.$query;
 		}
 				
 		if($this->paginacao != false){
