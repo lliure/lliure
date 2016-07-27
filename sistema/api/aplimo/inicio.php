@@ -3,7 +3,7 @@
 *
 * API Aplimo - lliure
 *
-* @Versão 8.1
+* @Versão 8.3
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <jomadee@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -224,14 +224,8 @@ class aplimo{
 		$this->class_sub = null;
 		$this->class_li = null;
 		
-		if(!isset($_GET['apm'])){			
-			$tmp_menu = array_keys($this->menu);
-			$class = array_shift($tmp_menu);
-			
-			if(!is_array($this->menu[$class]['link']))
-				$_GET['apm'] = $this->menu[$class]['link'];
-		}
-		
+		if(!isset($_GET['apm']))	
+			$_GET['apm'] = 'home';		
 		
 		foreach($this->menu as $key => $valor){
 			
