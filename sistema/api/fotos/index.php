@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 6.0
+* @Versão 8.4
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -25,6 +25,10 @@ $galeriaAPI['dir'] é o diretório onde vão ser armazenadas as imagens
 
 $galeriaAPI['tabela_app'] = $galeriaAPI['tabela'];
 $galeriaAPI['tabela'] = $galeriaAPI['tabela'].'_fotos';
+
+if(is_writable ($galeriaAPI['dir'])){
+	ll_alert('A pasta <strong>'.$galeriaAPI['dir'].'</strong> não tem permissão para escrita');
+}
 ?>
 <style>
 	@import "api/fotos/estilo.css";
@@ -57,9 +61,19 @@ $(function(){
 		'fileDesc'    : 'Arquivos de imagem (.jpg e .png)',
 		'buttonText'  : 'Selecionar fotos',
 		'multi'     : true,
+		'onUploadError' : function(file, errorCode, errorMsg, errorString) {
+            alert('The file ' + file.name + ' could not be uploaded: ' + errorString);
+        },
+
 		'onAllComplete'  : function(event,data) {
-			carregaFotos();
-		}
+			carregaFotos();			
+		},
+		
+		'onSelectError' : function() {
+            alert('The file ' + file.name + ' returned an error and was not added to the queue.');
+        }
+
+
 	});
 });
 </script>
