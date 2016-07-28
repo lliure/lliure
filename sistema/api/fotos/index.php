@@ -3,7 +3,7 @@
 *
 * lliure WAP
 *
-* @Versão 8.4
+* @Versão 6.0
 * @Pacote lliure
 * @Entre em contato com o desenvolvedor <lliure@lliure.com.br> http://www.lliure.com.br/
 * @Licença http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -26,7 +26,7 @@ $galeriaAPI['dir'] é o diretório onde vão ser armazenadas as imagens
 $galeriaAPI['tabela_app'] = $galeriaAPI['tabela'];
 $galeriaAPI['tabela'] = $galeriaAPI['tabela'].'_fotos';
 
-if(is_writable ($galeriaAPI['dir'])){
+if(!is_writable ($galeriaAPI['dir'])){
 	ll_alert('A pasta <strong>'.$galeriaAPI['dir'].'</strong> não tem permissão para escrita');
 }
 ?>
