@@ -55,15 +55,23 @@ if(!empty($_SESSION['ll_url'])){
 }
 
 
+
 /***********************************************	SETA O TEMA PADRAO	*/
-if(isset($_ll['conf']->grupo) && isset($_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema))
-	if(file_exists($_ll['conf']->temas->{$tema_default})){
+if(isset($_ll['conf']->grupo) 
+	&& isset($_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema) 
+	&& isset($_ll['conf']->temas->{$_SESSION['ll']['user']['tema']})){
+		
+	if(file_exists($_ll['conf']->temas->{$_SESSION['ll']['user']['tema']})){
 		$tema_default = $_ll['conf']->grupo->{$_SESSION['ll']['user']['grupo']}->tema;
 		$tema_path = (string) $_ll['conf']->temas->{$tema_default};
 	}
-
+} else {
+	$_SESSION['ll']['user']['tema'] = 'default';
+}
+	
 
 if($_SESSION['ll']['user']['tema'] == 'default'){
+	
 	$_SESSION['ll']['user']['tema'] = array('id' => $tema_default);
 	$_SESSION['ll']['user']['tema']['path'] = $tema_path;
 } else {
