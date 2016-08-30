@@ -104,6 +104,7 @@ if(empty($_GET['user'])){
 				</div>	
 			
 				<?php	
+
 				if(ll_tsecuryt('admin') && $login != $_ll['user']['login']){
 					?>
 					<div>

@@ -1,5 +1,8 @@
 Neste aquivo estão descritas todas atualizações do lliure core (lê-se lhiure),  Módulos e API nativas
 
+#### 8.6 Clumber Spaniel (09/07/2016)
+- [bug] Correção de erro acrescentar grupos de usuário ao sistema
+
 #### 8.0 Clumber Spaniel (09/07/2016)
 - [update] metodo lliure::add reformulado para que cada paremetro seja designado para oque foi pensado;
 - [update] metodo lliure::add agora ganhou um 4º parametro refente a dependenci do script.

@@ -37,7 +37,9 @@ if(!isset($_ll['mode_operacion']))
 
 
 if(!isset($_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao)){
-	$_ll['conf']->grupo = new stdClass;
+	if(!isset($_ll['conf']->grupo))
+		$_ll['conf']->grupo = new stdClass;
+	
 	$_ll['conf']->grupo->$_ll['user']['grupo'] = new stdClass;
 	$_ll['conf']->grupo->{$_ll['user']['grupo']}->execucao = URL_NORMAL;
 }
